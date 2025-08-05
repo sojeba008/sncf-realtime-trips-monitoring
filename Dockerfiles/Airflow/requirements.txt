@@ -1,0 +1,6 @@
+﻿gtfs-realtime-bindings
+requests
+confluent-kafka
+python-dotenv
+DateTime
+pyarrow
