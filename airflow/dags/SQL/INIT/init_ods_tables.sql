@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS ods.stops (
 
 CREATE TABLE IF NOT EXISTS ods.stations (
     station_pk      INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    code_uic        char(8)               NOT NULL UNIQUE,
+    code_uic        char(8)               NOT NULL,
     libelle         text                  NOT NULL,
     fret            char(1)               NOT NULL,      -- 'O' / 'N'
     voyageurs       char(1)               NOT NULL,      -- 'O' / 'N'

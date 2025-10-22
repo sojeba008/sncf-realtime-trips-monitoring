@@ -31,6 +31,7 @@ def refresh_ods_table():
     tomorrow  = today + timedelta(days=1)
     dayAfterTomorrow  = tomorrow + timedelta(days=1)
     suffix    = today.strftime("%Y%m%d")
+    suffix_2    = tomorrow.strftime("%Y%m%d")
 
     sql_partition = f"""
     CREATE TABLE IF NOT EXISTS ods.trips_{suffix} PARTITION OF ods.trips
@@ -39,10 +40,10 @@ def refresh_ods_table():
     CREATE TABLE IF NOT EXISTS ods.stops_{suffix} PARTITION OF ods.stops
         FOR VALUES FROM ('{today}') TO ('{tomorrow}');
 
-    CREATE TABLE IF NOT EXISTS ods.trips_{suffix} PARTITION OF ods.trips
+    CREATE TABLE IF NOT EXISTS ods.trips_{suffix_2} PARTITION OF ods.trips
         FOR VALUES FROM ('{tomorrow}') TO ('{dayAfterTomorrow}');
 
-    CREATE TABLE IF NOT EXISTS ods.stops_{suffix} PARTITION OF ods.stops
+    CREATE TABLE IF NOT EXISTS ods.stops_{suffix_2} PARTITION OF ods.stops
         FOR VALUES FROM ('{tomorrow}') TO ('{dayAfterTomorrow}');
     """
     print(sql_partition)
