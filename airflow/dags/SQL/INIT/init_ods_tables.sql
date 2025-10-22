@@ -1,0 +1,64 @@
+CREATE EXTENSION IF NOT EXISTS postgis;
+
+CREATE SCHEMA IF NOT EXISTS ods;
+
+CREATE TABLE IF NOT EXISTS ods.trips (
+    trip_id TEXT NOT NULL,
+    train TEXT,
+    origin_name TEXT,
+    departure_time TIMESTAMP,
+    dest_name TEXT,
+    arrival_time TIMESTAMP,
+    production_date TIMESTAMP,
+    ref_date DATE NOT NULL,
+    CONSTRAINT trips_pkey PRIMARY KEY (trip_id, ref_date)
+) PARTITION BY RANGE (ref_date);
+
+
+CREATE TABLE IF NOT EXISTS ods.stops (
+    id                 INT8 GENERATED ALWAYS AS IDENTITY,
+    trip_id            text         NOT NULL,
+    stop_name          text         NOT NULL,
+    aimed_arrival      timestamp,
+    expected_arrival   timestamp,
+    aimed_departure    timestamp,
+    expected_departure timestamp,
+    is_starting_point  int,
+    is_terminus        int,
+    production_date    timestamp,
+    ref_date           date         NOT NULL,
+    CONSTRAINT stops_pkey PRIMARY KEY (id, ref_date),
+    CONSTRAINT stops_un UNIQUE (trip_id, stop_name, ref_date),
+    CONSTRAINT stops_trip_id_fkey FOREIGN KEY (trip_id, ref_date) REFERENCES ods.trips (trip_id, ref_date)
+) PARTITION BY RANGE (ref_date);
+
+CREATE TABLE IF NOT EXISTS ods.stations (
+    station_pk      INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    code_uic        char(8)               NOT NULL UNIQUE,
+    libelle         text                  NOT NULL,
+    fret            char(1)               NOT NULL,      -- 'O' / 'N'
+    voyageurs       char(1)               NOT NULL,      -- 'O' / 'N'
+    code_ligne      char(6),
+    rg_troncon      smallint,
+    pk              text,
+    commune         text,
+    departemen      text,
+    idreseau        integer,
+    idgaia          uuid,
+    x_l93           numeric(10,3),
+    y_l93           numeric(10,3),
+    x_wgs84         numeric(9,6),
+    y_wgs84         numeric(9,6),
+    geom            geography(Point,4326),
+    geom_l93        geometry(Point,2154),
+    inserted_at     timestamptz           DEFAULT now()
+);
+
+CREATE INDEX IF NOT EXISTS stations_geom_gix     ON ods.stations USING gist (geom);
+CREATE INDEX IF NOT EXISTS stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
+
+CREATE TABLE IF NOT EXISTS ods.trains (
+    tk_train      INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,   
+    num_train     TEXT,
+    CONSTRAINT trains_un UNIQUE (num_train)
+);
