@@ -97,8 +97,8 @@ INSERT INTO dwh.f_trips_realtime (
     delay_arrival_minutes,
     delay_departure_minutes,
         
-    departure_time_trip,
-    arrival_time_trip,
+    departure_time_journey,
+    arrival_time_journey,
     
     is_starting_point,
     is_terminus
@@ -115,8 +115,8 @@ WITH src AS (
         s.expected_arrival,
         s.aimed_departure,
         s.expected_departure,
-        t.departure_time AS departure_time_trip,
-        t.arrival_time AS arrival_time_trip,
+        t.departure_time AS departure_time_journey,
+        t.arrival_time AS arrival_time_journey,
         t.origin_name,
         t.dest_name
     FROM ods.stops s
@@ -149,8 +149,8 @@ SELECT
     COALESCE(EXTRACT(EPOCH FROM (s.expected_arrival  - s.aimed_arrival ))/60::int, 0),
     COALESCE(EXTRACT(EPOCH FROM (s.expected_departure - s.aimed_departure))/60::int, 0),
     
-    departure_time_trip,
-    arrival_time_trip,
+    departure_time_journey,
+    arrival_time_journey,
     
     s.is_starting_point,
     s.is_terminus

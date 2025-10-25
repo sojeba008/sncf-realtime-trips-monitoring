@@ -335,8 +335,8 @@ CREATE TABLE dwh.f_trips_realtime (
     delay_arrival_minutes int4 NULL,
     delay_departure_minutes int4 NULL,
     
-    departure_time_trip timestamp,
-    arrival_time_trip timestamp,
+    departure_time_journey timestamp,
+    arrival_time_journey timestamp,
     
     is_starting_point bool NULL,
     is_terminus bool NULL,
@@ -352,8 +352,8 @@ CREATE TABLE dwh.f_trips_realtime (
     ) STORED,
     status_trip text GENERATED ALWAYS AS (
         CASE 
-	        WHEN (departure_time_trip < ref_date AND arrival_time_trip > ref_date) THEN 'EN_COURS'
-            WHEN (arrival_time_trip < ref_date) THEN 'TERMINE'
+	        WHEN (departure_time_journey < ref_date AND arrival_time_journey > ref_date) THEN 'EN_COURS'
+            WHEN (arrival_time_journey < ref_date) THEN 'TERMINE'
         END
     ) STORED,
     last_update timestamp DEFAULT now()
