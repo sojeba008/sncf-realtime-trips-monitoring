@@ -74,6 +74,7 @@ CREATE TABLE dwh.d_station (
   CONSTRAINT d_station_pk PRIMARY KEY (tk_station),
   CONSTRAINT d_station_un UNIQUE (station_name, commune, departement)
 );
+INSERT INTO d_station (tk_station, station_name) VALUES(-1, 'Station inconnue');
 
 CREATE INDEX IF NOT EXISTS dwh_stations_geom_gix ON ods.stations USING gist (geom);
 CREATE INDEX IF NOT EXISTS dwh_stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
@@ -304,3 +305,58 @@ CREATE TABLE dwh.d_train (
 CREATE INDEX idx_num_train ON dwh.d_train(num_train);
 CREATE INDEX idx_type_train ON dwh.d_train(type_train);
 CREATE INDEX idx_region_origine ON dwh.d_train(region_origine);
+
+
+CREATE TABLE dwh.f_trips_realtime (
+    tk_trip_rt bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    
+    trip_id text NOT NULL,
+    num_train text NOT NULL,
+
+    ref_date  timestamp NULL,
+    stop_station_tk int4 NOT NULL,
+    origin_station_tk int4 NULL,
+    destination_station_tk int4 NULL,
+
+    aimed_arrival_date_tk int4 NULL,
+    aimed_arrival_time_tk int4 NULL,
+    expected_arrival_date_tk int4 NULL,
+    expected_arrival_time_tk int4 NULL,
+    aimed_departure_date_tk int4 NULL,
+    aimed_departure_time_tk int4 NULL,
+    expected_departure_date_tk int4 NULL,
+    expected_departure_time_tk int4 NULL,
+
+    aimed_departure timestamp,
+    aimed_arrival timestamp,
+    expected_departure timestamp,
+    expected_arrival timestamp,
+    
+    delay_arrival_minutes int4 NULL,
+    delay_departure_minutes int4 NULL,
+    
+    departure_time_trip timestamp,
+    arrival_time_trip timestamp,
+    
+    is_starting_point bool NULL,
+    is_terminus bool NULL,
+
+    status_stop text GENERATED ALWAYS AS (
+        CASE 
+            WHEN expected_departure IS NULL AND NOT is_terminus THEN 'NON_PLANIFIE'
+            WHEN expected_arrival IS NULL AND NOT is_starting_point THEN 'NON_PLANIFIE'
+            WHEN ((is_terminus OR expected_departure < ref_date) AND expected_arrival < ref_date) THEN 'TERMINE'
+            WHEN ((is_terminus OR expected_departure > ref_date) AND expected_arrival > ref_date) THEN 'A_VENIR'
+            ELSE 'EN_COURS'
+        END
+    ) STORED,
+    status_trip text GENERATED ALWAYS AS (
+        CASE 
+	        WHEN (departure_time_trip < ref_date AND arrival_time_trip > ref_date) THEN 'EN_COURS'
+            WHEN (arrival_time_trip < ref_date) THEN 'TERMINE'
+        END
+    ) STORED,
+    last_update timestamp DEFAULT now()
+);
+
+

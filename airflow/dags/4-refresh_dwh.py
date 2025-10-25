@@ -33,6 +33,7 @@ def refresh_dwh():
         for sql_file in sql_files:
             if sql_file[0] != '0':
                 sql_path = os.path.join(dag_folder, 'SQL', 'DWH', sql_file)
+                print("SQL Filename : "+sql_path)
                 with open(sql_path, 'r', encoding='utf-8') as file:
                     sql = file.read()
                     cursor.execute(sql)

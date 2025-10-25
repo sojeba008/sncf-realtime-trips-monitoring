@@ -71,7 +71,7 @@ def trip_to_dsa():
                 unique_id, stop_name, aimed_arrival, expected_arrival,
                 aimed_departure, expected_departure,
                 1 if idx == 0 else 0,
-                1 if idx == len(calls) - 1 else 0,
+                1 if stop_name == dest_name else 0,
                 production_date
             ))
     conn = psycopg2.connect(**DB_PARAMS)
