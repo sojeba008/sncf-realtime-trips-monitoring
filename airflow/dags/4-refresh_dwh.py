@@ -23,10 +23,42 @@ DB_PARAMS = {
 }
 
 def refresh_dwh():
+    
+    today = date.today()
+    tomorrow = today + timedelta(days=1)
+    day_after_tomorrow = tomorrow + timedelta(days=1)
+
+    suffix_today = today.strftime("%Y%m%d")
+    suffix_tomorrow = tomorrow.strftime("%Y%m%d")
+
+    tk_today = int(today.strftime("%Y%m%d"))
+    tk_tomorrow = int(tomorrow.strftime("%Y%m%d"))
+    tk_day_after_tomorrow = int(day_after_tomorrow.strftime("%Y%m%d"))
+
+    sql_partition_f_journey = f"""
+    CREATE TABLE IF NOT EXISTS dwh.f_journey_{suffix_today} 
+        PARTITION OF dwh.f_journey
+        FOR VALUES FROM ({tk_today}) TO ({tk_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_journey_{suffix_tomorrow}
+        PARTITION OF dwh.f_journey
+        FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_trips_{suffix_today} 
+        PARTITION OF dwh.f_trips
+        FOR VALUES FROM ({tk_today}) TO ({tk_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_trips_{suffix_tomorrow}
+        PARTITION OF dwh.f_trips
+        FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
+    """
+
     try:
         conn = psycopg2.connect(**DB_PARAMS)
         cursor = conn.cursor()
         dag_folder = os.path.dirname(__file__)
+
+        cursor.execute(sql_partition_f_journey)
 
         DWH_SQL_FOLDER=os.path.join(dag_folder, 'SQL', 'DWH')
         sql_files = [f for f in os.listdir(DWH_SQL_FOLDER) if os.path.isfile(os.path.join(DWH_SQL_FOLDER, f))]

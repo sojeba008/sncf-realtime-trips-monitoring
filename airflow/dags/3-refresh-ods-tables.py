@@ -46,7 +46,6 @@ def refresh_ods_table():
     CREATE TABLE IF NOT EXISTS ods.stops_{suffix_2} PARTITION OF ods.stops
         FOR VALUES FROM ('{tomorrow}') TO ('{dayAfterTomorrow}');
     """
-    print(sql_partition)
     try:
         conn = psycopg2.connect(**DB_PARAMS)
         cursor = conn.cursor()

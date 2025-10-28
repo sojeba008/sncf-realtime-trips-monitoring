@@ -33,9 +33,11 @@ WITH src AS (
         s.aimed_departure,
         s.expected_departure,
         t.origin_name,
-        t.dest_name
+        t.dest_name,
+        t.departure_time AS departure_ref_date
     FROM ods.stops  s
     JOIN ods.trips  t USING (trip_id, ref_date)
+    WHERE t.departure_time::DATE >= current_date::DATE - interval '1 day'
 )
 SELECT
     s.trip_id,
@@ -58,7 +60,7 @@ SELECT
     s.is_terminus
 FROM src s
 -- === Main Dates ===
-JOIN dwh.d_date d_ref       ON d_ref.date = s.ref_date
+JOIN dwh.d_date d_ref       ON d_ref.date = s.departure_ref_date::DATE
 -- ==== Stations Dim ===
 JOIN dwh.d_station st_stop   ON st_stop.station_name  = s.stop_name
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
@@ -73,6 +75,54 @@ LEFT JOIN dwh.d_time tm_exp_arr ON tm_exp_arr.tk_time = to_char(s.expected_arriv
 LEFT JOIN dwh.d_time tm_aim_dep ON tm_aim_dep.tk_time = to_char(s.aimed_departure,'HH24MISS')::INT8
 LEFT JOIN dwh.d_time tm_exp_dep ON tm_exp_dep.tk_time = to_char(s.expected_departure,'HH24MISS')::INT8
 ON CONFLICT (trip_id, stop_station_tk, ref_date_tk) DO NOTHING;
+
+
+INSERT INTO dwh.f_journey (
+    trip_id,
+    num_train,
+    ref_date_tk,
+    origin_station_tk,
+    destination_station_tk,
+    departure_journey_date_tk,
+    departure_journey_time_tk,
+    arrival_journey_date_tk,
+    arrival_journey_time_tk,
+    insert_date
+)
+WITH src AS (
+    SELECT
+        t.trip_id,
+        t.train AS num_train,
+        t.ref_date,
+        t.origin_name,
+        t.dest_name,
+        t.departure_time AS aimed_departure,
+        t.arrival_time   AS aimed_arrival
+    FROM ods.trips t
+    WHERE t.departure_time::DATE >= current_date::DATE - interval '1 day'
+)
+SELECT
+    s.trip_id,
+    s.num_train,
+    d_ref.tk_date AS ref_date_tk,
+    COALESCE(st_origin.tk_station, -1)       AS origin_station_tk,
+    COALESCE(st_dest.tk_station, -1)         AS destination_station_tk,
+    COALESCE(d_dep.tk_date, -1)              AS departure_journey_date_tk,
+    COALESCE(tm_dep.tk_time, -1)             AS departure_journey_time_tk,
+    COALESCE(d_arr.tk_date, -1)              AS arrival_journey_date_tk,
+    COALESCE(tm_arr.tk_time, -1)             AS arrival_journey_time_tk,
+    clock_timestamp()
+FROM src s
+JOIN dwh.d_date d_ref ON d_ref.date = s.ref_date::date
+LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
+LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
+LEFT JOIN dwh.d_date d_dep ON d_dep.date = s.aimed_departure::date
+LEFT JOIN dwh.d_date d_arr ON d_arr.date = s.aimed_arrival::date
+LEFT JOIN dwh.d_time tm_dep ON tm_dep.tk_time = to_char(s.aimed_departure,'HH24MISS')::INT8
+LEFT JOIN dwh.d_time tm_arr ON tm_arr.tk_time = to_char(s.aimed_arrival,'HH24MISS')::INT8
+ON CONFLICT (trip_id, ref_date_tk) DO NOTHING;
+
+
 
 TRUNCATE TABLE dwh.f_trips_realtime RESTART IDENTITY;
 INSERT INTO dwh.f_trips_realtime (

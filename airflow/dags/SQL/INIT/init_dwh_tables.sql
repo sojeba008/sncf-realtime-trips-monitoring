@@ -81,7 +81,7 @@ CREATE INDEX IF NOT EXISTS dwh_stations_geom_l93_gix ON ods.stations USING gist 
 
 
 CREATE TABLE dwh.f_trips (
-    tk_trip_fact             INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tk_trip_fact             INT8 GENERATED ALWAYS AS IDENTITY,
     -- busness_key
     trip_id                  text NOT NULL,
     num_train                text NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE dwh.f_trips (
     is_terminus              boolean,
 
     insert_date              timestamp DEFAULT clock_timestamp(),
-    CONSTRAINT f_trips_un UNIQUE (trip_id, ref_date_tk, stop_station_tk),
+    CONSTRAINT f_trips_un PRIMARY KEY (trip_id, ref_date_tk, stop_station_tk),
     CONSTRAINT fk_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
     CONSTRAINT fk_aim_arr_date      FOREIGN KEY (aimed_arrival_date_tk)  REFERENCES dwh.d_date(tk_date),
     CONSTRAINT fk_exp_arr_date      FOREIGN KEY (expected_arrival_date_tk) REFERENCES dwh.d_date(tk_date),
@@ -121,7 +121,43 @@ CREATE TABLE dwh.f_trips (
     CONSTRAINT fk_stop_station      FOREIGN KEY (stop_station_tk)       REFERENCES dwh.d_station(tk_station),
     CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
     CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station)
-);
+) PARTITION BY RANGE (ref_date_tk);
+CREATE INDEX idx_f_trips_ref_date_tk ON dwh.f_trips (ref_date_tk);
+CREATE INDEX idx_f_trips_fk_exp_dep_date ON dwh.f_trips (expected_departure_date_tk);
+CREATE INDEX idx_f_trips_num_train ON dwh.f_trips (num_train);
+CREATE INDEX idx_f_trips_stop_station_tk ON dwh.f_trips (stop_station_tk);
+
+
+
+
+CREATE TABLE dwh.f_journey (
+    tk_journey_fact             INT8 GENERATED ALWAYS AS IDENTITY,
+    trip_id                  TEXT NOT NULL,
+    num_train                TEXT NOT NULL,
+    ref_date_tk              integer NOT NULL,
+
+    origin_station_tk        integer,            
+    destination_station_tk   integer,
+
+    departure_journey_date_tk  integer,
+    departure_journey_time_tk  integer,
+    arrival_journey_date_tk    integer,
+    arrival_journey_time_tk    integer,
+
+    insert_date              timestamp DEFAULT clock_timestamp(),
+    CONSTRAINT pk_f_journey PRIMARY KEY (tk_journey_fact, ref_date_tk),
+    CONSTRAINT f_journey_un UNIQUE (trip_id, ref_date_tk),
+    CONSTRAINT fk_j_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_departure_journey_date      FOREIGN KEY (departure_journey_date_tk)  REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_arrival_journey_date      FOREIGN KEY (arrival_journey_date_tk) REFERENCES dwh.d_date(tk_date),
+
+    CONSTRAINT fk_departure_journey_time      FOREIGN KEY (departure_journey_time_tk)    REFERENCES dwh.d_time(tk_time),
+    CONSTRAINT fk_arrival_journey_time      FOREIGN KEY (arrival_journey_time_tk) REFERENCES dwh.d_time(tk_time),
+    
+    CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station)
+) PARTITION BY RANGE (ref_date_tk);
+
 
 INSERT INTO 
   dwh.d_date
@@ -350,10 +386,11 @@ CREATE TABLE dwh.f_trips_realtime (
             ELSE 'EN_COURS'
         END
     ) STORED,
-    status_trip text GENERATED ALWAYS AS (
+    status_journey text GENERATED ALWAYS AS (
         CASE 
 	        WHEN (departure_time_journey < ref_date AND arrival_time_journey > ref_date) THEN 'EN_COURS'
             WHEN (arrival_time_journey < ref_date) THEN 'TERMINE'
+            ELSE THEN 'PREVU'
         END
     ) STORED,
     last_update timestamp DEFAULT now()
