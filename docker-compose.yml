@@ -90,7 +90,9 @@ services:
 
   airflow-init:
     <<: *airflow-common
-    command: version
+    command: >
+      bash -c "airflow connections add postgres_default \
+        --conn-uri postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
     environment:
       <<: *airflow-common-env
       _AIRFLOW_DB_UPGRADE: 'true'
