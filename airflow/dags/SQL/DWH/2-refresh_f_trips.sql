@@ -171,11 +171,7 @@ WITH src AS (
         t.dest_name
     FROM ods.stops s
     JOIN ods.trips t USING (trip_id, ref_date)
-    WHERE s.ref_date BETWEEN (CURRENT_DATE - INTERVAL '1 day') AND (CURRENT_DATE + INTERVAL '1 day')
-      AND (
-            s.expected_arrival > (NOW() - INTERVAL '3 hours')
-            OR s.expected_departure > (NOW() - INTERVAL '1 hour')
-          )
+    WHERE s.ref_date >= (CURRENT_DATE - INTERVAL '1 day')
 )
 SELECT
     s.trip_id,
