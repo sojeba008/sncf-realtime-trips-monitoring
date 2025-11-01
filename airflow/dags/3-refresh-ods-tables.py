@@ -54,13 +54,11 @@ def refresh_ods_table():
         cursor.execute(sql_partition)
 
         print(dag_folder)
-        # sql_path = os.path.join(dag_folder, 'SQL', 'ODS', 'refresh_trips.sql').replace("***", "airflow")
         sql_path = os.path.join(dag_folder, 'SQL', 'ODS', 'refresh_trips.sql')
         with open(sql_path, 'r', encoding='utf-8') as file:
             sql = file.read()
             cursor.execute(sql)
 
-        # sql_path = os.path.join(dag_folder, 'SQL', 'ODS', 'refresh_stops.sql').replace("***", "airflow")
         sql_path = os.path.join(dag_folder, 'SQL', 'ODS', 'refresh_stops.sql')
         with open(sql_path, 'r', encoding='utf-8') as file:
             sql = file.read()
@@ -75,9 +73,6 @@ def refresh_ods_table():
         if conn:
             conn.rollback()
 
-
-# fetch_and_push()
-# create_database_and_schemas()
 default_args = {
     'owner': 'sncf-data',
     'depends_on_past': False,

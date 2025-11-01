@@ -1,15 +1,12 @@
+import os
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.utils.trigger_rule import TriggerRule
 from airflow.operators.trigger_dagrun import TriggerDagRunOperator
 import psycopg2
-from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from dotenv import load_dotenv
-import os
 from datetime import datetime, timedelta
 import requests
-from google.transit import gtfs_realtime_pb2
-import json
 import xml.etree.ElementTree as ET
 from psycopg2.extras import execute_values
 
@@ -25,8 +22,6 @@ DB_PARAMS = {
 URL = "https://proxy.transport.data.gouv.fr/resource/sncf-siri-lite-estimated-timetable"
 
 def trip_to_dsa():
-    import psycopg2
-
     response = requests.get(URL)
     if response.status_code != 200:
         raise Exception(f"Erreur: {response.status_code}")
@@ -35,12 +30,14 @@ def trip_to_dsa():
     ns = {'siri': 'http://www.siri.org.uk/siri'}
     journeys = root.findall('.//siri:EstimatedVehicleJourney', ns)
 
-    trips = []
     production_date = datetime.now()
+    conn = psycopg2.connect(**DB_PARAMS)
+    cursor = conn.cursor()
+    cursor.execute("TRUNCATE TABLE dsa.trips CASCADE;")
+    cursor.execute("TRUNCATE TABLE dsa.stops CASCADE;")
 
     trip_rows = []
     stop_rows = []
-
     i = 0
     for journey in journeys:
         i += 1
@@ -74,21 +71,13 @@ def trip_to_dsa():
                 1 if stop_name == dest_name else 0,
                 production_date
             ))
-    conn = psycopg2.connect(**DB_PARAMS)
-    cursor = conn.cursor()
 
-    # Vider les tables
-    cursor.execute("TRUNCATE TABLE dsa.trips CASCADE;")
-    cursor.execute("TRUNCATE TABLE dsa.stops CASCADE;")
-
-    # Insertion en batch des trips
     execute_values(cursor, """
         INSERT INTO dsa.trips (trip_id, train, origin_name, departure_time, dest_name, arrival_time, production_date)
         VALUES %s
         ON CONFLICT (trip_id) DO NOTHING;
     """, trip_rows)
 
-    # Insertion en batch des stops
     execute_values(cursor, """
         INSERT INTO dsa.stops (trip_id, stop_name, aimed_arrival, expected_arrival, aimed_departure, expected_departure, is_starting_point, is_terminus, production_date)
         VALUES %s
@@ -98,11 +87,6 @@ def trip_to_dsa():
     cursor.close()
     conn.close()
 
-
-
-
-# trip_to_dsa()
-# create_database_and_schemas()
 default_args = {
     'owner': 'sncf-data',
     'depends_on_past': False,
