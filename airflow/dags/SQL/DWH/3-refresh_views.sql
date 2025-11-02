@@ -14,19 +14,19 @@ WITH current_day AS (
     SELECT 
         COUNT(DISTINCT trip_id) AS trains_en_retard
     FROM dwh.f_trips_realtime
-    WHERE ref_date::DATE=NOW()::DATE AND delay_arrival_minutes > 5
+    WHERE departure_time_journey::DATE=NOW()::DATE AND delay_arrival_minutes > 5
 ),
 previous_day AS (
     SELECT 
         COUNT(DISTINCT trip_id) AS trains_en_retard
     FROM dwh.f_trips_realtime
     WHERE delay_arrival_minutes > 5
-      AND ref_date::DATE=(NOW() - INTERVAL '1 day')::DATE
+      AND departure_time_journey::DATE=(NOW() - INTERVAL '1 day')::DATE
 )
 SELECT
     c.trains_en_retard AS nb_trains_en_retard,
     ROUND(
-        ((c.trains_en_retard - p.trains_en_retard) / NULLIF(p.trains_en_retard,0)) * 100,
+        ((c.trains_en_retard - p.trains_en_retard)::numeric / NULLIF(p.trains_en_retard, 0)) * 100,
         1
     ) AS variation_vs_hier
 FROM current_day c, previous_day p;
@@ -41,6 +41,8 @@ WITH current_day AS (
     FROM dwh.f_trips_realtime
     WHERE delay_arrival_minutes IS NOT NULL
       AND delay_arrival_minutes >= 0
+      AND departure_time_journey::DATE = NOW()::DATE
+      AND is_terminus 
 ),
 daily_avg AS (
     SELECT
@@ -48,12 +50,12 @@ daily_avg AS (
     FROM dwh.f_trips_realtime ftr 
     WHERE delay_arrival_minutes IS NOT NULL
       AND delay_arrival_minutes >= 0
-      AND ftr.ref_date::DATE = NOW()::DATE
+      AND is_terminus 
 )
 SELECT
     c.retard_moyen,
     ROUND(
-        ((c.retard_moyen - d.retard_moyen_journalier) / NULLIF(d.retard_moyen_journalier, 0)) * 100,
+        ((c.retard_moyen - d.retard_moyen_journalier)::numeric / NULLIF(d.retard_moyen_journalier, 0)) * 100,
         1
     ) AS variation_vs_moy_journaliere
 FROM current_day c, daily_avg d;
@@ -72,6 +74,7 @@ previous_hour AS (
         COUNT(DISTINCT stop_station_tk) AS gares_actives
     FROM dwh.f_trips_realtime
     WHERE expected_arrival BETWEEN NOW() - INTERVAL '2 hour' AND NOW() - INTERVAL '1 hour'
+    AND expected_departure > NOW() - INTERVAL '2 hour'
 )
 SELECT
     c.gares_actives,
