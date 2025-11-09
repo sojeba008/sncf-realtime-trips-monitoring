@@ -46,7 +46,7 @@ def trip_to_dsa():
         date = journey.findtext('.//siri:DataFrameRef', default="N/A", namespaces=ns)
         dated_vj_ref = journey.findtext('.//siri:DatedVehicleJourneyRef', default="N/A", namespaces=ns)
         
-        unique_id = f"{date}_{dated_vj_ref}"
+        unique_id = f"{dated_vj_ref}"
 
         train_num = journey.findtext('.//siri:TrainNumberRef', default="N/A", namespaces=ns)
         origin_name = journey.findtext('.//siri:OriginName', default="N/A", namespaces=ns)
@@ -54,7 +54,11 @@ def trip_to_dsa():
         dest_name = journey.findtext('.//siri:DestinationName', default="N/A", namespaces=ns)
         arrival_time = journey.findtext('.//siri:DestinationAimedArrivalTime', default="N/A", namespaces=ns)
 
-        trip_rows.append((unique_id, train_num, origin_name, departure_time, dest_name, arrival_time, production_date))
+        vehicule_category = journey.findtext('.//siri:ProductCategoryRef', default="N/A", namespaces=ns)
+        vehicule_mode = journey.findtext('.//siri:VehicleMode', default="N/A", namespaces=ns)
+        published_line_name = journey.findtext('.//siri:PublishedLineName', default="N/A", namespaces=ns)
+
+        trip_rows.append((unique_id, train_num, origin_name, departure_time, dest_name, arrival_time, vehicule_category, vehicule_mode, published_line_name,  production_date))
 
         calls = journey.findall('.//siri:RecordedCall', ns)
         for idx, call in enumerate(calls):
@@ -64,22 +68,27 @@ def trip_to_dsa():
             aimed_departure = call.findtext('siri:AimedDepartureTime', default="", namespaces=ns)
             expected_departure = call.findtext('siri:ExpectedDepartureTime', default="", namespaces=ns)
 
+            departure_platform_name = call.findtext('siri:DeparturePlatformName', default="", namespaces=ns)
+            arrival_platform_name = call.findtext('siri:ArrivalPlatformName', default="", namespaces=ns)
+
             stop_rows.append((
                 unique_id, stop_name, aimed_arrival, expected_arrival,
                 aimed_departure, expected_departure,
                 1 if idx == 0 else 0,
                 1 if stop_name == dest_name else 0,
+                departure_platform_name,
+                arrival_platform_name,
                 production_date
             ))
 
     execute_values(cursor, """
-        INSERT INTO dsa.trips (trip_id, train, origin_name, departure_time, dest_name, arrival_time, production_date)
+        INSERT INTO dsa.trips (trip_id, train, origin_name, departure_time, dest_name, arrival_time, vehicule_category, vehicule_mode, published_line_name, production_date)
         VALUES %s
         ON CONFLICT (trip_id) DO NOTHING;
     """, trip_rows)
 
     execute_values(cursor, """
-        INSERT INTO dsa.stops (trip_id, stop_name, aimed_arrival, expected_arrival, aimed_departure, expected_departure, is_starting_point, is_terminus, production_date)
+        INSERT INTO dsa.stops (trip_id, stop_name, aimed_arrival, expected_arrival, aimed_departure, expected_departure, is_starting_point, is_terminus, departure_platform_name, arrival_platform_name, production_date)
         VALUES %s
     """, stop_rows)
 
@@ -101,7 +110,8 @@ with DAG(
     schedule_interval='*/2 * * * *',
     catchup=False,
     is_paused_upon_creation=False,
-    tags=[]
+    tags=[],
+    max_active_runs=1
 ) as dag:
     
     collect_task = PythonOperator(

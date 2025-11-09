@@ -131,10 +131,10 @@ def decoder_numero_train(num_train: str) -> dict:
     return train_info
 
 
-def refresh_train_infos():
+def refresh_vehicule_infos():
     with psycopg2.connect(**DB_PARAMS) as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT DISTINCT num_train FROM ods.trains;")
+            cur.execute("SELECT train, split_part(vehicule_category, '::', 2) AS category_vehicule, vehicule_mode FROM dsa.trips")
             rows = cur.fetchall()
 
             train_data = []
@@ -143,6 +143,8 @@ def refresh_train_infos():
                 if decoded:
                     values = (
                         decoded['num_train'],
+                        row[1],
+                        row[2],
                         decoded['sens_circulation'],
                         decoded['type_train'],
                         decoded['sous_type'],
@@ -163,8 +165,10 @@ def refresh_train_infos():
 
             if train_data:
                 execute_values(cur, """
-                    INSERT INTO dwh.d_train (
-                        num_train,
+                    INSERT INTO dwh.d_vehicule (
+                        num_vehicule,
+                        categorie_vehicule,
+                        vehicule_mode,
                         sens_circulation,
                         type_train,
                         sous_type,
@@ -181,7 +185,7 @@ def refresh_train_infos():
                         date_creation,
                         date_maj
                     ) VALUES %s
-                    ON CONFLICT (num_train) DO NOTHING;
+                    ON CONFLICT (num_vehicule) DO NOTHING;
                 """, train_data)
 
         conn.commit()
@@ -191,20 +195,21 @@ default_args = {
     'depends_on_past': False,
     'start_date': datetime(2025, 7, 28),
     'retries': 1,
-    'retry_delay': timedelta(minutes=5),
+    'retry_delay': timedelta(minutes=0.1),
 }
 
 with DAG(
-    'refresh_train_infos',
+    'refresh_vehicule_infos',
     default_args=default_args,
     schedule_interval='0 6,18 * * *',
     catchup=False,
-    tags=[]
+    tags=[],
+    max_active_runs=1
 ) as dag:
     
     collect_task = PythonOperator(
-        task_id='3-refresh_train_infos',
-        python_callable=refresh_train_infos
+        task_id='3-refresh_vehicule_infos',
+        python_callable=refresh_vehicule_infos
     )
     
 

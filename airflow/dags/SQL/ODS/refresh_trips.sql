@@ -1,6 +1,6 @@
 INSERT INTO ods.trips (
     trip_id,
-    train,
+    vehicule,
     origin_name,
     departure_time,
     dest_name,
@@ -20,7 +20,10 @@ SELECT
 FROM dsa.trips
 ON CONFLICT DO NOTHING;
 
--- load of ods.trains
-INSERT INTO ods.trains(num_train)
-SELECT train DISTINCT FROM dsa.trips
+-- load of ods.vehicules
+INSERT INTO ods.vehicules(num_vehicule, category_vehicule, vehicule_mode)
+SELECT train AS vehicule_numero, 
+		split_part(vehicule_category, '::', 2) AS category_vehicule,
+		vehicule_mode
+FROM dsa.trips
 ON CONFLICT DO NOTHING;

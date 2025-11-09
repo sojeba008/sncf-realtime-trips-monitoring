@@ -1,6 +1,6 @@
 INSERT INTO dwh.f_trips (
       trip_id,
-      num_train,
+      num_vehicule,
       ref_date_tk,
       stop_station_tk,
       origin_station_tk,
@@ -23,7 +23,7 @@ INSERT INTO dwh.f_trips (
 WITH src AS (
     SELECT
         s.trip_id,
-        t.train AS num_train,
+        t.vehicule AS num_vehicule,
         s.stop_name,
         s.is_starting_point::boolean,
         s.is_terminus::boolean,
@@ -41,7 +41,7 @@ WITH src AS (
 )
 SELECT
     s.trip_id,
-    s.num_train,
+    s.num_vehicule,
     d_ref.tk_date,
     COALESCE(st_stop.tk_station, -1),
     COALESCE(st_origin.tk_station, -1),
@@ -79,7 +79,7 @@ ON CONFLICT (trip_id, stop_station_tk, ref_date_tk) DO NOTHING;
 
 INSERT INTO dwh.f_journey (
     trip_id,
-    num_train,
+    num_vehicule,
     ref_date_tk,
     origin_station_tk,
     destination_station_tk,
@@ -92,7 +92,7 @@ INSERT INTO dwh.f_journey (
 WITH src AS (
     SELECT
         t.trip_id,
-        t.train AS num_train,
+        t.vehicule AS num_vehicule,
         t.ref_date,
         t.origin_name,
         t.dest_name,
@@ -103,7 +103,7 @@ WITH src AS (
 )
 SELECT
     s.trip_id,
-    s.num_train,
+    s.num_vehicule,
     d_ref.tk_date AS ref_date_tk,
     COALESCE(st_origin.tk_station, -1)       AS origin_station_tk,
     COALESCE(st_dest.tk_station, -1)         AS destination_station_tk,
@@ -127,7 +127,7 @@ ON CONFLICT (trip_id, ref_date_tk) DO NOTHING;
 TRUNCATE TABLE dwh.f_trips_realtime RESTART IDENTITY;
 INSERT INTO dwh.f_trips_realtime (
     trip_id,
-    num_train,
+    num_vehicule,
     ref_date,
     stop_station_tk,
     origin_station_tk,
@@ -156,7 +156,7 @@ INSERT INTO dwh.f_trips_realtime (
 WITH src AS (
     SELECT
         s.trip_id,
-        t.train AS num_train,
+        t.vehicule AS num_vehicule,
         s.stop_name,
         s.is_starting_point::boolean,
         s.is_terminus::boolean,
@@ -171,11 +171,11 @@ WITH src AS (
         t.dest_name
     FROM ods.stops s
     JOIN ods.trips t USING (trip_id, ref_date)
-    WHERE s.ref_date >= (CURRENT_DATE - INTERVAL '1 day')
+    WHERE s.ref_date::DATE >= (CURRENT_DATE - INTERVAL '2 day')
 )
 SELECT
     s.trip_id,
-    s.num_train,
+    s.num_vehicule,
     NOW()::TIMESTAMP AS tk_date,
     COALESCE(st_stop.tk_station, -1),
     COALESCE(st_origin.tk_station, -1),

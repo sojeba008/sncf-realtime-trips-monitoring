@@ -1,16 +1,19 @@
 CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS unaccent;
 
 CREATE SCHEMA IF NOT EXISTS ods;
 
 CREATE TABLE IF NOT EXISTS ods.trips (
     trip_id TEXT NOT NULL,
-    train TEXT,
+    vehicule TEXT,
     origin_name TEXT,
     departure_time TIMESTAMP,
     dest_name TEXT,
     arrival_time TIMESTAMP,
     production_date TIMESTAMP,
     ref_date DATE NOT NULL,
+    vehicule_category TEXT NULL,
+	vehicule_mode TEXT NULL,
     CONSTRAINT trips_pkey PRIMARY KEY (trip_id, ref_date)
 ) PARTITION BY RANGE (ref_date);
 
@@ -26,6 +29,8 @@ CREATE TABLE IF NOT EXISTS ods.stops (
     is_starting_point  int,
     is_terminus        int,
     production_date    timestamp,
+    departure_platform_name TEXT NULL,
+	arrival_platform_name TEXT NULL,
     ref_date           date         NOT NULL,
     CONSTRAINT stops_pkey PRIMARY KEY (id, ref_date),
     CONSTRAINT stops_un UNIQUE (trip_id, stop_name, ref_date),
@@ -57,8 +62,10 @@ CREATE TABLE IF NOT EXISTS ods.stations (
 CREATE INDEX IF NOT EXISTS stations_geom_gix     ON ods.stations USING gist (geom);
 CREATE INDEX IF NOT EXISTS stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
 
-CREATE TABLE IF NOT EXISTS ods.trains (
-    tk_train      INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,   
-    num_train     TEXT,
-    CONSTRAINT trains_un UNIQUE (num_train)
+CREATE TABLE IF NOT EXISTS ods.vehicules (
+    tk_vehicule      INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,   
+    num_vehicule     TEXT,
+    category_vehicule TEXT,
+    vehicule_mode TEXT,
+    CONSTRAINT vehicule_un UNIQUE (num_vehicule)
 );

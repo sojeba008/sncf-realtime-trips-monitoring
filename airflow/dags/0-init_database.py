@@ -39,7 +39,7 @@ def create_database_and_schemas():
     db_params_target = DB_PARAMS.copy()
     db_params_target['dbname'] = TARGET_DB
     
-    for schema_init_script in ['init_dsa_tables.sql', 'init_ods_tables.sql', 'init_dwh_tables.sql']:
+    for schema_init_script in ['init_dsa_tables.sql', 'init_ods_tables.sql', 'init_dwh_tables.sql', 'init_ods_statics_refs.sql']:
         conn = psycopg2.connect(**db_params_target)
         cur = conn.cursor()
 

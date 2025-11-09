@@ -62,6 +62,7 @@ def refresh_dwh():
 
         DWH_SQL_FOLDER=os.path.join(dag_folder, 'SQL', 'DWH')
         sql_files = [f for f in os.listdir(DWH_SQL_FOLDER) if os.path.isfile(os.path.join(DWH_SQL_FOLDER, f))]
+        sql_files.sort()
         for sql_file in sql_files:
             if sql_file[0] != '0':
                 sql_path = os.path.join(dag_folder, 'SQL', 'DWH', sql_file)
@@ -77,13 +78,14 @@ def refresh_dwh():
         print("Erreur PostgreSQL :", e)
         if conn:
             conn.rollback()
+        raise
 
 default_args = {
     'owner': 'sncf-data',
     'depends_on_past': False,
     'start_date': datetime(2025, 5, 30),
     'retries': 1,
-    'retry_delay': timedelta(minutes=1)
+    'retry_delay': timedelta(minutes=0.1)
 }
 
 with DAG(
@@ -91,7 +93,8 @@ with DAG(
     default_args=default_args,
     schedule_interval='@once',
     catchup=False,
-    tags=[]
+    tags=[],
+    max_active_runs=1
 ) as dag:
     
     collect_task = PythonOperator(

@@ -7,6 +7,9 @@ CREATE TABLE IF NOT EXISTS dsa.trips (
 	departure_time TIMESTAMP NULL,
 	dest_name TEXT NULL,
 	arrival_time TIMESTAMP NULL,
+	vehicule_category TEXT NULL,
+	vehicule_mode TEXT NULL,
+	published_line_name TEXT NULL,
 	production_date TIMESTAMP NULL,
 	CONSTRAINT trips_pkey PRIMARY KEY (trip_id)
 );
@@ -21,6 +24,8 @@ CREATE TABLE IF NOT EXISTS dsa.stops (
 	expected_departure TEXT NULL,
 	is_starting_point INT8 NULL,
 	is_terminus INT8 NULL,
+	departure_platform_name TEXT NULL,
+	arrival_platform_name TEXT NULL,
 	production_date TIMESTAMP NULL,
 	CONSTRAINT stops_trip_id_fkey FOREIGN KEY (trip_id) REFERENCES dsa.trips(trip_id)
 );

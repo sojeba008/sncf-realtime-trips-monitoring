@@ -69,9 +69,9 @@ def refresh_ods_table():
         conn.close()
 
     except Exception as e:
-        print("Erreur PostgreSQL :", e)
         if conn:
             conn.rollback()
+        raise 
 
 default_args = {
     'owner': 'sncf-data',
@@ -86,7 +86,7 @@ with DAG(
     default_args=default_args,
     schedule_interval='@once',
     catchup=False,
-    tags=[]
+    max_active_runs=1
 ) as dag:
     
     collect_task = PythonOperator(

@@ -60,7 +60,7 @@ def refresh_station_infos():
     print(len(station_rows))
     with psycopg2.connect(**DB_PARAMS) as conn:
         with conn.cursor() as cur:
-            cur.execute("TRUNCATE TABLE ods.stations;")
+            cur.execute("TRUNCATE TABLE ods.stations RESTART IDENTITY;")
 
             execute_values(cur, """
                 INSERT INTO ods.stations (
@@ -89,7 +89,8 @@ with DAG(
     default_args=default_args,
     schedule_interval='@once',
     catchup=False,
-    tags=[]
+    tags=[],
+    max_active_runs=1
 ) as dag:
     
     collect_task = PythonOperator(
