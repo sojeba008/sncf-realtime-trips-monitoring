@@ -5,6 +5,7 @@ INSERT INTO ods.trips (
     departure_time,
     dest_name,
     arrival_time,
+    published_line_name,
     production_date,
     ref_date
 )
@@ -15,6 +16,7 @@ SELECT
     departure_time,
     dest_name,
     arrival_time,
+    published_line_name,
     production_date,
     departure_time::DATE
 FROM dsa.trips

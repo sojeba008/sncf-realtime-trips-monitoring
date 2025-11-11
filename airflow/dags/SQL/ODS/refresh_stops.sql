@@ -7,6 +7,8 @@ INSERT INTO ods.stops (
     expected_departure,
     is_starting_point,
     is_terminus,
+    departure_platform_name,
+    arrival_platform_name,
     production_date,
     ref_date
 )
@@ -19,6 +21,8 @@ SELECT
     NULLIF(ds.expected_departure,'')::timestamp expected_departure,
     ds.is_starting_point,
     ds.is_terminus,
+    ds.departure_platform_name,
+    ds.arrival_platform_name,
     ds.production_date,
     ot.departure_time::DATE
 FROM dsa.stops ds

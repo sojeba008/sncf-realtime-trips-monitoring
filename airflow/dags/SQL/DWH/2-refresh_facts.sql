@@ -5,7 +5,7 @@ INSERT INTO dwh.f_trips (
       stop_station_tk,
       origin_station_tk,
       destination_station_tk,
-
+	  line_tk,
       aimed_arrival_date_tk,
       aimed_arrival_time_tk,
       expected_arrival_date_tk,
@@ -14,9 +14,10 @@ INSERT INTO dwh.f_trips (
       aimed_departure_time_tk,
       expected_departure_date_tk,
       expected_departure_time_tk,
-
       delay_arrival_minutes,
-      delay_departure_minutes,
+      delay_departure_minutes,  
+      departure_platform_name,
+      arrival_platform_name,
       is_starting_point,
       is_terminus
 )
@@ -34,7 +35,10 @@ WITH src AS (
         s.expected_departure,
         t.origin_name,
         t.dest_name,
-        t.departure_time AS departure_ref_date
+        t.departure_time AS departure_ref_date,
+        s.departure_platform_name,
+        s.arrival_platform_name,
+        t.published_line_name
     FROM ods.stops  s
     JOIN ods.trips  t USING (trip_id, ref_date)
     WHERE t.departure_time::DATE >= current_date::DATE - interval '1 day'
@@ -46,6 +50,7 @@ SELECT
     COALESCE(st_stop.tk_station, -1),
     COALESCE(st_origin.tk_station, -1),
     COALESCE(st_dest.tk_station, -1),
+    COALESCE(dl.tk_line, -1),
     COALESCE(d_aim_arr.tk_date, -1),
     COALESCE(tm_aim_arr.tk_time, -1),
     COALESCE(d_exp_arr.tk_date, -1),
@@ -56,6 +61,8 @@ SELECT
     COALESCE(tm_exp_dep.tk_time, -1),
     COALESCE(EXTRACT(EPOCH FROM (s.expected_arrival  - s.aimed_arrival ))/60::int, 0)  AS delay_arrival_minutes,
     COALESCE(EXTRACT(EPOCH FROM (s.expected_departure - s.aimed_departure))/60::int, 0) AS delay_departure_minutes,
+    s.departure_platform_name,
+    s.arrival_platform_name,
     s.is_starting_point,
     s.is_terminus
 FROM src s
@@ -65,6 +72,8 @@ JOIN dwh.d_date d_ref       ON d_ref.date = s.departure_ref_date::DATE
 JOIN dwh.d_station st_stop   ON st_stop.station_name  = s.stop_name
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
 LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
+--- Line Dim ---
+LEFT JOIN dwh.d_line dl ON dl.line_name=s.published_line_name
 -- ==== Dates & Time ===
 LEFT JOIN dwh.d_date d_aim_arr  ON d_aim_arr.date = s.aimed_arrival::date
 LEFT JOIN dwh.d_date d_exp_arr  ON d_exp_arr.date = s.expected_arrival::date
@@ -83,6 +92,7 @@ INSERT INTO dwh.f_journey (
     ref_date_tk,
     origin_station_tk,
     destination_station_tk,
+    line_tk,
     departure_journey_date_tk,
     departure_journey_time_tk,
     arrival_journey_date_tk,
@@ -97,7 +107,8 @@ WITH src AS (
         t.origin_name,
         t.dest_name,
         t.departure_time AS aimed_departure,
-        t.arrival_time   AS aimed_arrival
+        t.arrival_time   AS aimed_arrival,
+        t.published_line_name
     FROM ods.trips t
     WHERE t.departure_time::DATE >= current_date::DATE - interval '1 day'
 )
@@ -107,6 +118,7 @@ SELECT
     d_ref.tk_date AS ref_date_tk,
     COALESCE(st_origin.tk_station, -1)       AS origin_station_tk,
     COALESCE(st_dest.tk_station, -1)         AS destination_station_tk,
+    COALESCE(dl.tk_line, -1)				 AS line_tk,
     COALESCE(d_dep.tk_date, -1)              AS departure_journey_date_tk,
     COALESCE(tm_dep.tk_time, -1)             AS departure_journey_time_tk,
     COALESCE(d_arr.tk_date, -1)              AS arrival_journey_date_tk,
@@ -116,11 +128,14 @@ FROM src s
 JOIN dwh.d_date d_ref ON d_ref.date = s.ref_date::date
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
 LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
+LEFT JOIN dwh.d_line dl ON dl.line_name=s.published_line_name
 LEFT JOIN dwh.d_date d_dep ON d_dep.date = s.aimed_departure::date
 LEFT JOIN dwh.d_date d_arr ON d_arr.date = s.aimed_arrival::date
 LEFT JOIN dwh.d_time tm_dep ON tm_dep.tk_time = to_char(s.aimed_departure,'HH24MISS')::INT8
 LEFT JOIN dwh.d_time tm_arr ON tm_arr.tk_time = to_char(s.aimed_arrival,'HH24MISS')::INT8
 ON CONFLICT (trip_id, ref_date_tk) DO NOTHING;
+
+
 
 
 
@@ -132,6 +147,7 @@ INSERT INTO dwh.f_trips_realtime (
     stop_station_tk,
     origin_station_tk,
     destination_station_tk,
+    line_tk,
     aimed_arrival_date_tk,
     aimed_arrival_time_tk,
     expected_arrival_date_tk,
@@ -149,7 +165,8 @@ INSERT INTO dwh.f_trips_realtime (
         
     departure_time_journey,
     arrival_time_journey,
-    
+    departure_platform_name,
+    arrival_platform_name,
     is_starting_point,
     is_terminus
 )
@@ -168,7 +185,10 @@ WITH src AS (
         t.departure_time AS departure_time_journey,
         t.arrival_time AS arrival_time_journey,
         t.origin_name,
-        t.dest_name
+        t.dest_name,
+        s.departure_platform_name,
+        s.arrival_platform_name,
+        t.published_line_name
     FROM ods.stops s
     JOIN ods.trips t USING (trip_id, ref_date)
     WHERE s.ref_date::DATE >= (CURRENT_DATE - INTERVAL '2 day')
@@ -180,6 +200,7 @@ SELECT
     COALESCE(st_stop.tk_station, -1),
     COALESCE(st_origin.tk_station, -1),
     COALESCE(st_dest.tk_station, -1),
+    COALESCE(dl.tk_line, -1),
     COALESCE(d_aim_arr.tk_date, -1),
     COALESCE(tm_aim_arr.tk_time, -1),
     COALESCE(d_exp_arr.tk_date, -1),
@@ -197,7 +218,8 @@ SELECT
     
     departure_time_journey,
     arrival_time_journey,
-    
+    s.departure_platform_name,
+    s.arrival_platform_name,
     s.is_starting_point,
     s.is_terminus
 FROM src s
@@ -205,6 +227,7 @@ JOIN dwh.d_date d_ref ON d_ref.date = s.ref_date
 LEFT JOIN dwh.d_station st_stop   ON st_stop.station_name  = s.stop_name
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
 LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
+LEFT JOIN dwh.d_line dl ON dl.line_name=s.published_line_name
 LEFT JOIN dwh.d_date d_aim_arr  ON d_aim_arr.date = s.aimed_arrival::date
 LEFT JOIN dwh.d_date d_exp_arr  ON d_exp_arr.date = s.expected_arrival::date
 LEFT JOIN dwh.d_date d_aim_dep  ON d_aim_dep.date = s.aimed_departure::date

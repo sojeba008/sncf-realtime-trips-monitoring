@@ -1,8 +1,10 @@
--- INSERT INTO dwh.d_station (station_name)
--- SELECT DISTINCT stop_name
--- FROM ods.stops
--- ON CONFLICT (station_name) DO NOTHING;
-
+INSERT INTO dwh.d_line (line_name)
+SELECT DISTINCT t.published_line_name 
+FROM ods.trips t 
+WHERE t.published_line_name IS NOT NULL 
+AND t.published_line_name <> 'N/A'
+AND t.arrival_time::DATE > (NOW()::DATE-2)
+ON CONFLICT DO NOTHING;
 
 INSERT INTO dwh.d_station (
 	code_uic, 

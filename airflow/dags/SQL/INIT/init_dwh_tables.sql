@@ -79,86 +79,6 @@ INSERT INTO dwh.d_station (tk_station, station_name) VALUES(-1, 'Gare/Station in
 CREATE INDEX IF NOT EXISTS dwh_stations_geom_gix ON ods.stations USING gist (geom);
 CREATE INDEX IF NOT EXISTS dwh_stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
 
-
-CREATE TABLE dwh.f_trips (
-    tk_trip_fact             INT8 GENERATED ALWAYS AS IDENTITY,
-    -- busness_key
-    trip_id                  text NOT NULL,
-    num_vehicule                text NOT NULL,
-    ref_date_tk              integer NOT NULL,   -- 
-    stop_station_tk          integer NOT NULL,   -- 
-    origin_station_tk        integer,            --
-    destination_station_tk   integer,            --
-
-    aimed_arrival_date_tk      integer,
-    aimed_arrival_time_tk      integer,
-    expected_arrival_date_tk   integer,
-    expected_arrival_time_tk   integer,
-
-    aimed_departure_date_tk    integer,
-    aimed_departure_time_tk    integer,
-    expected_departure_date_tk integer,
-    expected_departure_time_tk integer,
-
-    delay_arrival_minutes    integer,
-    delay_departure_minutes  integer,
-    is_starting_point        boolean,
-    is_terminus              boolean,
-
-    insert_date              timestamp DEFAULT clock_timestamp(),
-    CONSTRAINT f_trips_un PRIMARY KEY (trip_id, ref_date_tk, stop_station_tk),
-    CONSTRAINT fk_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_aim_arr_date      FOREIGN KEY (aimed_arrival_date_tk)  REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_exp_arr_date      FOREIGN KEY (expected_arrival_date_tk) REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_aim_dep_date      FOREIGN KEY (aimed_departure_date_tk)  REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_exp_dep_date      FOREIGN KEY (expected_departure_date_tk) REFERENCES dwh.d_date(tk_date),
-
-    CONSTRAINT fk_aim_arr_time      FOREIGN KEY (aimed_arrival_time_tk)    REFERENCES dwh.d_time(tk_time),
-    CONSTRAINT fk_exp_arr_time      FOREIGN KEY (expected_arrival_time_tk) REFERENCES dwh.d_time(tk_time),
-    CONSTRAINT fk_aim_dep_time      FOREIGN KEY (aimed_departure_time_tk)  REFERENCES dwh.d_time(tk_time),
-    CONSTRAINT fk_exp_dep_time      FOREIGN KEY (expected_departure_time_tk) REFERENCES dwh.d_time(tk_time),
-
-    CONSTRAINT fk_stop_station      FOREIGN KEY (stop_station_tk)       REFERENCES dwh.d_station(tk_station),
-    CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
-    CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station)
-) PARTITION BY RANGE (ref_date_tk);
-CREATE INDEX idx_f_trips_ref_date_tk ON dwh.f_trips (ref_date_tk);
-CREATE INDEX idx_f_trips_fk_exp_dep_date ON dwh.f_trips (expected_departure_date_tk);
-CREATE INDEX idx_f_trips_num_vehicule ON dwh.f_trips (num_vehicule);
-CREATE INDEX idx_f_trips_stop_station_tk ON dwh.f_trips (stop_station_tk);
-
-
-
-
-CREATE TABLE dwh.f_journey (
-    tk_journey_fact             INT8 GENERATED ALWAYS AS IDENTITY,
-    trip_id                  TEXT NOT NULL,
-    num_vehicule                TEXT NOT NULL,
-    ref_date_tk              integer NOT NULL,
-
-    origin_station_tk        integer,            
-    destination_station_tk   integer,
-
-    departure_journey_date_tk  integer,
-    departure_journey_time_tk  integer,
-    arrival_journey_date_tk    integer,
-    arrival_journey_time_tk    integer,
-
-    insert_date              timestamp DEFAULT clock_timestamp(),
-    CONSTRAINT pk_f_journey PRIMARY KEY (tk_journey_fact, ref_date_tk),
-    CONSTRAINT f_journey_un UNIQUE (trip_id, ref_date_tk),
-    CONSTRAINT fk_j_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_departure_journey_date      FOREIGN KEY (departure_journey_date_tk)  REFERENCES dwh.d_date(tk_date),
-    CONSTRAINT fk_arrival_journey_date      FOREIGN KEY (arrival_journey_date_tk) REFERENCES dwh.d_date(tk_date),
-
-    CONSTRAINT fk_departure_journey_time      FOREIGN KEY (departure_journey_time_tk)    REFERENCES dwh.d_time(tk_time),
-    CONSTRAINT fk_arrival_journey_time      FOREIGN KEY (arrival_journey_time_tk) REFERENCES dwh.d_time(tk_time),
-    
-    CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
-    CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station)
-) PARTITION BY RANGE (ref_date_tk);
-
-
 INSERT INTO 
   dwh.d_date
 (
@@ -317,6 +237,15 @@ INSERT INTO dwh.d_time
 	(tk_time, hour, minute, second, hour_2digits, minute_2digits, second_2digits) OVERRIDING SYSTEM VALUE 
 VALUES(-1, 0, 0, 0, 'NC', 'NC', 'NC');
 
+CREATE TABLE dwh.d_line (
+  tk_line INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  line_name         TEXT NOT NULL,
+  CONSTRAINT d_line_unique UNIQUE (line_name)
+);
+INSERT INTO dwh.d_line
+	(tk_line, line_name) OVERRIDING SYSTEM VALUE 
+VALUES(-1, 'N/A');
+
 CREATE TABLE dwh.d_vehicule (
     tk_vehicule          INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,                     
     num_vehicule         TEXT NOT NULL,     
@@ -328,7 +257,7 @@ CREATE TABLE dwh.d_vehicule (
     categorie_service    TEXT,                                   
     axe_geographique     TEXT,                                   
     region_origine       TEXT,                                   
-    vitesse_max_kmh      INTEGER,                                
+    vitesse_max_kmh      int4,                                
     plage_numero         TEXT,                                   
     code_mission         TEXT,                                   
     origine_mission      TEXT,                                   
@@ -342,16 +271,104 @@ CREATE TABLE dwh.d_vehicule (
 CREATE INDEX idx_num_vehicule ON dwh.d_vehicule(num_vehicule);
 
 
-CCREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
+CREATE TABLE dwh.f_trips (
+    tk_trip_fact             INT8 GENERATED ALWAYS AS IDENTITY,
+    trip_id                  text NOT NULL,
+    vehicule_tk              int4,
+    num_vehicule             text NOT NULL,
+    ref_date_tk              int4 NOT NULL,  
+    stop_station_tk          int4 NOT NULL,  
+    origin_station_tk        int4,            
+    destination_station_tk   int4,            
+    line_tk                  int4,
+
+    aimed_arrival_date_tk      int4,
+    aimed_arrival_time_tk      int4,
+    expected_arrival_date_tk   int4,
+    expected_arrival_time_tk   int4,
+
+    aimed_departure_date_tk    int4,
+    aimed_departure_time_tk    int4,
+    expected_departure_date_tk int4,
+    expected_departure_time_tk int4,
+
+    delay_arrival_minutes    int4,
+    delay_departure_minutes  int4,
+
+    departure_platform_name TEXT,
+    arrival_platform_name TEXT,
+
+    is_starting_point        boolean,
+    is_terminus              boolean,
+
+    insert_date              timestamp DEFAULT clock_timestamp(),
+    CONSTRAINT f_trips_un PRIMARY KEY (trip_id, ref_date_tk, stop_station_tk),
+    CONSTRAINT fk_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_aim_arr_date      FOREIGN KEY (aimed_arrival_date_tk)  REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_exp_arr_date      FOREIGN KEY (expected_arrival_date_tk) REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_aim_dep_date      FOREIGN KEY (aimed_departure_date_tk)  REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_exp_dep_date      FOREIGN KEY (expected_departure_date_tk) REFERENCES dwh.d_date(tk_date),
+
+    CONSTRAINT fk_aim_arr_time      FOREIGN KEY (aimed_arrival_time_tk)    REFERENCES dwh.d_time(tk_time),
+    CONSTRAINT fk_exp_arr_time      FOREIGN KEY (expected_arrival_time_tk) REFERENCES dwh.d_time(tk_time),
+    CONSTRAINT fk_aim_dep_time      FOREIGN KEY (aimed_departure_time_tk)  REFERENCES dwh.d_time(tk_time),
+    CONSTRAINT fk_exp_dep_time      FOREIGN KEY (expected_departure_time_tk) REFERENCES dwh.d_time(tk_time),
+
+    CONSTRAINT fk_stop_station      FOREIGN KEY (stop_station_tk)       REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT f_trips_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
+    CONSTRAINT f_trips_d_line_fk FOREIGN KEY (line_tk) REFERENCES dwh.d_line(tk_line)
+) PARTITION BY RANGE (ref_date_tk);
+CREATE INDEX idx_f_trips_ref_date_tk ON dwh.f_trips (ref_date_tk);
+CREATE INDEX idx_f_trips_fk_exp_dep_date ON dwh.f_trips (expected_departure_date_tk);
+CREATE INDEX idx_f_trips_num_vehicule ON dwh.f_trips (num_vehicule);
+CREATE INDEX idx_f_trips_stop_station_tk ON dwh.f_trips (stop_station_tk);
+
+
+CREATE TABLE dwh.f_journey (
+    tk_journey_fact             INT8 GENERATED ALWAYS AS IDENTITY,
+    trip_id                  TEXT NOT NULL,
+    vehicule_tk              int4,
+    num_vehicule                TEXT NOT NULL,
+    ref_date_tk              int4 NOT NULL,
+
+    origin_station_tk        int4,            
+    destination_station_tk   int4,
+    line_tk                  int4,
+
+    departure_journey_date_tk  int4,
+    departure_journey_time_tk  int4,
+    arrival_journey_date_tk    int4,
+    arrival_journey_time_tk    int4,
+
+    insert_date              timestamp DEFAULT clock_timestamp(),
+    CONSTRAINT pk_f_journey PRIMARY KEY (tk_journey_fact, ref_date_tk),
+    CONSTRAINT f_journey_un UNIQUE (trip_id, ref_date_tk),
+    CONSTRAINT fk_j_ref_date          FOREIGN KEY (ref_date_tk)            REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_departure_journey_date      FOREIGN KEY (departure_journey_date_tk)  REFERENCES dwh.d_date(tk_date),
+    CONSTRAINT fk_arrival_journey_date      FOREIGN KEY (arrival_journey_date_tk) REFERENCES dwh.d_date(tk_date),
+
+    CONSTRAINT fk_departure_journey_time      FOREIGN KEY (departure_journey_time_tk)    REFERENCES dwh.d_time(tk_time),
+    CONSTRAINT fk_arrival_journey_time      FOREIGN KEY (arrival_journey_time_tk) REFERENCES dwh.d_time(tk_time),
+    
+    CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT f_journey_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
+) PARTITION BY RANGE (ref_date_tk);
+
+CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     tk_trip_rt bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     
     trip_id text NOT NULL,
+    vehicule_tk              int4,
     num_vehicule text NOT NULL,
 
     ref_date  timestamp NULL,
     stop_station_tk int4 NOT NULL,
     origin_station_tk int4 NULL,
     destination_station_tk int4 NULL,
+    line_tk                  int4,
 
     aimed_arrival_date_tk int4 NULL,
     aimed_arrival_time_tk int4 NULL,
@@ -361,6 +378,7 @@ CCREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     aimed_departure_time_tk int4 NULL,
     expected_departure_date_tk int4 NULL,
     expected_departure_time_tk int4 NULL,
+    line_tk int4 null,
 
     aimed_departure timestamp,
     aimed_arrival timestamp,
@@ -373,6 +391,9 @@ CCREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     departure_time_journey timestamp,
     arrival_time_journey timestamp,
     
+    departure_platform_name TEXT,
+    arrival_platform_name TEXT,
+
     is_starting_point bool NULL,
     is_terminus bool NULL,
 
@@ -393,5 +414,6 @@ CCREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
             ELSE 'PREVU'
         END
     ) STORED,
-    last_update timestamp DEFAULT now()
+    last_update timestamp DEFAULT now(),
+    CONSTRAINT f_trips_realtime_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
 );

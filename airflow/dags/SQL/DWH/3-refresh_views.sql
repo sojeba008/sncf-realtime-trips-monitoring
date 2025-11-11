@@ -196,17 +196,30 @@ WITH base AS (
 	WHERE f.departure_time_journey::DATE = NOW()::DATE
 )
 SELECT
-    COALESCE(replace(dt.categorie_vehicule, '_', ' '), 'Non identifié') AS type_train,
+    CASE 
+        WHEN dt.categorie_vehicule ILIKE 'RER%' THEN 'RER'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN TER%' THEN 'TRAIN TER'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN SPECIAL' THEN 'TRAIN SPECIAL'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN' THEN 'TRAIN'
+        ELSE COALESCE(replace(dt.categorie_vehicule, '_', ' '), 'Non identifié')
+    END AS type_vehicule,
     ROUND(SUM(f.delay_arrival_minutes)/COUNT(DISTINCT f.trip_id)::numeric, 5) AS retard_moyen_min,
     COUNT(DISTINCT f.trip_id) AS nb_trains
 FROM f_trips_realtime_filterd f
 JOIN dwh.d_vehicule dt ON dt.num_vehicule = f.num_vehicule
 WHERE f.delay_arrival_minutes IS NOT NULL 
-GROUP BY dt.categorie_vehicule
+GROUP BY 
+    CASE 
+        WHEN dt.categorie_vehicule ILIKE 'RER%' THEN 'RER'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN TER%' THEN 'TRAIN TER'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN SPECIAL' THEN 'TRAIN SPECIAL'
+        WHEN dt.categorie_vehicule ILIKE 'TRAIN' THEN 'TRAIN'
+        ELSE COALESCE(replace(dt.categorie_vehicule, '_', ' '), 'Non identifié')
+    END
 ORDER BY retard_moyen_min DESC;
 
 
---stats-retard-region par date de départ régio
+--stats-retard-region par date d'arrivé et par région
 CREATE MATERIALIZED VIEW IF NOT EXISTS dwh.v_stats_retard_region AS
 WITH ordered_stops AS (
     SELECT
@@ -217,9 +230,9 @@ WITH ordered_stops AS (
         st.station_name,
         st.commune,
         rd.nom_region AS region_station,
-        fr.expected_arrival,
+        COALESCE(fr.expected_arrival::DATE, fr.expected_departure::DATE ) AS ref_date, 
         fr.delay_arrival_minutes,
-        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival) AS stop_order
+        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival, fr.stop_station_tk) AS stop_order
     FROM dwh.f_trips_realtime fr
     JOIN dwh.d_station st ON fr.stop_station_tk = st.tk_station
     JOIN ods.ref_departements rd ON LOWER(st.departement) = LOWER(rd.nom_departement) 
@@ -233,7 +246,7 @@ lagged AS (
 ),
 delay_gen AS (
     SELECT
-    	departure_time_journey,
+    	ref_date,
         trip_id,
         num_vehicule,
         region_station,
@@ -241,15 +254,15 @@ delay_gen AS (
     FROM lagged
 )
 SELECT
-	departure_time_journey as date,
+	ref_date as date,
     region_station,
     COUNT(DISTINCT trip_id) AS nb_trains_impactes,
     SUM(CASE WHEN delay_diff > 0 THEN 1 ELSE 0 END) AS nb_points_generation,
     ROUND(AVG(CASE WHEN delay_diff > 0 THEN delay_diff END), 2) AS avg_delay_generated,
     ROUND(SUM(CASE WHEN delay_diff > 0 THEN delay_diff ELSE 0 END), 2) AS total_delay_generated
 FROM delay_gen
-GROUP BY departure_time_journey, region_station
-ORDER BY departure_time_journey, region_station, total_delay_generated DESC;
+GROUP BY ref_date, region_station
+ORDER BY ref_date, region_station, total_delay_generated DESC;
 
 REFRESH MATERIALIZED VIEW dwh.v_stats_retard_region;
 
@@ -260,16 +273,15 @@ REFRESH MATERIALIZED VIEW dwh.v_stats_retard_region;
 CREATE MATERIALIZED VIEW IF NOT EXISTS dwh.v_stats_rattrapage_regions AS
 WITH ordered_stops AS (
     SELECT
-    	fr.departure_time_journey::DATE,
         fr.trip_id,
         fr.num_vehicule,
         fr.stop_station_tk,
         st.station_name,
         st.commune,
         rd.nom_region AS region_station,
-        fr.expected_arrival,
+        COALESCE(fr.expected_arrival::DATE, fr.expected_departure::DATE) AS ref_date,
         fr.delay_arrival_minutes,
-        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival) AS stop_order
+        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival, fr.stop_station_tk) AS stop_order
     FROM dwh.f_trips_realtime fr
     JOIN dwh.d_station st ON fr.stop_station_tk = st.tk_station
     JOIN ods.ref_departements rd ON LOWER(st.departement) = LOWER(rd.nom_departement)
@@ -283,7 +295,7 @@ lagged AS (
 ),
 delay_eval AS (
     SELECT
-    	departure_time_journey::DATE,
+    	ref_date,
         region_station,
         trip_id,
         num_vehicule,
@@ -300,15 +312,15 @@ delay_eval AS (
     FROM lagged
 )
 SELECT
-	departure_time_journey as date,
+	ref_date AS date,
     region_station,
     COUNT(DISTINCT trip_id) AS nb_trains,
     SUM(is_rattrapage) AS nb_rattrapages,
     SUM(is_generation) AS nb_generations,
     ROUND(100.0 * SUM(is_rattrapage) / NULLIF(SUM(is_rattrapage) + SUM(is_generation), 0), 2) AS taux_rattrapage_pct
 FROM delay_eval
-GROUP BY departure_time_journey, region_station
-ORDER BY departure_time_journey, region_station, taux_rattrapage_pct DESC;
+GROUP BY ref_date, region_station
+ORDER BY ref_date, region_station, taux_rattrapage_pct DESC;
 
 REFRESH MATERIALIZED VIEW dwh.v_stats_rattrapage_regions;
 
@@ -326,7 +338,7 @@ WITH ordered_stops AS (
         rd.nom_region AS region_station,
         dt.hour_date AS espected_arrival_hour,
         fr.delay_arrival_minutes,
-        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival_date_tk  , fr.expected_arrival_time_tk ) AS stop_order
+        rank() OVER (PARTITION BY fr.trip_id ORDER BY fr.expected_arrival_date_tk  , fr.expected_arrival_time_tk, fr.stop_station_tk ) AS stop_order
     FROM dwh.f_trips fr
     INNER JOIN dwh.d_date dd_dep ON dd_dep.tk_date = fr.expected_departure_date_tk 
     INNER JOIN dwh.d_time dt  ON dt.tk_time  = fr.expected_arrival_time_tk   

@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS ods.trips (
     ref_date DATE NOT NULL,
     vehicule_category TEXT NULL,
 	vehicule_mode TEXT NULL,
+    published_line_name TEXT NULL,
     CONSTRAINT trips_pkey PRIMARY KEY (trip_id, ref_date)
 ) PARTITION BY RANGE (ref_date);
 

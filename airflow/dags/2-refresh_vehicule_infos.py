@@ -201,7 +201,7 @@ default_args = {
 with DAG(
     'refresh_vehicule_infos',
     default_args=default_args,
-    schedule_interval='0 6,18 * * *',
+    schedule_interval='*/2 * * * *',
     catchup=False,
     tags=[],
     max_active_runs=1
