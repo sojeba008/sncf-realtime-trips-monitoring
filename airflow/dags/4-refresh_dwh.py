@@ -51,8 +51,33 @@ def refresh_dwh():
     CREATE TABLE IF NOT EXISTS dwh.f_trips_{suffix_tomorrow}
         PARTITION OF dwh.f_trips
         FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
-    """
 
+    CREATE TABLE IF NOT EXISTS dwh.f_line_metrics_{suffix_today} 
+        PARTITION OF dwh.f_line_metrics
+        FOR VALUES FROM ({tk_today}) TO ({tk_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_line_metrics_{suffix_tomorrow}
+        PARTITION OF dwh.f_line_metrics
+        FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_station_platform_usage_{suffix_today} 
+        PARTITION OF dwh.f_station_platform_usage
+        FOR VALUES FROM ({tk_today}) TO ({tk_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_station_platform_usage_{suffix_tomorrow}
+        PARTITION OF dwh.f_station_platform_usage
+        FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_station_daily_metrics_{suffix_today} 
+        PARTITION OF dwh.f_station_daily_metrics
+        FOR VALUES FROM ({tk_today}) TO ({tk_tomorrow});
+
+    CREATE TABLE IF NOT EXISTS dwh.f_station_daily_metrics_{suffix_tomorrow}
+        PARTITION OF dwh.f_station_daily_metrics
+        FOR VALUES FROM ({tk_tomorrow}) TO ({tk_day_after_tomorrow});
+          
+    """
+    print(sql_partition_f_journey)
     try:
         conn = psycopg2.connect(**DB_PARAMS)
         cursor = conn.cursor()

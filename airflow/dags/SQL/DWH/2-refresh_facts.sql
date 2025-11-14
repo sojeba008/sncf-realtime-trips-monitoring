@@ -237,3 +237,160 @@ LEFT JOIN dwh.d_time tm_exp_arr ON tm_exp_arr.tk_time = to_char(s.expected_arriv
 LEFT JOIN dwh.d_time tm_aim_dep ON tm_aim_dep.tk_time = to_char(s.aimed_departure,'HH24MISS')::INT8
 LEFT JOIN dwh.d_time tm_exp_dep ON tm_exp_dep.tk_time = to_char(s.expected_departure,'HH24MISS')::INT8
 ON CONFLICT DO NOTHING;
+
+INSERT INTO dwh.f_line_metrics (
+    line_tk,
+    ref_date_tk,
+    nb_journey,
+    nb_delay,
+    delay_rate,
+    delay_minutes,
+    avg_delay_minutes
+)
+SELECT
+    t.line_tk,
+    t.expected_arrival_date_tk AS ref_date_tk,
+    COUNT(DISTINCT t.trip_id) AS nb_journey,
+    COUNT(DISTINCT t.trip_id) FILTER (
+        WHERE t.delay_arrival_minutes > 0
+    ) AS nb_delay,  
+    ROUND(
+        100.0 * COUNT(DISTINCT t.trip_id) FILTER (WHERE t.delay_arrival_minutes > 5)
+        / NULLIF(COUNT(DISTINCT t.trip_id), 0),
+    2) AS delay_rate,      
+    COALESCE(SUM(t.delay_arrival_minutes) FILTER (WHERE t.delay_arrival_minutes > 0), 0) AS delay_minutes,
+    ROUND(AVG(t.delay_arrival_minutes) FILTER (WHERE t.delay_arrival_minutes > 0), 2) AS avg_delay_minutes 
+FROM dwh.f_trips t
+INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
+WHERE t.line_tk IS NOT NULL AND dd.date>=NOW()::DATE-2
+GROUP BY t.line_tk, t.expected_arrival_date_tk
+ON CONFLICT (line_tk, ref_date_tk) DO UPDATE
+SET 
+    nb_journey = EXCLUDED.nb_journey,
+    nb_delay = EXCLUDED.nb_delay,
+    delay_rate = EXCLUDED.delay_rate,
+    delay_minutes = EXCLUDED.delay_minutes,
+    avg_delay_minutes = EXCLUDED.avg_delay_minutes,
+    insert_date = clock_timestamp();
+
+
+INSERT INTO dwh.f_station_platform_usage (
+    station_tk,
+    platform_name,
+    ref_date_tk,
+    nb_arrivals,
+    nb_departures,
+    nb_departures_delayed,
+    nb_arrivals_delayed,
+    avg_delay_minutes,
+    max_delay_minutes
+)
+SELECT
+    station_tk,
+    platform_name,
+    ref_date_tk,
+    COUNT(*) FILTER (WHERE event_type = 'arrival')      AS nb_arrivals,
+    COUNT(*) FILTER (WHERE event_type = 'departure')    AS nb_departures,
+    COUNT(*) FILTER (
+        WHERE event_type = 'arrival'
+          AND delay_minutes > 0
+    ) AS nb_arrivals_delayed,
+    COUNT(*) FILTER (
+        WHERE event_type = 'departure'
+          AND delay_minutes > 0
+    ) AS nb_departures_delayed,
+    AVG(NULLIF(delay_minutes, 0))                       AS avg_delay_minutes,
+    MAX(delay_minutes)                                  AS max_delay_minutes
+FROM (
+    SELECT
+        stop_station_tk AS station_tk,
+        arrival_platform_name AS platform_name,
+        t.expected_arrival_date_tk AS  ref_date_tk,
+        'arrival' AS event_type,
+        GREATEST(COALESCE(delay_arrival_minutes, 0), 0) AS delay_minutes
+    FROM dwh.f_trips t
+    INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
+    WHERE arrival_platform_name IS NOT NULL AND arrival_platform_name<> '' AND dd.date>=NOW()::DATE-2
+    UNION ALL
+    SELECT
+        stop_station_tk AS station_tk,
+        departure_platform_name AS platform_name,
+        t.expected_arrival_date_tk AS  ref_date_tk,
+        'departure' AS event_type,
+        GREATEST(COALESCE(delay_departure_minutes, 0), 0) AS delay_minutes
+    FROM dwh.f_trips t
+    INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
+    WHERE departure_platform_name IS NOT NULL AND departure_platform_name<> '' AND dd.date>=NOW()::DATE-2
+) t
+GROUP BY station_tk, platform_name, ref_date_tk
+ON CONFLICT (station_tk, platform_name, ref_date_tk) DO UPDATE
+SET
+    nb_arrivals           = EXCLUDED.nb_arrivals,
+    nb_departures         = EXCLUDED.nb_departures,
+    nb_arrivals_delayed   = EXCLUDED.nb_arrivals_delayed,
+    nb_departures_delayed = EXCLUDED.nb_departures_delayed,
+    avg_delay_minutes     = EXCLUDED.avg_delay_minutes,
+    max_delay_minutes     = EXCLUDED.max_delay_minutes,
+    insert_date           = clock_timestamp();
+
+
+
+INSERT INTO dwh.f_station_daily_metrics (
+    station_tk,
+    ref_date_tk,
+    nb_arrivals,
+    nb_departures,
+    nb_departures_delayed,
+    nb_arrivals_delayed,
+    delay_rate,
+    total_delay_minutes,
+    avg_delay_minutes,
+    max_delay_minutes,
+    nb_platforms_used,
+    most_used_platform
+)
+SELECT
+    station_tk,
+    ref_date_tk,
+    SUM(nb_arrivals)               AS nb_arrivals,
+    SUM(nb_departures)             AS nb_departures,
+    SUM(nb_departures_delayed)     AS nb_departures_delayed,
+    SUM(nb_arrivals_delayed)       AS nb_arrivals_delayed,
+    100*(SUM(nb_departures_delayed) + SUM(nb_arrivals_delayed))::float
+        / NULLIF(SUM(nb_arrivals) + SUM(nb_departures), 0) AS delay_rate,
+    SUM(total_delay_minutes)       AS total_delay_minutes,
+    AVG(pu.avg_delay_minutes)         AS avg_delay_minutes,
+    MAX(pu.max_delay_minutes)         AS max_delay_minutes,
+    COUNT(*)                       AS nb_platforms_used,
+    (
+        SELECT platform_name
+        FROM dwh.f_station_platform_usage pu2
+        WHERE pu2.station_tk = pu.station_tk
+          AND pu2.ref_date_tk = pu.ref_date_tk
+        ORDER BY (pu2.nb_arrivals + pu2.nb_departures) DESC
+        LIMIT 1
+    ) AS most_used_platform
+FROM dwh.f_station_platform_usage pu
+INNER JOIN dwh.d_date dd ON dd.tk_date = pu.ref_date_tk 
+LEFT JOIN LATERAL (
+    SELECT
+        GREATEST(pu.max_delay_minutes, 0) AS max_delay_minutes,
+        GREATEST(pu.avg_delay_minutes, 0) AS avg_delay_minutes,
+        COALESCE(pu.avg_delay_minutes * (pu.nb_arrivals + pu.nb_departures), 0) 
+            AS total_delay_minutes
+) d ON TRUE
+WHERE dd.date::DATE>=NOW()::DATE-2
+GROUP BY station_tk, ref_date_tk
+ON CONFLICT (station_tk, ref_date_tk) DO UPDATE
+SET
+    nb_arrivals           = EXCLUDED.nb_arrivals,
+    nb_departures         = EXCLUDED.nb_departures,
+    nb_departures_delayed = EXCLUDED.nb_departures_delayed,
+    nb_arrivals_delayed   = EXCLUDED.nb_arrivals_delayed,
+    delay_rate            = EXCLUDED.delay_rate,
+    total_delay_minutes   = EXCLUDED.total_delay_minutes,
+    avg_delay_minutes     = EXCLUDED.avg_delay_minutes,
+    max_delay_minutes     = EXCLUDED.max_delay_minutes,
+    nb_platforms_used     = EXCLUDED.nb_platforms_used,
+    most_used_platform    = EXCLUDED.most_used_platform,
+    insert_date           = clock_timestamp();

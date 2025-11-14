@@ -24,7 +24,7 @@ with DAG(
         end_date = today + relativedelta(months=1)
 
         ods_tables = ["ods.trips", "ods.stops"]
-        dwh_tables = ["dwh.f_trips", "dwh.f_journey"]
+        dwh_tables = ["dwh.f_trips", "dwh.f_journey", "dwh.f_line_metrics", "dwh.f_station_daily_metrics", "dwh.f_station_platform_usage"]
 
         current_date = today
         sql_statements = []

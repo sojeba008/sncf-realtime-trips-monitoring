@@ -358,7 +358,7 @@ CREATE TABLE dwh.f_journey (
 ) PARTITION BY RANGE (ref_date_tk);
 
 CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
-    tk_trip_rt bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    tk_trip_rt INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     
     trip_id text NOT NULL,
     vehicule_tk              int4,
@@ -417,3 +417,55 @@ CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     last_update timestamp DEFAULT now(),
     CONSTRAINT f_trips_realtime_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
 );
+
+CREATE TABLE IF NOT EXISTS dwh.f_line_metrics (
+    tk_line_metrics INT8 GENERATED ALWAYS AS IDENTITY,
+    line_tk INT8 NOT NULL REFERENCES dwh.d_line(tk_line),
+    ref_date_tk INT8 NOT NULL REFERENCES dwh.d_date(tk_date),
+    nb_journey INT8,        
+    nb_delay INT8,           
+    delay_rate FLOAT8,
+    delay_minutes INT8,      
+    avg_delay_minutes FLOAT8,
+    insert_date TIMESTAMP DEFAULT clock_timestamp(),
+    CONSTRAINT pk_f_line_metrics PRIMARY KEY (line_tk, ref_date_tk),
+    CONSTRAINT fk_line_metrics_line FOREIGN KEY (line_tk) REFERENCES dwh.d_line(tk_line),
+    CONSTRAINT fk_line_metrics_ref_date FOREIGN KEY (ref_date_tk) REFERENCES dwh.d_date(tk_date)
+) PARTITION BY RANGE (ref_date_tk);
+
+CREATE TABLE IF NOT EXISTS dwh.f_station_platform_usage (
+    station_tk            INT4 NOT NULL,
+    platform_name         TEXT NOT NULL,
+    ref_date_tk           INT4 NOT NULL,
+    nb_arrivals           INT4 DEFAULT 0,
+    nb_departures         INT4 DEFAULT 0,
+    nb_departures_delayed            INT4 DEFAULT 0,
+    nb_arrivals_delayed            INT4 DEFAULT 0,
+    avg_delay_minutes     FLOAT8 DEFAULT 0,
+    max_delay_minutes     INT4 DEFAULT 0,
+    insert_date           TIMESTAMP DEFAULT clock_timestamp(),
+    PRIMARY KEY (station_tk, platform_name, ref_date_tk),
+    CONSTRAINT fk_spu_station FOREIGN KEY (station_tk) REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_spu_ref_date FOREIGN KEY (ref_date_tk) REFERENCES dwh.d_date(tk_date)
+)
+PARTITION BY RANGE (ref_date_tk);
+
+CREATE TABLE IF NOT EXISTS dwh.f_station_daily_metrics (
+    station_tk            INT4 NOT NULL,
+    ref_date_tk           INT4 NOT NULL,
+    nb_arrivals           INT4 DEFAULT 0,
+    nb_departures         INT4 DEFAULT 0,
+    nb_departures_delayed            INT4 DEFAULT 0,
+    nb_arrivals_delayed            INT4 DEFAULT 0,
+    delay_rate            FLOAT8,
+    total_delay_minutes   INT4 DEFAULT 0,
+    avg_delay_minutes     FLOAT8 DEFAULT 0,
+    max_delay_minutes     INT4 DEFAULT 0,
+    nb_platforms_used     INT4 DEFAULT 0,
+    most_used_platform    TEXT NULL,
+    insert_date           TIMESTAMP DEFAULT clock_timestamp(),
+    PRIMARY KEY (station_tk, ref_date_tk),
+    CONSTRAINT fk_sdm_station FOREIGN KEY (station_tk) REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT fk_sdm_ref_date FOREIGN KEY (ref_date_tk) REFERENCES dwh.d_date(tk_date)
+)
+PARTITION BY RANGE (ref_date_tk);
