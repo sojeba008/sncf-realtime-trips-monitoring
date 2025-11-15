@@ -421,3 +421,59 @@ FROM delay_gen
 GROUP BY region_station, heure_passage
 ORDER BY region_station, heure_passage;
 REFRESH MATERIALIZED VIEW dwh.v_stats_retard_horaire_region;
+
+
+
+
+------------STATION ANALYSIS----------------------
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS dwh.station_analysis_kpi_global AS
+SELECT
+	f.station_tk,
+	ds.station_name,
+    d.date AS ref_date,
+    SUM(f.nb_arrivals) AS nb_arrivals,
+    SUM(f.nb_departures) AS nb_departures,
+    SUM(f.nb_arrivals + f.nb_departures) AS total_trains,
+    SUM(f.total_delay_minutes) AS total_delay_minutes,
+    SUM(f.nb_arrivals_delayed) AS nb_arrivals_delayed_trains,
+    sum(f.nb_departures_delayed) AS nb_departures_delayed_trains,
+    SUM(f.nb_arrivals_delayed + f.nb_departures_delayed) AS nb_delayed_trains,
+    ROUND(
+        CASE WHEN SUM(f.nb_arrivals + f.nb_departures) = 0 THEN 100
+        ELSE 100 * (1 - SUM(f.nb_arrivals_delayed + f.nb_departures_delayed)::numeric
+                       / SUM(f.nb_arrivals + f.nb_departures))
+        END, 2
+    ) AS punctuality_rate,
+    ROUND(
+        CASE WHEN SUM(f.nb_arrivals_delayed + f.nb_departures_delayed) = 0 THEN 0
+        ELSE SUM(f.total_delay_minutes)::numeric 
+             / SUM(f.nb_arrivals_delayed + f.nb_departures_delayed)
+        END, 2
+    ) AS avg_delay_minutes,
+    MAX(f.max_delay_minutes) AS retard_max
+FROM dwh.f_station_daily_metrics f
+JOIN dwh.d_date d ON d.tk_date = f.ref_date_tk
+JOIN dwh.d_station ds ON ds.tk_station = f.station_tk
+GROUP BY f.station_tk, ds.station_name, d.date
+ORDER BY f.station_tk, ds.station_name, d.date;
+REFRESH MATERIALIZED VIEW dwh.station_analysis_kpi_global;
+
+
+CREATE MATERIALIZED VIEW IF NOT EXISTS dwh.station_analysis_platefoms_usage AS
+SELECT
+	d.date ,
+	s.tk_station,
+	s.station_name ,
+    spu.platform_name,
+    SUM(spu.nb_arrivals) AS nb_arrivals,
+    SUM(spu.nb_departures) AS nb_departures,
+    SUM(spu.nb_arrivals + spu.nb_departures) AS trafic_total
+FROM dwh.f_station_platform_usage spu
+JOIN dwh.d_station s 
+    ON s.tk_station = spu.station_tk
+JOIN dwh.d_date d
+    ON d.tk_date = spu.ref_date_tk
+GROUP BY d.date, s.station_name,s.tk_station, spu.platform_name
+ORDER BY trafic_total DESC;
+REFRESH MATERIALIZED VIEW dwh.station_analysis_platefoms_usage;

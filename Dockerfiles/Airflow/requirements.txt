@@ -2,3 +2,4 @@ requests
 python-dotenv
 DateTime
 pyarrow
+jours-feries-france

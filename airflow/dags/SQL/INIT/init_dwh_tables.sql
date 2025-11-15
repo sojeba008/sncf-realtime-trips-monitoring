@@ -35,6 +35,7 @@ create table if not exists dwh.d_date (
   year_quarter text,
   year4 INT4,
   season text,
+  is_public_holiday bool NULL,
   constraint d_date_pk primary key(tk_date)
 );
 

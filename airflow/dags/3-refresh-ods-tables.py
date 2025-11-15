@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime, date, timedelta
 import requests
-from google.transit import gtfs_realtime_pb2
+# from google.transit import gtfs_realtime_pb2
 import json
 import xml.etree.ElementTree as ET
 from pathlib import Path
