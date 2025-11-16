@@ -111,3 +111,18 @@ services:
       timeout: 10s
       retries: 5
     restart: always
+
+  pentaho-server:
+      build:
+        context: ./Dockerfiles/pentaho-server
+      environment:
+        DWH_DATABASE: ${DB_NAME}
+        DWH_HOST: ${DB_HOST}
+        DWH_PORT: ${DB_PORT}
+        DWH_USERNAME: ${DB_USER}
+        DWH_PASSWORD: ${DB_PASSWORD}
+      ports:
+        - "8086:8080"
+      depends_on:
+        - postgres
+      restart: always
