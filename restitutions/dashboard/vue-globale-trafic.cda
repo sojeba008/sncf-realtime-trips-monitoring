@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDADescriptor>
+   <DataSources>
+      <Connection id="nbTrainsEnCiruclationKPIQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="nbTrainsEnRetardKPIQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="retardMoyenKPIQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="nbGaresActivesKPIQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="tauxDeRetardRadarQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="EvolutionNbTrainParHeureQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="nbMinutesRetardQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="nbRetardParTypeDeTrainQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="retardMoyenVolumeDeTrainChartQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="hourDelayHeatMapQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="delayByRegionRankingQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+   </DataSources>
+   <DataAccess access="public" connection="nbTrainsEnCiruclationKPIQuery"
+               id="nbTrainsEnCiruclationKPIQuery"
+               type="sql">
+      <Name>nbTrainsEnCiruclationKPIQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT nb_trains_actifs, nb_trains_actifs_h_1 FROM dwh.v_trains_actifs_kpi;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="nbTrainsEnRetardKPIQuery"
+               id="nbTrainsEnRetardKPIQuery"
+               type="sql">
+      <Name>nbTrainsEnRetardKPIQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT nb_trains_en_retard , variation_vs_hier  FROM dwh.v_trains_en_retard_kpi;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="retardMoyenKPIQuery" id="retardMoyenKPIQuery"
+               type="sql">
+      <Name>retardMoyenKPIQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT retard_moyen, variation_vs_moy_journaliere  FROM dwh.v_retard_moyen_kpi;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="nbGaresActivesKPIQuery" id="nbGaresActivesKPIQuery"
+               type="sql">
+      <Name>nbGaresActivesKPIQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT gares_actives , variation_vs_heure_precedente  FROM dwh.v_gares_actives_kpi ;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="tauxDeRetardRadarQuery" id="tauxDeRetardRadarQuery"
+               type="sql">
+      <Name>tauxDeRetardRadarQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT 100*SUM(nb_trains_en_retard)/SUM(nb_trains_total) taux_retard_pct,
+      100-100*SUM(nb_trains_en_retard)/SUM(nb_trains_total) taux_ponctualite_pct
+FROM dwh.v_taux_retard WHERE jour=NOW()::DATE;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="EvolutionNbTrainParHeureQuery"
+               id="EvolutionNbTrainParHeureQuery"
+               type="sql">
+      <Name>EvolutionNbTrainParHeureQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT to_char(hour_start , 'HH24:mi') AS heure, nb_trains_actifs , nb_trains_actifs_j_1 FROM dwh.v_trains_actifs_par_heure]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="nbMinutesRetardQuery" id="nbMinutesRetardQuery"
+               type="sql">
+      <Name>nbMinutesRetardQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT date AS jour,sum(total_delay_generated) AS total_minutes_retard
+FROM dwh.v_stats_retard_region
+WHERE date >= now()::DATE-1 AND date<=now()::DATE
+GROUP BY date
+ORDER BY date DESC
+LIMIT 2;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="nbRetardParTypeDeTrainQuery"
+               id="nbRetardParTypeDeTrainQuery"
+               type="sql">
+      <Name>nbRetardParTypeDeTrainQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT type_vehicule, retard_moyen_min, nb_trains 
+FROM dwh.v_retard_par_type_train
+ORDER BY nb_trains DESC
+LIMIT 6;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="retardMoyenVolumeDeTrainChartQuery"
+               id="retardMoyenVolumeDeTrainChartQuery"
+               type="sql">
+      <Name>retardMoyenVolumeDeTrainChartQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT heure_passage, avg_delay_generated, total_delay_generated, nb_trains FROM dwh.v_stats_retard_horaire;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="hourDelayHeatMapQuery" id="hourDelayHeatMapQuery"
+               type="sql">
+      <Name>hourDelayHeatMapQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT  heure_passage, region_station, avg_delay_generated
+FROM dwh.v_stats_retard_horaire_region;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="delayByRegionRankingQuery"
+               id="delayByRegionRankingQuery"
+               type="sql">
+      <Name>delayByRegionRankingQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT region_station, sum(total_delay_generated)
+FROM dwh.v_stats_retard_region
+WHERE date = now()::DATE
+GROUP BY region_station
+ORDER BY sum(total_delay_generated) DESC
+limit 4;]]></Query>
+   </DataAccess>
+</CDADescriptor>

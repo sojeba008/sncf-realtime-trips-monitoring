@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDADescriptor>
+   <DataSources>
+      <Connection id="regionsListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="departementsListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="communesListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="garesListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="stationKpiQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="todayPlatformUsageStackedBarQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="stationFlowComparisonQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+   </DataSources>
+   <DataAccess access="public" connection="regionsListQuery" id="regionsListQuery" type="sql">
+      <Name>regionsListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[(SELECT '-2', 'Toutes les régions')
+UNION ALL
+(SELECT DISTINCT rd.code_region , nom_region 
+FROM ods.ref_departements rd 
+ORDER BY nom_region);]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="departementsListQuery" id="departementsListQuery"
+               type="sql">
+      <Name>departementsListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+      </Parameters>
+      <Query><![CDATA[(SELECT '-2' AS code_departement, 'Tous les départements' AS nom_departement)
+UNION ALL
+(SELECT DISTINCT rd.code_departement  , rd.nom_departement 
+FROM ods.ref_departements rd
+WHERE (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+ORDER BY rd.nom_departement)]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="communesListQuery" id="communesListQuery"
+               type="sql">
+      <Name>communesListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+         <Parameter default="" name="pDepartement" type="String"/>
+      </Parameters>
+      <Query><![CDATA[(SELECT '-2' AS commune_key, 'Toutes les communes' AS commune_val)
+UNION ALL
+(SELECT DISTINCT ds.commune AS commune_key, ds.commune AS commune_val FROM dwh.d_station ds 
+INNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))
+WHERE (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+AND (${pDepartement} = '-2' OR rd.code_departement::TEXT=${pDepartement})
+ORDER BY ds.commune);]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="garesListQuery" id="garesListQuery" type="sql">
+      <Name>garesListQuery</Name>
+      <Cache duration="3600" enabled="true"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+         <Parameter default="" name="pDepartement" type="String"/>
+         <Parameter default="" name="pCommune" type="String"/>
+      </Parameters>
+      <Query><![CDATA[SELECT tk_station, station_name_ref
+FROM dwh.d_station ds 
+INNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))
+WHERE ds.tk_station <> -1
+AND  (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+AND (${pDepartement} = '-2' OR rd.code_departement::TEXT=${pDepartement})
+AND (${pCommune} = '-2' OR unaccent(UPPER(ds.commune))=unaccent(UPPER(${pCommune})))
+ORDER BY station_name_ref;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="stationKpiQuery" id="stationKpiQuery" type="sql">
+      <Name>stationKpiQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pStation" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT ref_date, 
+    total_trains, 
+    total_delay_minutes, 
+	nb_delayed_trains, 
+	punctuality_rate, 
+	avg_delay_minutes
+FROM dwh.station_analysis_kpi_global
+WHERE ref_date>=NOW()::DATE-1
+AND station_tk = ${pStation} 
+ORDER BY ref_date DESC;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="todayPlatformUsageStackedBarQuery"
+               id="todayPlatformUsageStackedBarQuery"
+               type="sql">
+      <Name>todayPlatformUsageStackedBarQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pStation" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    date ,
+    platform_name,
+    nb_arrivals,
+    nb_departures
+FROM dwh.station_analysis_platefoms_usage sapu
+WHERE sapu.tk_station = ${pStation}
+AND date::DATE=NOW()::DATE
+ORDER BY trafic_total DESC;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="stationFlowComparisonQuery"
+               id="stationFlowComparisonQuery"
+               type="sql">
+      <Name>stationFlowComparisonQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pStation" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT ref_date, 
+    nb_arrivals, 
+	nb_departures,
+    nb_arrivals_delayed_trains,
+	nb_departures_delayed_trains
+FROM dwh.station_analysis_kpi_global
+WHERE ref_date>=NOW()::DATE-1
+AND station_tk = ${pStation}
+ORDER BY ref_date DESC;]]></Query>
+   </DataAccess>
+</CDADescriptor>

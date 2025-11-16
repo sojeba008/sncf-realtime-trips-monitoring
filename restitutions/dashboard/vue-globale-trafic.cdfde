@@ -1,0 +1,2511 @@
+{
+  "components" : {
+    "rows" : [
+      {
+        "id" : "WIDGETS",
+        "name" : "Widgets",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Widgets"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "247f569c-81be-32d0-fd55-9631003bcd56",
+        "meta_wcdf" : "/public/cde/widgets/sncfDashboardMenu.wcdf",
+        "meta_widget" : "true",
+        "parent" : "WIDGETS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menuWidget"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:menu}"
+          }
+        ],
+        "rowName" : "sncfDashboardMenu",
+        "type" : "ComponentswidgetsncfDashboardMenu",
+        "typeDesc" : "sncfDashboardMenu Widget"
+      },
+      {
+        "id" : "PARAMETERS",
+        "name" : "Parameters",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Parameters"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "1362c690-b171-260c-8c29-e44f1feec314",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "page"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "vue-globale-trafic"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "STANDARDCOMPONENTS",
+        "name" : "Standard",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Standard"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "57ac0db0-cd0b-a529-855d-4e894716c9b1",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbGaresActivesKPIQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "nbGaresActivesKPIQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchGaresActives(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const row = data.resultset[0];\n    \n    const garesActives = parseInt(row[0]); \n    const variationVsHeurePrecedente = parseFloat(row[1]);\n\n    const valElement = document.getElementById(\u0027gares_actives_val\u0027);\n    if (valElement) {\n        valElement.textContent = garesActives.toLocaleString(); \n    }\n\n    const progressionElement = document.getElementById(\u0027gares_actives_progression\u0027);\n\n    if (progressionElement) {\n        let texteProgression = \u0022\u0022;\n        \n        progressionElement.classList.remove(\u0027text-success\u0027, \u0027text-danger\u0027);\n        \n        if (!isNaN(variationVsHeurePrecedente)) {\n            texteProgression = `${variationVsHeurePrecedente.toFixed(1)}%`;\n            progressionElement.textContent = (variationVsHeurePrecedente \u003E= 0 ? \u0027+\u0027 : \u0027\u0027) + texteProgression;\n            if (variationVsHeurePrecedente \u003E 0) {\n                progressionElement.classList.add(\u0027text-success\u0027);\n            } else if (variationVsHeurePrecedente \u003C 0) {\n                progressionElement.classList.add(\u0027text-danger\u0027);\n            }\n        } else {\n            progressionElement.textContent = \u00220.0%\u0022;\n        }\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "71cc938d-6bcd-b433-cdad-d5a98be3a0ec",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbTrainsEnCirculationKPIQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "nbTrainsEnCiruclationKPIQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetch(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const row = data.resultset[0];\n    \n    const nbTrainsActifs = parseInt(row[0]); \n    const nbTrainsActifsHMoins1 = parseInt(row[1]);\n\n    const valElement = document.getElementById(\u0027nb_train_ciruclation_val\u0027);\n    if (valElement) {\n\n        valElement.textContent = nbTrainsActifs.toLocaleString(); \n    }\n\n    const progressionElement = document.getElementById(\u0027nb_train_ciruclation_progression\u0027);\n\n    if (progressionElement) {\n        let progression = 0;\n        let texteProgression = \u0022\u0022;\n        \n        progressionElement.classList.remove(\u0027text-success\u0027, \u0027text-danger\u0027);\n        \n        if (nbTrainsActifsHMoins1 \u003E 0) {\n            progression = ((nbTrainsActifs - nbTrainsActifsHMoins1) / nbTrainsActifsHMoins1) * 100;\n            \n\n            texteProgression = `${progression.toFixed(1)}%`;\n            progressionElement.textContent = (progression \u003E= 0 ? \u0027+\u0027 : \u0027\u0027) + texteProgression;\n\n            if (progression \u003E 0) {\n                progressionElement.classList.add(\u0027text-success\u0027); // Vert pour positif\n            } else if (progression \u003C 0) {\n                progressionElement.classList.add(\u0027text-danger\u0027); // Rouge pour négatif\n            }\n        } else if (nbTrainsActifs \u003E 0 \u0026\u0026 nbTrainsActifsHMoins1 === 0) {\n            progressionElement.textContent = \u0022Nouveau\u0022;\n            progressionElement.classList.add(\u0027text-success\u0027);\n        } else {\n            progressionElement.textContent = \u00220%\u0022;\n        }\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "2fc95049-d69e-70df-a538-e22efdb5a65c",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbRetardMoyenKPIQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "retardMoyenKPIQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchRetardMoyen(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const row = data.resultset[0];\n    \n    const retardMoyen = parseFloat(row[0]); \n    const variationVsMoyJournaliere = parseFloat(row[1]);\n\n    const valElement = document.getElementById(\u0027retard_moyen_val\u0027);\n    if (valElement) {\n        valElement.textContent = retardMoyen.toFixed(1) + \u0027 min\u0027; \n    }\n\n    const progressionElement = document.getElementById(\u0027retard_moyen_progression\u0027);\n\n    if (progressionElement) {\n        let texteProgression = \u0022\u0022;\n        \n        progressionElement.classList.remove(\u0027text-success\u0027, \u0027text-danger\u0027);\n        \n        if (!isNaN(variationVsMoyJournaliere)) {\n            texteProgression = `${variationVsMoyJournaliere.toFixed(1)}%`;\n            progressionElement.textContent = (variationVsMoyJournaliere \u003E= 0 ? \u0027+\u0027 : \u0027\u0027) + texteProgression;\n\n            if (variationVsMoyJournaliere \u003E 0) {\n \n                progressionElement.classList.add(\u0027text-danger\u0027);\n            } else if (variationVsMoyJournaliere \u003C 0) {\n                progressionElement.classList.add(\u0027text-success\u0027);\n            }\n        } else {\n            progressionElement.textContent = \u00220.0%\u0022;\n        }\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "f02937d3-8e09-f13a-4e51-71e1830ab972",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbTrainsEnRetardKPIQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "nbTrainsEnRetardKPIQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchRetards(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n    const row = data.resultset[0];\n    \n    const nbTrainsEnRetard = parseInt(row[0]); \n    const variationVsHier = parseFloat(row[1]);\n\n    const valElement = document.getElementById(\u0027nb_train_en_retard_val\u0027);\n    if (valElement) {\n        valElement.textContent = nbTrainsEnRetard.toLocaleString(); \n    }\n\n    const progressionElement = document.getElementById(\u0027nb_train_en_retard_progression\u0027);\n\n    if (progressionElement) {\n        let texteProgression = \u0022\u0022;\n        \n        progressionElement.classList.remove(\u0027text-success\u0027, \u0027text-danger\u0027);\n        \n        if (!isNaN(variationVsHier)) {\n            texteProgression = `${variationVsHier.toFixed(1)}%`;\n            progressionElement.textContent = (variationVsHier \u003E= 0 ? \u0027+\u0027 : \u0027\u0027) + texteProgression;\n\n            if (variationVsHier \u003E 0) {\n                progressionElement.classList.add(\u0027text-danger\u0027);\n            } else if (variationVsHier \u003C 0) {\n                progressionElement.classList.add(\u0027text-success\u0027);\n            }\n        } else {\n            progressionElement.textContent = \u00220%\u0022;\n        }\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "6efb39a8-e6aa-dc98-cd50-69b0ceb881c1",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxDeRetardRadarQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "tauxDeRetardRadarQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchRetards(data) {\n    var delayRateChartOptions = {\n    series: [0],\n    chart: {\n        height: \u0027100%\u0027,\n        type: \u0027radialBar\u0027,\n        toolbar: {\n            show: false\n        }\n    },\n    plotOptions: {\n        radialBar: {\n            startAngle: -135,\n            endAngle: 225,\n            hollow: {\n                margin: 0,\n                size: \u002770%\u0027,\n                background: \u0027#fff\u0027,\n                image: undefined,\n                position: \u0027front\u0027,\n                dropShadow: {\n                    enabled: true,\n                    top: 3,\n                    left: 0,\n                    blur: 4,\n                    opacity: 0.24\n                }\n            },\n            track: {\n                background: \u0027#e7e7e7\u0027,\n                strokeWidth: \u002767%\u0027,\n                margin: 0, \n                dropShadow: {\n                    enabled: true,\n                    top: -3,\n                    left: 0,\n                    blur: 4,\n                    opacity: 0.35\n                }\n            },\n\n            dataLabels: {\n                show: true,\n                name: {\n                    offsetY: -10,\n                    show: true,\n                    color: \u0027#888\u0027,\n                    fontSize: \u002717px\u0027\n                },\n                value: {\n                    formatter: function(val) {\n                        return parseInt(val) + \u0027%\u0027;\n                    },\n                    color: \u0027#111\u0027,\n                    fontSize: \u002736px\u0027,\n                    show: true,\n                }\n            }\n        }\n    },\n    fill: {\n        type: \u0027gradient\u0027,\n        gradient: {\n            shade: \u0027dark\u0027,\n            type: \u0027horizontal\u0027,\n            shadeIntensity: 0.5,\n            gradientToColors: [\u0027#38c172\u0027],\n            inverseColors: true,\n            opacityFrom: 1,\n            opacityTo: 1,\n            stops: [0, 100]\n        }\n    },\n    stroke: {\n        lineCap: \u0027round\u0027\n    },\n    labels: [\u0027Ponctualité\u0027],\n    colors: [\u0027#38c172\u0027], \n};\n\nvar delayRateChart = new ApexCharts(document.querySelector(\u0022#delayRateChart\u0022), delayRateChartOptions);\ndelayRateChart.render();\n    if (typeof delayRateChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique ApexCharts n\u0027est pas initialisé.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour le graphique de retard.\u0022);\n        // Optionnel : Mettre le graphique à 0 ou afficher un message d\u0027erreur\n        delayRateChart.updateOptions({\n            series: [0],\n            labels: [\u0027Erreur de données\u0027]\n        });\n        return;\n    }\n\n    const row = data.resultset[0];\n    \n    \n    const tauxRetardPct = parseFloat(row[0]); \n    const tauxPonctualitePct = parseFloat(row[1]);\n    \n    if (isNaN(tauxPonctualitePct)) {\n        console.error(\u0022Les données de ponctualité ne sont pas valides.\u0022);\n        return;\n    }\n\n    \n    let chartColor = \u0027#38c172\u0027;\n    let label = \u0027Ponctualité\u0027;\n    \n    if (tauxPonctualitePct \u003C 90) {\n        chartColor = \u0027#ff6347\u0027; \n    }\n\n\n    delayRateChart.updateOptions({\n        series: [Math.round(tauxPonctualitePct)], \n        labels: [label],\n        colors: [chartColor],\n        fill: {\n            type: \u0027gradient\u0027,\n            gradient: {\n                shade: \u0027dark\u0027,\n                type: \u0027horizontal\u0027,\n                shadeIntensity: 0.5,\n                gradientToColors: [chartColor], \n                inverseColors: true,\n                opacityFrom: 1,\n                opacityTo: 1,\n                stops: [0, 100]\n            }\n        }\n    });\n\n  \n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "e71ed46e-343d-1a58-dfc7-4480396aac8f",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "evolutionNbTrainParHeureQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "evolutionNbTrainParHeureQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchTrains(data) {\n    \n    \n    \n    var evolutionNbTrainOptions = {\n    series: [{\n        name: \u0027Trains Actifs (Aujourd\\\u0027hui)\u0027,\n        data: []\n    }, {\n        name: \u0027Trains Actifs (Hier)\u0027,\n        data: []\n    }],\n    chart: {\n        height: 320,\n        type: \u0027line\u0027,\n        zoom: {\n            enabled: false\n        },\n        toolbar: {\n            show: true\n        }\n    },\n    dataLabels: {\n        enabled: false\n    },\n    stroke: {\n        curve: \u0027smooth\u0027,\n        width: 3\n    },\n    title: {\n        text: \u0027\u0027,\n        align: \u0027left\u0027\n    },\n    grid: {\n        row: {\n            colors: [\u0027#f3f3f3\u0027, \u0027transparent\u0027], \n            opacity: 0.5\n        },\n    },\n    xaxis: {\n        categories: [], // Sera rempli par postfetchTrains (les heures)\n        title: {\n            text: \u0027Heure\u0027\n        }\n    },\n    yaxis: {\n        title: {\n            text: \u0027Nombre de Trains Actifs\u0027\n        },\n        min: 0,\n        // Optionnel: Définir les étapes pour que les étiquettes soient des nombres entiers\n        labels: {\n            formatter: function (val) {\n                return Math.round(val);\n            }\n        }\n    },\n    tooltip: {\n        y: {\n            formatter: function (val) {\n                return val.toLocaleString() + \u0022 trains\u0022;\n            }\n        }\n    },\n    colors: [\u0027#008FFB\u0027, \u0027#FEB019\u0027] \n};\n\nvar evolutionNbTrainChart = new ApexCharts(document.querySelector(\u0022#evolutionNbTrain\u0022), evolutionNbTrainOptions);\nevolutionNbTrainChart.render();\n    \n    if (typeof evolutionNbTrainChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique ApexCharts n\u0027est pas initialisé.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour le graphique d\u0027évolution des trains.\u0022);\n        return;\n    }\n\n    const categories = []; \n    const seriesToday = []; \n    const seriesYesterday = []; \n\n    data.resultset.forEach(row =\u003E {\n        \n        const heure = row[0] ? row[0].substring(0, 5) : \u0027\u0027; \n        const nbActifs = parseInt(row[1]);\n        const nbActifsJ1 = parseInt(row[2]);\n        \n        if (!isNaN(nbActifs) \u0026\u0026 !isNaN(nbActifsJ1)) {\n            categories.push(heure);\n            seriesToday.push(nbActifs);\n            seriesYesterday.push(nbActifsJ1);\n        }\n    });\n\n    evolutionNbTrainChart.updateOptions({\n        series: [{\n            name: \u0027Trains Actifs (Aujourd\\\u0027hui)\u0027,\n            data: seriesToday\n        }, {\n            name: \u0027Trains Actifs (Hier)\u0027,\n            data: seriesYesterday\n        }],\n        xaxis: {\n            categories: categories\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "5a208129-1d70-1bbe-51b6-c28361fe3d84",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbMinutesRetardQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "nbMinutesRetardQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchTotalMinutesRetard(data) {\n    console.log(\u0022DATA\u0022, data)\n    if (!data || !data.resultset || data.resultset.length \u003C 2) {\n        return;\n    }\n\n    const aujourdHuiData = data.resultset[0];\n    const hierData = data?.resultset[1];\n    const minutesAujourdHui = parseInt(aujourdHuiData[1]);\n    let variationVsHier = 0;\n    let minutesHier = 0;\n    if(hierData) {\n        minutesHier = parseInt(hierData[1]);\n    \n        if (minutesHier !== 0 \u0026\u0026 !isNaN(minutesAujourdHui) \u0026\u0026 !isNaN(minutesHier)) {\n            variationVsHier = ((minutesAujourdHui - minutesHier) / minutesHier) * 100;\n        } else if (minutesHier === 0 \u0026\u0026 minutesAujourdHui \u003E 0) {\n            variationVsHier = 1;\n        }\n    }\n    \n    const valElement = document.getElementById(\u0027nb_minutes_retard_ajd\u0027);\n    console.log(\u0022valElement\u0022, valElement);\n    if (valElement \u0026\u0026 !isNaN(minutesAujourdHui)) {\n        valElement.textContent = minutesAujourdHui.toLocaleString(\u0027fr-FR\u0027) + \u0027 min\u0027;\n    } else if (valElement) {\n        valElement.textContent = \u0027N/A\u0027;\n    }\n\n    const progressionElement = document.getElementById(\u0027nb_minutes_retard_progression_ajd\u0027);\n    const iconElement = progressionElement ? progressionElement.previousElementSibling : null;\n\n    if (progressionElement) {\n        progressionElement.classList.remove(\u0027text-success\u0027, \u0027text-danger\u0027);\n        if (iconElement) {\n            iconElement.className = \u0027\u0027;\n            iconElement.classList.add(\u0027icon-sm\u0027);\n        }\n        \n        if (!isNaN(variationVsHier) \u0026\u0026 isFinite(variationVsHier)) {\n            const texteProgression = `${Math.abs(variationVsHier).toFixed(1)}%`;\n            const signe = variationVsHier \u003E= 0 ? \u0027+\u0027 : \u0027\u0027;\n            \n            progressionElement.textContent = signe + texteProgression;\n\n            if (variationVsHier \u003E 0) {\n                progressionElement.classList.add(\u0027text-danger\u0027);\n                if (iconElement) iconElement.classList.add(\u0027ri\u0027, \u0027ri-arrow-up-s-line\u0027);\n            } else if (variationVsHier \u003C 0) {\n                progressionElement.classList.add(\u0027text-success\u0027);\n                if (iconElement) iconElement.classList.add(\u0027ri\u0027, \u0027ri-arrow-down-s-line\u0027);\n            } else {\n                progressionElement.textContent = \u00270.0%\u0027;\n                progressionElement.classList.add(\u0027text-muted\u0027);\n                if (iconElement) iconElement.classList.add(\u0027ri\u0027, \u0027ri-dash-line\u0027);\n            }\n        } else {\n            progressionElement.textContent = \u0022N/A\u0022;\n            progressionElement.classList.add(\u0027text-muted\u0027);\n            if (iconElement) iconElement.classList.add(\u0027ri\u0027, \u0027ri-dash-line\u0027);\n        }\n    }\n\n    const hierElement = document.getElementById(\u0027nb_minutes_retard_hier\u0027);\n    if (hierElement \u0026\u0026 !isNaN(minutesHier)) {\n        hierElement.textContent = `vs. ${minutesHier.toLocaleString(\u0027fr-FR\u0027)} min hier`;\n    } else if (hierElement) {\n        hierElement.textContent = \u0027vs. N/A hier\u0027;\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "cc0b4bd3-0f38-fa40-7880-867f75e2f78e",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbRetardParTypeDeTrainQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "nbRetardParTypeDeTrainQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchRetardsParTypeTrain(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const container = document.getElementById(\u0027retards-par-type-train-container\u0027);\n    const template = document.getElementById(\u0027train-type-template\u0027);\n\n    if (!container || !template) {\n        return;\n    }\n\n    container.innerHTML = \u0027\u0027;\n\n    data.resultset.forEach(row =\u003E {\n        const typeTrain = row[0] || \u0027Non identifié\u0027;\n        const retardMoyen = parseFloat(row[1]);\n        const nbTrains = parseInt(row[2]);\n\n        const clone = document.importNode(template.content, true);\n        const item = clone.querySelector(\u0027.train-type-item\u0027);\n\n        const initials = typeTrain.split(/\\s+/).map(word =\u003E word.charAt(0)).join(\u0027\u0027).toUpperCase().substring(0, 2);\n        const initialsElement = item.querySelector(\u0027.train-type-initials\u0027);\n        if (initialsElement) {\n            initialsElement.textContent = initials;\n            \n            initialsElement.classList.remove(\u0027bg-label-primary\u0027);\n            if (retardMoyen \u003E 5) {\n                initialsElement.classList.add(\u0027bg-label-danger\u0027);\n            } else if (retardMoyen \u003E 2) {\n                initialsElement.classList.add(\u0027bg-label-warning\u0027);\n            } else {\n                initialsElement.classList.add(\u0027bg-label-success\u0027);\n            }\n        }\n\n        const delayElement = item.querySelector(\u0027.train-average-delay\u0027);\n        if (delayElement) {\n            delayElement.textContent = `${retardMoyen.toFixed(1)} min`;\n        }\n\n        const nameElement = item.querySelector(\u0027.train-type-name\u0027);\n        if (nameElement) {\n            nameElement.textContent = typeTrain;\n        }\n\n        const volumeElement = item.querySelector(\u0027.train-volume\u0027);\n        if (volumeElement) {\n            volumeElement.textContent = nbTrains.toLocaleString(\u0027fr-FR\u0027);\n        }\n\n        container.appendChild(item);\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "72e8dace-30bd-f09c-d54d-6ff498e3dcec",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "retardMoyenVolumeDeTrainChartQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "retardMoyenVolumeDeTrainChartQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchDelayVolume(data) {\n    \n    var delayVolumeChartOptions = {\n    series: [{\n        name: \u0027Retard Moyen (min)\u0027,\n        type: \u0027line\u0027,\n        data: [] \n    }, {\n        name: \u0027Nombre de Trains\u0027,\n        type: \u0027line\u0027,\n        data: [] \n    }],\n    chart: {\n        height: 320,\n        type: \u0027line\u0027,\n        toolbar: {\n            show: true\n        }\n    },\n    dataLabels: {\n        enabled: false\n    },\n    stroke: {\n        curve: \u0027smooth\u0027, \n        width: [4, 3] \n    },\n    title: {\n        text: \u0027\u0027,\n        align: \u0027left\u0027\n    },\n    xaxis: {\n        categories: [], \n        title: {\n            text: \u0027Heure de Passage\u0027\n        }\n    },\n\n    yaxis: [{\n        // Axe Y 1 : Retard Moyen (Gauche)\n        seriesName: \u0027Retard Moyen (min)\u0027,\n        opposite: false, \n        title: {\n            text: \u0027Retard Moyen (minutes)\u0027,\n            style: {\n                color: \u0027#008FFB\u0027 \n            }\n        },\n        labels: {\n            formatter: function (val) {\n                return val ? val.toFixed(2) : 0; \n            },\n            style: {\n                colors: \u0027#008FFB\u0027\n            }\n        },\n        min: 0\n    }, {\n        seriesName: \u0027Volume de Trains\u0027,\n        opposite: true, \n        title: {\n            text: \u0027Nombre de Trains\u0027,\n            style: {\n                color: \u0027#FEB019\u0027 \n            }\n        },\n        labels: {\n            formatter: function (val) {\n                return Math.round(val); \n            },\n            style: {\n                colors: \u0027#FEB019\u0027\n            }\n        },\n        min: 0\n    }],\n    colors: [\u0027#008FFB\u0027, \u0027#FEB019\u0027],\n    tooltip: {\n        shared: true,\n        intersect: false,\n        y: [{\n            formatter: function (y) {\n                if (typeof y !== \u0022undefined\u0022) {\n                    return y.toFixed(2) + \u0022 min\u0022;\n                }\n                return y;\n            }\n        }, {\n            formatter: function (y) {\n                if (typeof y !== \u0022undefined\u0022) {\n                    return Math.round(y) + \u0022 trains\u0022;\n                }\n                return y;\n            }\n        }]\n    }\n};\n\nvar delayVolumeChart = new ApexCharts(document.querySelector(\u0022#delayVolumeChart\u0022), delayVolumeChartOptions);\ndelayVolumeChart.render();\n    \n    if (typeof delayVolumeChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique n\u0027est pas init.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour le graphique Retard/Nb trains.\u0022);\n        return;\n    }\n\n    const categories = [];     \n    const seriesDelay = [];    \n    const seriesVolume = [];  \n\n\n    data.resultset.forEach(row =\u003E {\n        \n        const heure = row[0]; // Format H:MM\n        const avgDelay = parseFloat(row[1]);\n        const nbTrains = parseInt(row[3]);\n        \n        if (!isNaN(avgDelay) \u0026\u0026 !isNaN(nbTrains)) {\n            categories.push(heure);\n            seriesDelay.push(avgDelay);\n            seriesVolume.push(nbTrains);\n        }\n    });\n    \n    delayVolumeChart.updateOptions({\n        series: [{\n            name: \u0027Retard Moyen (min)\u0027,\n            data: seriesDelay\n        }, {\n            name: \u0027Nombre de Trains\u0027,\n            data: seriesVolume\n        }],\n        xaxis: {\n            categories: categories\n        }\n    });\n    \n    \n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "04e76810-2bf2-000f-73e8-576b99c41b37",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "hourDelayHeatMapQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "hourDelayHeatMapQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchHeatmap(data) {\n\n    var delayHeatmapOptions = {\n    series: [], \n    chart: {\n        height: 400,\n        type: \u0027heatmap\u0027,\n        toolbar: {\n            show: true\n        }\n    },\n    dataLabels: {\n        enabled: false \n    },\n    colors: [\u0022#FF0000\u0022], \n    title: {\n        text: \u0027\u0027,\n        align: \u0027left\u0027\n    },\n    xaxis: {\n        type: \u0027category\u0027,\n        categories: [] \n    },\n    plotOptions: {\n        heatmap: {\n            shadeIntensity: 0.5,\n            radius: 0,\n            useFillColorAsStroke: true,\n            colorScale: {\n\n                ranges: [{\n                    from: 0,\n                    to: 0.5,\n                    name: \u0027Faible (\u003C 0.5 min)\u0027,\n                    color: \u0027#00A100\u0027 // Vert\n                },\n                {\n                    from: 0.5,\n                    to: 2,\n                    name: \u0027Modéré (0.5 - 2 min)\u0027,\n                    color: \u0027#FFB200\u0027 // Jaune/Orange\n                },\n                {\n                    from: 2,\n                    to: 100, // Une valeur haute\n                    name: \u0027Élevé (\u003E 2 min)\u0027,\n                    color: \u0027#FF0000\u0027 // Rouge\n                }\n                ]\n            }\n        }\n    }\n};\n\nvar delayHeatmapChart = new ApexCharts(document.querySelector(\u0022#delayHeatmapChart\u0022), delayHeatmapOptions);\ndelayHeatmapChart.render();\n    \n    if (typeof delayHeatmapChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique Heatmap n\u0027est pas initialisé.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour la Heatmap.\u0022);\n        return;\n    }\n\n    const regions = new Set();\n    const hours = new Set();\n    const dataMap = {}; \n\n    data.resultset.forEach(row =\u003E {\n        \n        const heure = row[0]; // H:MM\n        const region = row[1];\n        const avgDelay = parseFloat(row[2]);\n        \n        if (region \u0026\u0026 heure \u0026\u0026 !isNaN(avgDelay)) {\n            regions.add(region);\n            hours.add(heure);\n            dataMap[`${region}|${heure}`] = avgDelay;\n        }\n    });\n\n    const sortedHours = Array.from(hours).sort();\n    const sortedRegions = Array.from(regions).sort();\n    \n    const chartSeries = sortedRegions.map(region =\u003E {\n        const dataPoints = [];\n        \n        sortedHours.forEach(heure =\u003E {\n            const key = `${region}|${heure}`;\n            const delayValue = dataMap[key] !== undefined ? parseFloat(dataMap[key].toFixed(2)) : 0;\n            \n            dataPoints.push({\n                x: heure,\n                y: delayValue\n            });\n        });\n        \n        return {\n            name: region,\n            data: dataPoints\n        };\n    });\n\n    delayHeatmapChart.updateOptions({\n        series: chartSeries,\n        xaxis: {\n            categories: sortedHours\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "f9c3f56e-b70a-f6c6-ba1e-d70b8b970a11",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "delayByRegionRankingQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "delayByRegionRankingQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchDelayByRegion(data) {\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        document.getElementById(\u0027nb_minutes_retard_ajd\u0027).textContent = \u00220 min\u0022;\n        document.getElementById(\u0027nb_minutes_retard_progression_ajd\u0027).textContent = \u0022\u0022;\n        document.getElementById(\u0027nb_minutes_retard_hier\u0027).textContent = \u0022vs. données manquantes hier\u0022;\n        document.getElementById(\u0027classement_retard_regions\u0027).innerHTML = \u0022\u003Cp class=\u0027text-muted\u0027\u003EAucune donnée de retard par région disponible.\u003C/p\u003E\u0022;\n        return;\n    }\n\n    const regionsData = [];\n    let totalDelayAjd = 0;\n\n    data.resultset.forEach(row =\u003E {\n        const region = row[0];\n        const minutes = parseInt(row[1]) || 0;\n        \n        regionsData.push({ region, minutes });\n        totalDelayAjd += minutes;\n    });\n\n\n    const classementContainer = document.getElementById(\u0027classement_retard_regions\u0027);\n    let htmlList = \u0027\u0027;\n    const maxItems = 5;\n\n    const regionMapping = {\n        \u0027Île-de-France\u0027: { img: grayImg64, color: \u0027primary\u0027 },\n        \u0027Occitanie\u0027: { img: grayImg64, color: \u0027info\u0027 },\n        \u0027Nouvelle-Aquitaine\u0027: { img: grayImg64, color: \u0027secondary\u0027 },\n        \u0027Grand Est\u0027 : { img: grayImg64, color: \u0027secondary\u0027},\n        \u0027Autres\u0027: { img: \u0027default.png\u0027, color: \u0027warning\u0027 }\n    };\n    \n    \n    regionsData.slice(0, maxItems).forEach((item, index) =\u003E {\n        const regionName = item.region;\n        const minutes = item.minutes;\n        const percentage = totalDelayAjd \u003E 0 ? ((minutes / totalDelayAjd) * 100).toFixed(1) : 0;\n        \n        const map = regionMapping[regionName] || regionMapping[\u0027Autres\u0027];\n        const isLastItem = index === regionsData.length - 1 || index === maxItems - 1;\n        \n        htmlList += `\n            \u003Cli class=\u0022d-flex ${isLastItem ? \u0027\u0027 : \u0027mb-6\u0027}\u0022\u003E\n                \u003Cdiv class=\u0022avatar flex-shrink-0 bg-light rounded me-3\u0022\u003E\n                    \u003Cimg src=\u0022${map.img}\u0022 alt=\u0022${regionName}\u0022 width=\u002232\u0022 /\u003E\n                \u003C/div\u003E\n                \u003Cdiv class=\u0022d-flex w-100 flex-wrap align-items-center justify-content-between gap-2\u0022\u003E\n                    \u003Cdiv class=\u0022me-2\u0022\u003E\n                        \u003Ch6 class=\u0022mb-0\u0022\u003E${regionName}\u003C/h6\u003E\n                        \u003Cp class=\u0022mb-0 text-muted\u0022\u003E${percentage}% du total\u003C/p\u003E\n                    \u003C/div\u003E\n                    \u003Cdiv\u003E\n                        \u003Ch6 class=\u0022mb-2\u0022\u003E${minutes.toLocaleString()} min\u003C/h6\u003E\n                        \u003Cdiv class=\u0022progress bg-label-${map.color}\u0022 style=\u0022height: 4px\u0022\u003E\n                            \u003Cdiv class=\u0022progress-bar bg-${map.color}\u0022 style=\u0022width: ${percentage}%\u0022\u003E\u003C/div\u003E\n                        \u003C/div\u003E\n                    \u003C/div\u003E\n                \u003C/div\u003E\n            \u003C/li\u003E\n        `;\n    });\n\n    if (classementContainer) {\n        classementContainer.innerHTML = htmlList;\n    }\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      }
+    ]
+  },
+  "datasources" : {
+    "rows" : [
+      {
+        "id" : "SQL",
+        "name" : "SQL Queries",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "SQL Queries"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "b9bba914-7288-5f88-bf58-b283b2896afe",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbTrainsEnCiruclationKPIQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT nb_trains_actifs, nb_trains_actifs_h_1 FROM dwh.v_trains_actifs_kpi;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "d02b1f66-8e3a-1bb1-3069-0cace1235b83",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbTrainsEnRetardKPIQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT nb_trains_en_retard , variation_vs_hier  FROM dwh.v_trains_en_retard_kpi;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "6412ea67-ba34-7c7b-f981-f632eebdcd31",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "retardMoyenKPIQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT retard_moyen, variation_vs_moy_journaliere  FROM dwh.v_retard_moyen_kpi;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "5ec677f8-4b62-7805-163f-85ea65d60bba",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbGaresActivesKPIQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT gares_actives , variation_vs_heure_precedente  FROM dwh.v_gares_actives_kpi ;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "e2adad37-971d-c784-e99e-9d71aac43e93",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxDeRetardRadarQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT 100*SUM(nb_trains_en_retard)/SUM(nb_trains_total) taux_retard_pct,\n      100-100*SUM(nb_trains_en_retard)/SUM(nb_trains_total) taux_ponctualite_pct\nFROM dwh.v_taux_retard WHERE jour=NOW()::DATE;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "54ad811c-103e-e2b5-5e1d-e4571153333c",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "EvolutionNbTrainParHeureQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT to_char(hour_start , \u0027HH24:mi\u0027) AS heure, nb_trains_actifs , nb_trains_actifs_j_1 FROM dwh.v_trains_actifs_par_heure"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "7ee35903-c97c-5fdd-59e4-c55d2ffc6802",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbMinutesRetardQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT date AS jour,sum(total_delay_generated) AS total_minutes_retard\nFROM dwh.v_stats_retard_region\nWHERE date \u003E= now()::DATE-1 AND date\u003C=now()::DATE\nGROUP BY date\nORDER BY date DESC\nLIMIT 2;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "729f8b0b-53f3-6f78-5b5b-84f4cac7a3b5",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "nbRetardParTypeDeTrainQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT type_vehicule, retard_moyen_min, nb_trains \nFROM dwh.v_retard_par_type_train\nORDER BY nb_trains DESC\nLIMIT 6;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "b7c93cad-5ec3-be4c-a077-c5948e0d6389",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "retardMoyenVolumeDeTrainChartQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT heure_passage, avg_delay_generated, total_delay_generated, nb_trains FROM dwh.v_stats_retard_horaire;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "45307de5-23bc-faef-6e55-abef1ec84540",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "hourDelayHeatMapQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT  heure_passage, region_station, avg_delay_generated\nFROM dwh.v_stats_retard_horaire_region;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "7e96bb06-c9f5-4351-2c96-cbd7ee6a3da6",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "delayByRegionRankingQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT region_station, sum(total_delay_generated)\nFROM dwh.v_stats_retard_region\nWHERE date = now()::DATE\nGROUP BY region_station\nORDER BY sum(total_delay_generated) DESC\nlimit 4;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      }
+    ]
+  },
+  "filename" : "/public/dashboard/vue-globale-trafic.cdfde",
+  "layout" : {
+    "rows" : [
+      {
+        "id" : "c3c117e0-4e1d-92d4-ea4b-ac76d3c349b3",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "cutomStyles"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/styles.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "f61981aa-8ca1-d002-6469-4856d6e93561",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "customScripts"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/script.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "d777267f-934a-e8f4-ed0f-8e78fc75921c",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "apexcharts"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/apexcharts.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "cf9e1e9c-99c7-9143-c644-23092c87ea4d",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_wrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-wrapper layout-content-navbar"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "parent" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_container"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "046ff158-bd44-6079-1699-4e428abaa6ff",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menu"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "6befa140-dd36-c476-30b7-9f869e6ac63d",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "content"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "container-xxl flex-grow-1 container-p-y layout-container"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "7b5201cf-ac2c-191e-bc57-82d8692e34a7",
+        "parent" : "6befa140-dd36-c476-30b7-9f869e6ac63d",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnIndicateurs"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "455e86cd-c534-16cf-bbc0-d836cdeaf131",
+        "parent" : "7b5201cf-ac2c-191e-bc57-82d8692e34a7",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnIndicateursDefinition"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003Cdiv class=\u0022row g-6\u0022\u003E\n\n  \u003C!-- Trains en circulation --\u003E\n  \u003Cdiv class=\u0022col-sm-6 col-lg-3 mb-6\u0022\u003E\n    \u003Cdiv class=\u0022card card-border-shadow-primary h-100\u0022\u003E\n      \u003Cdiv class=\u0022card-body\u0022\u003E\n        \u003Cdiv class=\u0022d-flex align-items-center mb-2\u0022\u003E\n          \u003Cdiv class=\u0022avatar me-4\u0022\u003E\n            \u003Cspan class=\u0022avatar-initial rounded bg-label-primary\u0022\u003E\n              \u003Ci class=\u0022ri ri-train-line icon-24px\u0022\u003E\u003C/i\u003E\n            \u003C/span\u003E\n          \u003C/div\u003E\n          \u003Ch4 class=\u0022mb-0\u0022 id=\u0022nb_train_ciruclation_val\u0022\u003E\u003C/h4\u003E\n        \u003C/div\u003E\n        \u003Ch6 class=\u0022mb-0 fw-normal\u0022\u003ETrains en circulation\u003C/h6\u003E\n        \u003Cp class=\u0022mb-0\u0022\u003E\n          \u003Cspan class=\u0022me-1 fw-medium text-success\u0022 id=\u0022nb_train_ciruclation_progression\u0022\u003E\u003C/span\u003E\n          \u003Csmall class=\u0022text-body-secondary\u0022\u003Evs. heure précédente\u003C/small\u003E\n        \u003C/p\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\n  \u003C!-- Trains en retard --\u003E\n  \u003Cdiv class=\u0022col-sm-6 col-lg-3 mb-6\u0022\u003E\n    \u003Cdiv class=\u0022card card-border-shadow-danger h-100\u0022\u003E\n      \u003Cdiv class=\u0022card-body\u0022\u003E\n        \u003Cdiv class=\u0022d-flex align-items-center mb-2\u0022\u003E\n          \u003Cdiv class=\u0022avatar me-4\u0022\u003E\n            \u003Cspan class=\u0022avatar-initial rounded bg-label-danger\u0022\u003E\n              \u003Ci class=\u0022ri ri-timer-flash-line icon-24px\u0022\u003E\u003C/i\u003E\n            \u003C/span\u003E\n          \u003C/div\u003E\n          \u003Ch4 class=\u0022mb-0\u0022 id=\u0022nb_train_en_retard_val\u0022\u003E\u003C/h4\u003E\n        \u003C/div\u003E\n        \u003Ch6 class=\u0022mb-0 fw-normal\u0022\u003ETrains en retard (\u0026gt; 5 min)\u003C/h6\u003E\n        \u003Cp class=\u0022mb-0\u0022\u003E\n          \u003Cspan class=\u0022me-1 fw-medium text-danger\u0022 id=\u0022nb_train_en_retard_progression\u0022\u003E\u003C/span\u003E\n          \u003Csmall class=\u0022text-body-secondary\u0022\u003Evs. hier\u003C/small\u003E\n        \u003C/p\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\n  \u003C!-- Retard moyen --\u003E\n  \u003Cdiv class=\u0022col-sm-6 col-lg-3 mb-6\u0022\u003E\n    \u003Cdiv class=\u0022card card-border-shadow-warning h-100\u0022\u003E\n      \u003Cdiv class=\u0022card-body\u0022\u003E\n        \u003Cdiv class=\u0022d-flex align-items-center mb-2\u0022\u003E\n          \u003Cdiv class=\u0022avatar me-4\u0022\u003E\n            \u003Cspan class=\u0022avatar-initial rounded bg-label-warning\u0022\u003E\n              \u003Ci class=\u0022ri ri-time-line icon-24px\u0022\u003E\u003C/i\u003E\n            \u003C/span\u003E\n          \u003C/div\u003E\n          \u003Ch4 class=\u0022mb-0\u0022 id=\u0022retard_moyen_val\u0022\u003E\u003C/h4\u003E\n        \u003C/div\u003E\n        \u003Ch6 class=\u0022mb-0 fw-normal\u0022\u003ERetard moyen\u003C/h6\u003E\n        \u003Cp class=\u0022mb-0\u0022\u003E\n          \u003Cspan class=\u0022me-1 fw-medium text-success\u0022 id=\u0022retard_moyen_progression\u0022\u003E\u003C/span\u003E\n          \u003Csmall class=\u0022text-body-secondary\u0022\u003Evs. moyenne journalière\u003C/small\u003E\n        \u003C/p\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\n  \u003C!-- Gares actives --\u003E\n  \u003Cdiv class=\u0022col-sm-6 col-lg-3 mb-6\u0022\u003E\n    \u003Cdiv class=\u0022card card-border-shadow-info h-100\u0022\u003E\n      \u003Cdiv class=\u0022card-body\u0022\u003E\n        \u003Cdiv class=\u0022d-flex align-items-center mb-2\u0022\u003E\n          \u003Cdiv class=\u0022avatar me-4\u0022\u003E\n            \u003Cspan class=\u0022avatar-initial rounded bg-label-info\u0022\u003E\n              \u003Ci class=\u0022ri ri-map-pin-line icon-24px\u0022\u003E\u003C/i\u003E\n            \u003C/span\u003E\n          \u003C/div\u003E\n          \u003Ch4 class=\u0022mb-0\u0022 id=\u0022gares_actives_val\u0022\u003E\u003C/h4\u003E\n        \u003C/div\u003E\n        \u003Ch6 class=\u0022mb-0 fw-normal\u0022\u003EGares actives\u003C/h6\u003E\n        \u003Cp class=\u0022mb-0\u0022\u003E\n          \u003Cspan class=\u0022me-1 fw-medium text-success\u0022 id=\u0022gares_actives_progression\u0022\u003E\u003C/span\u003E\n          \u003Csmall class=\u0022text-body-secondary\u0022\u003Evs. heure précédente\u003C/small\u003E\n        \u003C/p\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "parent" : "6befa140-dd36-c476-30b7-9f869e6ac63d",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsData"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "row gy-6"
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "cee16a1e-a062-3edc-7656-fa400994f79d",
+        "parent" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsDataLine0"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003C!--Evolution du nombre de retard  --\u003E\n\u003Cdiv class=\u0022col-lg-12 col-xxl-12\u0022\u003E\n\u003Cdiv class=\u0022card height-100-p\u0022\u003E\n  \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between gap-2 flex-wrap\u0022\u003E\n    \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n      \u003Ch5 class=\u0022m-0 me-2\u0022\u003EÉvolution du nombre de trains actifs par heure\u003C/h5\u003E\n      \u003Cspan class=\u0022card-subtitle\u0022\u003E\u003C/span\u003E\n    \u003C/div\u003E\n    \u003Cdiv class=\u0022btn-group\u0022\u003E\n      \u003Cul class=\u0022dropdown-menu\u0022 style=\u0022\u0022\u003E\n       \n      \u003C/ul\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n  \u003Cdiv class=\u0022card-body\u0022\u003E\n    \u003Cdiv id=\u0022evolutionNbTrain\u0022 class=\u0022\u0022 style=\u0022min-height: 320px;\u0022\u003E\n\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E\n\u003C/div\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "a979fde4-ba41-fda4-b271-3c553933eacc",
+        "parent" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsDataLine1"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003C!-- Taux de retard --\u003E\n\u003Cdiv class=\u0022col-md-6 col-xxl-4\u0022\u003E\n  \u003Cdiv class=\u0022card h-100\u0022\u003E\n    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n      \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n        \u003Ch5 class=\u0022m-0 me-2\u0022\u003ETaux de ponctualité aujoud\u0027hui\u003C/h5\u003E\n      \u003C/div\u003E\n      \u003Cdiv class=\u0022dropdown\u0022\u003E\n        \u003Cbutton class=\u0022btn text-body-secondary p-0\u0022 type=\u0022button\u0022 id=\u0022deliveryExceptions\u0022 data-bs-toggle=\u0022dropdown\u0022\n          aria-haspopup=\u0022true\u0022 aria-expanded=\u0022false\u0022\u003E\n          \u003Ci class=\u0022icon-base ri ri-more-2-line\u0022\u003E\u003C/i\u003E\n        \u003C/button\u003E\n        \u003Cdiv class=\u0022dropdown-menu dropdown-menu-end\u0022 aria-labelledby=\u0022deliveryExceptions\u0022\u003E\n          \u003Ca class=\u0022dropdown-item waves-effect\u0022 href=\u0022javascript:void(0);\u0022\u003ESelect All\u003C/a\u003E\n          \u003Ca class=\u0022dropdown-item waves-effect\u0022 href=\u0022javascript:void(0);\u0022\u003ERefresh\u003C/a\u003E\n          \u003Ca class=\u0022dropdown-item waves-effect\u0022 href=\u0022javascript:void(0);\u0022\u003EShare\u003C/a\u003E\n        \u003C/div\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n    \u003Cdiv class=\u0022card-body\u0022\u003E\n      \u003Cdiv id=\u0022delayRateChart\u0022 style=\u0022min-height: 392px;\u0022 class=\u0022\u0022\u003E\n\n      \u003C/div\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E\n\n\n\n\n\u003Cdiv class=\u0022col-xl-4 col-md-6\u0022\u003E\n    \u003Cdiv class=\u0022card h-100 border-0 shadow-sm\u0022\u003E\n        \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n            \u003Ch5 class=\u0022card-title m-0 me-2\u0022\u003EMinutes de retard - Aujourd\u0027hui\u003C/h5\u003E\n            \u003C/div\u003E\n\n        \u003Cdiv class=\u0022card-body pt-lg-8\u0022\u003E\n            \u003Cdiv class=\u0022mb-5 mb-lg-12\u0022\u003E\n                \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                    \u003Ch3 class=\u0022mb-0 text-primary\u0022 id=\u0022nb_minutes_retard_ajd\u0022\u003E0 min\u003C/h3\u003E\n                    \u003Cspan class=\u0022text-danger ms-2\u0022\u003E\n                        \u003Ci class=\u0022ri ri-arrow-up-s-line icon-sm\u0022\u003E\u003C/i\u003E\n                        \u003Cspan id=\u0022nb_minutes_retard_progression_ajd\u0022\u003E\u003C/span\u003E\n                    \u003C/span\u003E\n                \u003C/div\u003E\n                \u003Cp class=\u0022mb-0 text-muted\u0022 id=\u0022nb_minutes_retard_hier\u0022\u003E\u003C/p\u003E\n            \u003C/div\u003E\n\n            \u003Cul class=\u0022p-0 m-0\u0022 id=\u0022classement_retard_regions\u0022\u003E\n                \u003C/ul\u003E\n        \u003C/div\u003E\n    \u003C/div\u003E\n\u003C/div\u003E\n\n\n\n\n\n\u003C!-- Retard par type de train --\u003E\n\u003Cdiv class=\u0022col-xl-4 col-md-6\u0022\u003E\n  \u003Cdiv class=\u0022card h-100\u0022\u003E\n    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n      \u003Ch5 class=\u0022card-title m-0 me-2\u0022\u003ETop 6 des types de vehicule en retard aujoud\u0027hui \u003C/h5\u003E\n      \u003Cdiv class=\u0022dropdown\u0022\u003E\n        \u003Cbutton class=\u0022btn text-body-secondary p-0\u0022 type=\u0022button\u0022 id=\u0022saleStatus\u0022 data-bs-toggle=\u0022dropdown\u0022\n          aria-haspopup=\u0022true\u0022 aria-expanded=\u0022false\u0022\u003E\n          \u003Ci class=\u0022icon-base ri ri-more-2-line icon-24px\u0022\u003E\u003C/i\u003E\n        \u003C/button\u003E\n      \u003C/div\u003E\n    \u003C/div\u003E\n    \u003Cdiv class=\u0022card-body\u0022\u003E\n      \u003Cdiv id=\u0022retards-par-type-train-container\u0022\u003E\n      \u003C/div\u003E\n\n      \u003Ctemplate id=\u0022train-type-template\u0022\u003E\n        \u003Cdiv class=\u0022d-flex justify-content-between align-items-center py-2 train-type-item\u0022\u003E\n\n          \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n            \u003Cdiv class=\u0022avatar me-3\u0022\u003E\n              \u003Cspan class=\u0022avatar-initial rounded-circle train-type-initials bg-label-success\u0022\u003ETT\u003C/span\u003E\n            \u003C/div\u003E\n            \u003Cdiv\u003E\n              \u003Ch6 class=\u0022mb-1 train-type-name\u0022\u003EType de Train\u003C/h6\u003E\n              \u003Csmall class=\u0022text-body train-average-delay\u0022\u003EX.X min\u003C/small\u003E \u003Csmall\n                class=\u0022text-body train-average-delay\u0022\u003Een moyenne\u003C/small\u003E\n            \u003C/div\u003E\n          \u003C/div\u003E\n\n          \u003Cdiv class=\u0022text-end\u0022\u003E\n            \u003Ch6 class=\u0022mb-1 fw-bold train-volume\u0022\u003E0\u003C/h6\u003E\n            \u003Csmall class=\u0022text-body-secondary\u0022\u003ETrains concernés\u003C/small\u003E\n          \u003C/div\u003E\n        \u003C/div\u003E\n      \u003C/template\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "252d3537-f726-31d5-ec2f-4a72adb9355e",
+        "parent" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsDataLine2"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003C!--Evolution du nombre de retard  --\u003E\n\u003Cdiv class=\u0022col-lg-12 col-xxl-12\u0022\u003E\n\u003Cdiv class=\u0022card height-100-p\u0022\u003E\n  \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between gap-2 flex-wrap\u0022\u003E\n    \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n      \u003Ch5 class=\u0022m-0 me-2\u0022\u003ERetard Moyen vs. Nombre de Trains par Heure  (Données sur les 7 derniers jours)\u003C/h5\u003E\n      \u003Cspan class=\u0022card-subtitle\u0022\u003E\u003C/span\u003E\n    \u003C/div\u003E\n    \u003Cdiv class=\u0022btn-group\u0022\u003E\n      \u003Cul class=\u0022dropdown-menu\u0022 style=\u0022\u0022\u003E\n       \n      \u003C/ul\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003Cdiv class=\u0022card-body\u0022\u003E\n    \u003Cdiv id=\u0022delayVolumeChart\u0022 class=\u0022\u0022 style=\u0022min-height: 320px;\u0022\u003E\n        \u003C/div\u003E\n\u003C/div\u003E \n\u003C/div\u003E\n\u003C/div\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "2c84de37-daca-6902-84a3-f05b4d7bee66",
+        "parent" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsDataLine3"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003C!--Evolution du nombre de retard  --\u003E\n\u003Cdiv class=\u0022col-lg-12 col-xxl-12\u0022\u003E\n\u003Cdiv class=\u0022card height-100-p\u0022\u003E\n  \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between gap-2 flex-wrap\u0022\u003E\n    \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n      \u003Ch5 class=\u0022m-0 me-2\u0022\u003ERetard Moyen (min) par Heure et par Région (Données sur les 7 derniers jours)\u003C/h5\u003E\n      \u003Cspan class=\u0022card-subtitle\u0022\u003E\u003C/span\u003E\n    \u003C/div\u003E\n    \u003Cdiv class=\u0022btn-group\u0022\u003E\n      \u003Cul class=\u0022dropdown-menu\u0022 style=\u0022\u0022\u003E\n       \n      \u003C/ul\u003E\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003Cdiv class=\u0022card-body\u0022\u003E\n    \u003Cdiv id=\u0022delayHeatmapChart\u0022 class=\u0022\u0022 style=\u0022min-height: 400px;\u0022\u003E\n        \u003C/div\u003E\n\u003C/div\u003E\n\u003C/div\u003E\n\u003C/div\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "d28080b0-4e8b-b1fd-b45c-ea9a140dbfde",
+        "parent" : "0ac0f615-7d70-c25c-3ab4-f78c1ec6deaa",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsDataLine4"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : ""
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      }
+    ],
+    "title" : "CDF - Sample structure"
+  }
+}

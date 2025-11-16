@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DesignerComponent><Header><Name>sncfDashboardMenu</Name><IName>widgetsncfDashboardMenu</IName><Description>sncfDashboardMenu Widget</Description><Category>WIDGETS</Category><CatDescription>Widgets</CatDescription><Type>PalleteEntry</Type><Order>0</Order><Version>1.0</Version><Visible>true</Visible></Header><Metadata><meta name="widget">true</meta><meta name="wcdf">/public/cde/widgets/sncfDashboardMenu.wcdf</meta></Metadata><Contents><Model><Property>htmlObject</Property></Model></Contents></DesignerComponent>

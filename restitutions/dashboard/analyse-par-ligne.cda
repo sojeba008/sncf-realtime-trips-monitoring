@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDADescriptor>
+   <DataSources>
+      <Connection id="lineColumnChartRetardVolumeTrainQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="tauxDeRetardStackedChartQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="tauxDeRetardRadarLineQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="ligneListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="linesCompChartQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="linesCompTableQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+   </DataSources>
+   <DataAccess access="public" connection="lineColumnChartRetardVolumeTrainQuery"
+               id="lineColumnChartRetardVolumeTrainQuery"
+               type="sql">
+      <Name>lineColumnChartRetardVolumeTrainQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pLine" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    dd."date" AS jour,
+    SUM(f.nb_journey) AS nb_trajets_total,
+    SUM(f.nb_delay) AS nb_trajets_en_retard
+FROM dwh.f_line_metrics f
+JOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk
+WHERE f.line_tk = ${pLine}
+AND dd.date>=NOW()::DATE-14
+GROUP BY dd."date"
+ORDER BY dd."date";]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="tauxDeRetardStackedChartQuery"
+               id="tauxDeRetardStackedChartQuery"
+               type="sql">
+      <Name>tauxDeRetardStackedChartQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pLine" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    dd.date AS jour,
+    100 - 100 * SUM(f.nb_delay)::FLOAT / NULLIF(SUM(f.nb_journey),0) AS taux_ponctualite_pct,
+    100 * SUM(f.nb_delay)::FLOAT / NULLIF(SUM(f.nb_journey),0) AS taux_retard_pct
+FROM dwh.f_line_metrics f
+JOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk
+WHERE f.line_tk = ${pLine}
+AND dd.date>=NOW()::DATE-14
+GROUP BY dd.date
+ORDER BY dd.date;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="tauxDeRetardRadarLineQuery"
+               id="tauxDeRetardRadarLineQuery"
+               type="sql">
+      <Name>tauxDeRetardRadarLineQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pLine" type="Integer"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    100 * SUM(nb_delay)::FLOAT / NULLIF(SUM(nb_journey),0) AS taux_retard_pct,
+    100 - 100 * SUM(nb_delay)::FLOAT / NULLIF(SUM(nb_journey),0) AS taux_ponctualite_pct
+FROM dwh.f_line_metrics AS flm
+JOIN dwh.d_date dd ON dd.tk_date = flm.ref_date_tk
+WHERE dd."date" = NOW()::DATE
+AND flm.line_tk = ${pLine};]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="ligneListQuery" id="ligneListQuery" type="sql">
+      <Name>ligneListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[SELECT dl.tk_line , line_name
+FROM dwh.d_line dl 
+WHERE tk_line <> -1
+ORDER BY dl.line_name ;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="linesCompChartQuery" id="linesCompChartQuery"
+               type="sql">
+      <Name>linesCompChartQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pLines" type="IntegerArray"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    dd.date ,
+    l.line_name AS ligne,
+    f.nb_journey AS nb_trajets,
+    f.nb_delay AS nb_retards
+FROM dwh.f_line_metrics f
+JOIN dwh.d_line l ON l.tk_line = f.line_tk
+JOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk 
+WHERE  l.tk_line IN (${pLines})
+AND dd."date" >= NOW()::DATE-14
+ORDER BY dd.date, f.delay_rate DESC, f.nb_delay DESC;]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="linesCompTableQuery" id="linesCompTableQuery"
+               type="sql">
+      <Name>linesCompTableQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pLines" type="IntegerArray"/>
+      </Parameters>
+      <Query><![CDATA[SELECT
+    l.line_name AS ligne,
+    f.nb_journey AS nb_trajets,
+    f.nb_delay AS nb_retards,
+    f.delay_rate AS taux_retard_pct,
+    f.delay_minutes  AS nb_minutes_retard,
+    f.avg_delay_minutes  AS retard_moyen_min
+FROM dwh.f_line_metrics f
+JOIN dwh.d_line l ON l.tk_line = f.line_tk
+WHERE f.ref_date_tk = TO_CHAR(NOW()::date, 'YYYYMMDD')::INT4
+AND l.tk_line IN (${pLines})
+ORDER BY f.delay_rate DESC, f.nb_delay DESC;]]></Query>
+   </DataAccess>
+</CDADescriptor>

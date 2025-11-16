@@ -1,0 +1,1791 @@
+{
+  "components" : {
+    "rows" : [
+      {
+        "id" : "WIDGETS",
+        "name" : "Widgets",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Widgets"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "247f569c-81be-32d0-fd55-9631003bcd56",
+        "meta_wcdf" : "/public/cde/widgets/sncfDashboardMenu.wcdf",
+        "meta_widget" : "true",
+        "parent" : "WIDGETS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menuWidget"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:menu}"
+          }
+        ],
+        "rowName" : "sncfDashboardMenu",
+        "type" : "ComponentswidgetsncfDashboardMenu",
+        "typeDesc" : "sncfDashboardMenu Widget"
+      },
+      {
+        "id" : "PARAMETERS",
+        "name" : "Parameters",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Parameters"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "1362c690-b171-260c-8c29-e44f1feec314",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "page"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "analyse-par-ligne"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "38998357-99ca-2469-7478-83b8ec1d7b5c",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pLine"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "-2"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "d75a4f2c-723f-1cad-ad3d-e04cd6e0b640",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pLines"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "(-2)"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "SELECTORS",
+        "name" : "Selects",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Selects"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "b391b5cd-83d6-764e-dd87-5b0c82667d60",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "ligne_filter"
+          },
+          {
+            "name" : "title",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "${p:pLine}"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLine}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "outputFormat",
+            "type" : "outputFormatCustom",
+            "value" : "lowestID"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "ligneListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "alwaysExpanded",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "multiselect",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "selectionLimit",
+            "type" : "Integer",
+            "value" : "1"
+          },
+          {
+            "name" : "pageSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "showIcons",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "showButtonOnlyThis",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "useOverlay",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "showFilter",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:ligne_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : "function postChange() {\n    document.getElementById(\u0022visu-line\u0022).classList.remove(\u0022hidden\u0022)\n}\n    "
+          },
+          {
+            "name" : "postUpdate",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootHeader",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootFooter",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderGroupSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderItemSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "sortGroup",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "sortItem",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "options",
+            "type" : "JavaScript",
+            "value" : "function options(){\n    return {};\n}"
+          }
+        ],
+        "rowName" : "Filter Component",
+        "type" : "ComponentsFilterComponent",
+        "typeDesc" : "Filter Component"
+      },
+      {
+        "id" : "278fa08e-25fc-cdc3-bd38-a9d315396217",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "lignes_filter"
+          },
+          {
+            "name" : "title",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "pLines"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLines}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "outputFormat",
+            "type" : "outputFormatCustom",
+            "value" : "lowestID"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "ligneListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "alwaysExpanded",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "multiselect",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "selectionLimit",
+            "type" : "Integer",
+            "value" : "10"
+          },
+          {
+            "name" : "pageSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "showIcons",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "showButtonOnlyThis",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "useOverlay",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "showFilter",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:lignes_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : "function postChange() {\n    document.getElementById(\u0022visu-lines\u0022).classList.remove(\u0022hidden\u0022)\n} "
+          },
+          {
+            "name" : "postUpdate",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootHeader",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderRootFooter",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderGroupSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "renderItemSelection",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "sortGroup",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "sortItem",
+            "type" : "Array",
+            "value" : "[]"
+          },
+          {
+            "name" : "options",
+            "type" : "JavaScript",
+            "value" : "function options(){\n    return {};\n}"
+          }
+        ],
+        "rowName" : "Filter Component",
+        "type" : "ComponentsFilterComponent",
+        "typeDesc" : "Filter Component"
+      },
+      {
+        "id" : "STANDARDCOMPONENTS",
+        "name" : "Standard",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Standard"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "5e51ef84-8790-a3c0-dccb-489b727c4e8f",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxDeRetardRadarQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLine}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pLine\u0022,\u0022pLine\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "tauxDeRetardRadarLineQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchRetards(data) {\n    var delayRateChartOptions = {\n    series: [0],\n    chart: {\n        height: 350,\n        type: \u0027radialBar\u0027,\n        toolbar: {\n            show: false\n        }\n    },\n    plotOptions: {\n        radialBar: {\n            startAngle: -135,\n            endAngle: 225,\n            hollow: {\n                margin: 0,\n                size: \u002770%\u0027,\n                background: \u0027#fff\u0027,\n                image: undefined,\n                position: \u0027front\u0027,\n                dropShadow: {\n                    enabled: true,\n                    top: 3,\n                    left: 0,\n                    blur: 4,\n                    opacity: 0.24\n                }\n            },\n            track: {\n                background: \u0027#e7e7e7\u0027,\n                strokeWidth: \u002767%\u0027,\n                margin: 0,\n                dropShadow: {\n                    enabled: true,\n                    top: -3,\n                    left: 0,\n                    blur: 4,\n                    opacity: 0.35\n                }\n            },\n\n            dataLabels: {\n                show: true,\n                name: {\n                    offsetY: -10,\n                    show: true,\n                    color: \u0027#888\u0027,\n                    fontSize: \u002717px\u0027\n                },\n                value: {\n                    formatter: function(val) {\n                        return parseInt(val) + \u0027%\u0027;\n                    },\n                    color: \u0027#111\u0027,\n                    fontSize: \u002736px\u0027,\n                    show: true,\n                }\n            }\n        }\n    },\n    fill: {\n        type: \u0027gradient\u0027,\n        gradient: {\n            shade: \u0027dark\u0027,\n            type: \u0027horizontal\u0027,\n            shadeIntensity: 0.5,\n            gradientToColors: [\u0027#38c172\u0027],\n            inverseColors: true,\n            opacityFrom: 1,\n            opacityTo: 1,\n            stops: [0, 100]\n        }\n    },\n    stroke: {\n        lineCap: \u0027round\u0027\n    },\n    labels: [\u0027Ponctualité\u0027],\n    colors: [\u0027#38c172\u0027], \n};\n\nvar delayRateChart = new ApexCharts(document.querySelector(\u0022#delayRateChart\u0022), delayRateChartOptions);\ndelayRateChart.render();\n    if (typeof delayRateChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique ApexCharts n\u0027est pas initialisé.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour le graphique de retard.\u0022);\n        delayRateChart.updateOptions({\n            series: [0],\n            labels: [\u0027Erreur de données\u0027]\n        });\n        return;\n    }\n\n    const row = data.resultset[0];\n\n    \n    const tauxRetardPct = parseFloat(row[0]); \n    const tauxPonctualitePct = parseFloat(row[1]);\n    \n    if (isNaN(tauxPonctualitePct)) {\n        console.error(\u0022Les données de ponctualité ne sont pas valides.\u0022);\n        return;\n    }\n\n    \n    let chartColor = \u0027#38c172\u0027; \n    let label = \u0027Ponctualité\u0027;\n    \n    if (tauxPonctualitePct \u003C 90) {\n        chartColor = \u0027#ff6347\u0027;\n    }\n\n\n    delayRateChart.updateOptions({\n        series: [Math.round(tauxPonctualitePct)],\n        labels: [label],\n        colors: [chartColor],\n        fill: {\n            type: \u0027gradient\u0027,\n            gradient: {\n                shade: \u0027dark\u0027,\n                type: \u0027horizontal\u0027,\n                shadeIntensity: 0.5,\n                gradientToColors: [chartColor], \n                inverseColors: true,\n                opacityFrom: 1,\n                opacityTo: 1,\n                stops: [0, 100]\n            }\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "30889d5b-2c0a-adf5-f36b-feb6b013870a",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "lineColumnChartRetardVolumeTrainQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLine}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pLine\u0022,\u0022pLine\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "lineColumnChartRetardVolumeTrainQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchMixedChart(data) {\n    \n    var volumeDelayMixedOptions = {\n    series: [{\n        name: \u0027Trajets Totaux\u0027,\n        type: \u0027column\u0027,\n        data: []\n    }, {\n        name: \u0027Trajets en Retard\u0027,\n        type: \u0027line\u0027,\n        data: []\n    }],\n    chart: {\n        height: 350,\n        type: \u0027line\u0027,\n        toolbar: {\n            show: true\n        }\n    },\n    stroke: {\n        width: [0, 4]\n    },\n    title: {\n        text: \u0027Nombre de Trajets vs. Trajets en Retard (14 Jours)\u0027,\n        align: \u0027left\u0027\n    },\n    dataLabels: {\n        enabled: true,\n        enabledOnSeries: [1]\n    },\n    labels: [],\n    xaxis: {\n        type: \u0027category\u0027,\n        title: {\n            text: \u0027Date\u0027\n        }\n    },\n    yaxis: [{\n        title: {\n            text: \u0027Nombre de Trajets Totaux\u0027\n        },\n        labels: {\n            formatter: function (val) {\n                return Math.round(val).toLocaleString();\n            }\n        },\n        min: 0\n    }, {\n        opposite: true,\n        title: {\n            text: \u0027Nombre de Trajets en Retard\u0027,\n            style: {\n                color: \u0027#FF4560\u0027\n            }\n        },\n        labels: {\n            formatter: function (val) {\n                return Math.round(val).toLocaleString();\n            },\n            style: {\n                colors: \u0027#FF4560\u0027\n            }\n        },\n        min: 0\n    }],\n    colors: [\u0027#008FFB\u0027, \u0027#FF4560\u0027],\n    tooltip: {\n        shared: true,\n        intersect: false,\n        y: {\n            formatter: function (y) {\n                if (typeof y !== \u0022undefined\u0022) {\n                    return Math.round(y).toLocaleString();\n                }\n                return y;\n            }\n        }\n    }\n};\n\nvar volumeDelayMixedChart = new ApexCharts(document.querySelector(\u0022#volumeDelayMixedChart\u0022), volumeDelayMixedOptions);\nvolumeDelayMixedChart.render();\n    \n    if (typeof volumeDelayMixedChart === \u0027undefined\u0027) {\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const categories = [];\n    const seriesTotal = [];\n    const seriesDelay = [];\n\n    data.resultset.forEach(row =\u003E {\n        const dateString = row[0];\n        const dateFormatted = dateString ? dateString.substring(5, 10) : \u0027\u0027; \n        \n        const totalJourneys = parseInt(row[1]) || 0;\n        const delayedJourneys = parseInt(row[2]) || 0;\n        \n        categories.push(dateFormatted);\n        seriesTotal.push(totalJourneys);\n        seriesDelay.push(delayedJourneys);\n    });\n\n    volumeDelayMixedChart.updateOptions({\n        series: [{\n            name: \u0027Trajets Totaux\u0027,\n            data: seriesTotal\n        }, {\n            name: \u0027Trajets en Retard\u0027,\n            data: seriesDelay\n        }],\n        xaxis: {\n            categories: categories\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "77211539-a265-ffcd-dd3e-b6e5ec2b6c69",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxRetardStackedQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLine}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pLine\u0022,\u0022pLine\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "tauxDeRetardStackedChartQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchStackedRates(data) {\n    \n    var punctualityDelayStackOptions = {\n    series: [{\n        name: \u0027Ponctualité (%)\u0027,\n        data: [] \n    }, {\n        name: \u0027Retard (%)\u0027,\n        data: []\n    }],\n    chart: {\n        type: \u0027bar\u0027,\n        height: 335,\n        stacked: true,\n        stackType: \u0027100%\u0027,\n        toolbar: {\n            show: true\n        }\n    },\n    responsive: [{\n        breakpoint: 480,\n        options: {\n            legend: {\n                position: \u0027bottom\u0027,\n                offsetX: -10,\n                offsetY: 0\n            }\n        }\n    }],\n    xaxis: {\n        categories: [],\n        title: {\n            text: \u0027Date\u0027\n        }\n    },\n    yaxis: {\n        title: {\n            text: \u0027Pourcentage (%)\u0027\n        },\n        labels: {\n            formatter: function (val) {\n                return val.toFixed(0) + \u0022%\u0022;\n            }\n        }\n    },\n    fill: {\n        opacity: 1\n    },\n    legend: {\n        position: \u0027right\u0027,\n        offsetX: 0,\n        offsetY: 50\n    },\n    colors: [\u0027#00E396\u0027, \u0027#FF4560\u0027],\n    tooltip: {\n        y: {\n            formatter: function (val) {\n                return val.toFixed(2) + \u0022%\u0022;\n            }\n        }\n    }\n};\n\nvar punctualityDelayStackChart = new ApexCharts(document.querySelector(\u0022#punctualityDelayStackChart\u0022), punctualityDelayStackOptions);\npunctualityDelayStackChart.render();\n\n\n    if (typeof punctualityDelayStackChart === \u0027undefined\u0027) {\n        console.error(\u0022Le graphique Stacked Column 100% n\u0027est pas initialisé.\u0022);\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        console.warn(\u0022Aucune donnée reçue pour le Stacked Column Chart.\u0022);\n        return;\n    }\n\n    const categories = [];      \n    const seriesPunctuality = [];\n    const seriesDelay = [];     \n\n    data.resultset.forEach(row =\u003E {\n        \n        const dateString = row[0];\n        const dateFormatted = dateString ? dateString.substring(5, 10) : \u0027\u0027; \n        \n        const punctuality = parseFloat(row[1]);\n        const delay = parseFloat(row[2]);\n        \n        if (!isNaN(punctuality) \u0026\u0026 !isNaN(delay)) {\n            categories.push(dateFormatted);\n            seriesPunctuality.push(parseFloat(punctuality.toFixed(2)));\n            seriesDelay.push(parseFloat(delay.toFixed(2)));\n        }\n    });\n\n    \n    punctualityDelayStackChart.updateOptions({\n        series: [{\n            name: \u0027Ponctualité (%)\u0027,\n            data: seriesPunctuality\n        }, {\n            name: \u0027Retard (%)\u0027,\n            data: seriesDelay\n        }],\n        xaxis: {\n            categories: categories\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "edf5615b-45f0-a015-0578-81bdd1279d29",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "linesCompTableQueryQuery"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLines}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pLines\u0022,\u0022pLines\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "linesCompTableQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postFetchLineMetrics(data) {\n    const tableBody = document.querySelector(\u0027#line-metrics-table tbody\u0027);\n    tableBody.innerHTML = \u0027\u0027;\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        tableBody.innerHTML = `\n            \u003Ctr\u003E\n                \u003Ctd colspan=\u00226\u0022 class=\u0022text-center text-muted\u0022\u003EAucune donnée de performance des lignes disponible\u003C/td\u003E\n            \u003C/tr\u003E\n        `;\n        return;\n    }\n\n    data.resultset.forEach(row =\u003E {\n        const [ligne, nbTrajets, nbRetards, tauxRetard, nbMinRetard, avgMinRetard] = row;\n\n        const red = Math.min(255, Math.round((tauxRetard / 100) * 255));\n        const green = Math.min(255, Math.round((1 - tauxRetard / 100) * 255));\n        const colorStyle = `background-color: rgb(${red}, ${green}, 0); color: #fff;`;\n\n        const tr = document.createElement(\u0027tr\u0027);\n        tr.innerHTML = `\n            \u003Ctd\u003E\u003Cstrong\u003E${ligne}\u003C/strong\u003E\u003C/td\u003E\n            \u003Ctd\u003E${nbTrajets.toLocaleString()}\u003C/td\u003E\n            \u003Ctd\u003E${nbRetards.toLocaleString()}\u003C/td\u003E\n            \u003Ctd\u003E\u003Cspan class=\u0022badge\u0022 style=\u0022${colorStyle}\u0022\u003E${tauxRetard.toFixed(1)}%\u003C/span\u003E\u003C/td\u003E\n            \u003Ctd\u003E${nbMinRetard.toLocaleString()}\u003C/td\u003E\n            \u003Ctd\u003E${avgMinRetard ? avgMinRetard.toFixed(1) : \u00270.0\u0027}\u003C/td\u003E\n        `;\n        tableBody.appendChild(tr);\n    });\n}\n "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      },
+      {
+        "id" : "c08a2f8f-d5fe-b4c5-648a-68a4ddf06afa",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "linesCompChartQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pLines}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pLines\u0022,\u0022pLines\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "linesCompChartQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchMultilineDelay(data) {\n    \nvar groupedLineDelayOptions = {\n    series: [],\n    chart: {\n        type: \u0027bar\u0027,\n        height: 400,\n        toolbar: {\n            show: true\n        }\n    },\n    plotOptions: {\n        bar: {\n            horizontal: false,\n            columnWidth: \u002770%\u0027,\n            borderRadius: 4,\n            borderRadiusApplication: \u0027end\u0027\n        },\n    },\n    dataLabels: {\n        enabled: false\n    },\n    stroke: {\n        show: true,\n        width: 2,\n        colors: [\u0027transparent\u0027]\n    },\n    xaxis: {\n        categories: [],\n        title: {\n            text: \u0027Jour\u0027\n        }\n    },\n    yaxis: {\n        title: {\n            text: \u0027Nombre de Trajets\u0027\n        },\n        labels: {\n            formatter: function (val) {\n                return Math.round(val).toLocaleString();\n            }\n        },\n        min: 0\n    },\n    fill: {\n        opacity: 1\n    },\n    legend: {\n        position: \u0027top\u0027,\n        horizontalAlign: \u0027left\u0027,\n        offsetX: 40\n    },\n    colors: [\u0027#008FFB\u0027, \u0027#FF4560\u0027],\n    tooltip: {\n        y: {\n            formatter: function (val) {\n                return Math.round(val).toLocaleString();\n            }\n        }\n    }\n};\n\nvar groupedLineDelayChart = new ApexCharts(document.querySelector(\u0022#groupedLineDelayChart\u0022), groupedLineDelayOptions);\ngroupedLineDelayChart.render();\n    \n    if (typeof groupedLineDelayChart === \u0027undefined\u0027) {\n        return;\n    }\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        return;\n    }\n\n    const categories = new Set();\n    const lineMetricsMap = {}; \n    const lineNames = new Set();\n\n    data.resultset.forEach(row =\u003E {\n\n        const dateString = row[0];\n        const lineName = row[1];\n        const total = parseInt(row[2]) || 0;\n        const delay = parseInt(row[3]) || 0;\n\n        const dateFormatted = dateString ? dateString.substring(5, 10) : \u0027\u0027; \n\n        categories.add(dateFormatted);\n        lineNames.add(lineName);\n\n        if (!lineMetricsMap[lineName]) {\n            lineMetricsMap[lineName] = {};\n        }\n        lineMetricsMap[lineName][dateFormatted] = { total, delay };\n    });\n\n    const sortedCategories = Array.from(categories).sort();\n    const chartSeries = [];\n\n    Array.from(lineNames).sort().forEach(lineName =\u003E {\n        const totalData = [];\n        const delayData = [];\n\n        sortedCategories.forEach(date =\u003E {\n            const metrics = lineMetricsMap[lineName][date] || { total: 0, delay: 0 }; \n            totalData.push(metrics.total);\n            delayData.push(metrics.delay);\n        });\n\n        chartSeries.push({\n            name: `${lineName} (Total)`,\n            data: totalData,\n            color: \u0027#008FFB\u0027 \n        });\n        chartSeries.push({\n            name: `${lineName} (Retard)`,\n            data: delayData,\n            color: \u0027#FF4560\u0027 \n        });\n    });\n\n    groupedLineDelayChart.updateOptions({\n        series: chartSeries,\n        xaxis: {\n            categories: sortedCategories\n        }\n    });\n} "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      }
+    ]
+  },
+  "datasources" : {
+    "rows" : [
+      {
+        "id" : "SQL",
+        "name" : "SQL Queries",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "SQL Queries"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "9c4eec6f-190b-c3a7-ac22-c6a222955e79",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "lineColumnChartRetardVolumeTrainQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT\n    dd.\u0022date\u0022 AS jour,\n    SUM(f.nb_journey) AS nb_trajets_total,\n    SUM(f.nb_delay) AS nb_trajets_en_retard\nFROM dwh.f_line_metrics f\nJOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk\nWHERE f.line_tk = ${pLine}\nAND dd.date\u003E=NOW()::DATE-14\nGROUP BY dd.\u0022date\u0022\nORDER BY dd.\u0022date\u0022;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pLine\u0022,\u0022\u0022,\u0022Integer\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "f54d8d9b-4824-33c6-821d-633ddb7237ef",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxDeRetardStackedChartQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT\n    dd.date AS jour,\n    100 - 100 * SUM(f.nb_delay)::FLOAT / NULLIF(SUM(f.nb_journey),0) AS taux_ponctualite_pct,\n    100 * SUM(f.nb_delay)::FLOAT / NULLIF(SUM(f.nb_journey),0) AS taux_retard_pct\nFROM dwh.f_line_metrics f\nJOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk\nWHERE f.line_tk = ${pLine}\nAND dd.date\u003E=NOW()::DATE-14\nGROUP BY dd.date\nORDER BY dd.date;\n"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pLine\u0022,\u0022\u0022,\u0022Integer\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "dbb6cfbe-f802-dce3-2d00-d3a5354b0d1f",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "tauxDeRetardRadarLineQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT\n    100 * SUM(nb_delay)::FLOAT / NULLIF(SUM(nb_journey),0) AS taux_retard_pct,\n    100 - 100 * SUM(nb_delay)::FLOAT / NULLIF(SUM(nb_journey),0) AS taux_ponctualite_pct\nFROM dwh.f_line_metrics AS flm\nJOIN dwh.d_date dd ON dd.tk_date = flm.ref_date_tk\nWHERE dd.\u0022date\u0022 = NOW()::DATE\nAND flm.line_tk = ${pLine};\n"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pLine\u0022,\u0022\u0022,\u0022Integer\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "d02b1f66-8e3a-1bb1-3069-0cace1235b83",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "ligneListQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT dl.tk_line , line_name\nFROM dwh.d_line dl \nWHERE tk_line \u003C\u003E -1\nORDER BY dl.line_name ;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "bcc401d2-dfe5-27c2-2422-90033a91d70f",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "linesCompChartQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT\n    dd.date ,\n    l.line_name AS ligne,\n    f.nb_journey AS nb_trajets,\n    f.nb_delay AS nb_retards\nFROM dwh.f_line_metrics f\nJOIN dwh.d_line l ON l.tk_line = f.line_tk\nJOIN dwh.d_date dd ON dd.tk_date = f.ref_date_tk \nWHERE  l.tk_line IN (${pLines})\nAND dd.\u0022date\u0022 \u003E= NOW()::DATE-14\nORDER BY dd.date, f.delay_rate DESC, f.nb_delay DESC;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pLines\u0022,\u0022\u0022,\u0022IntegerArray\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "3dd4aa0a-aac8-27f1-2120-cde961f8a2af",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "linesCompTableQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "SELECT\n    l.line_name AS ligne,\n    f.nb_journey AS nb_trajets,\n    f.nb_delay AS nb_retards,\n    f.delay_rate AS taux_retard_pct,\n    f.delay_minutes  AS nb_minutes_retard,\n    f.avg_delay_minutes  AS retard_moyen_min\nFROM dwh.f_line_metrics f\nJOIN dwh.d_line l ON l.tk_line = f.line_tk\nWHERE f.ref_date_tk = TO_CHAR(NOW()::date, \u0027YYYYMMDD\u0027)::INT4\nAND l.tk_line IN (${pLines})\nORDER BY f.delay_rate DESC, f.nb_delay DESC;"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pLines\u0022,\u0022\u0022,\u0022IntegerArray\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      }
+    ]
+  },
+  "filename" : "/public/dashboard/analyse-par-ligne.cdfde",
+  "layout" : {
+    "rows" : [
+      {
+        "id" : "99573093-b37a-7b9a-a6c3-52e937fb0b20",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "apexcharts"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/apexcharts.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "cde56683-5c6f-05b9-0c7d-55973354695b",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/styles.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "f61981aa-8ca1-d002-6469-4856d6e93561",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/script.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "cf9e1e9c-99c7-9143-c644-23092c87ea4d",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_wrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-wrapper layout-content-navbar"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "parent" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_container"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "046ff158-bd44-6079-1699-4e428abaa6ff",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menu"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "455e86cd-c534-16cf-bbc0-d836cdeaf131",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003Cdiv class=\u0022content-wrapper\u0022 style=\u0022display: inline;\u0022\u003E\n  \u003Cdiv class=\u0022container-xxl flex-grow-1 container-p-y\u0022\u003E\n\n    \u003Cdiv class=\u0022row gy-6\u0022\u003E\n\n      \u003Cdiv class=\u0022col-12 order-5\u0022\u003E\n        \u003Cdiv class=\u0022card\u0022\u003E\n          \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n            \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n              \u003Ch5 class=\u0022m-0 me-2\u0022\u003EAnalyse par ligne\u003C/h5\u003E\n              \u003Csmall class=\u0022text-muted\u0022\u003E\u003C/small\u003E\n            \u003C/div\u003E\n          \u003C/div\u003E\n          \n          \u003Cdiv class=\u0022card-header border-bottom\u0022\u003E\n              \u003Ch6 class=\u0022card-title mb-0\u0022\u003E\u003C/h6\u003E\n              \u003Cdiv class=\u0022d-flex justify-content-between align-items-center row pt-4 pb-2 gap-4 gap-md-0 gx-5\u0022\u003E\n                \u003Clabel\u003ELigne\u003C/label\u003E\n                \u003Cdiv id=\u0022ligne_filter_definition\u0022 class=\u0022col-md-12 form-select-div text-capitalize-div\u0022\u003E\n                \u003C/div\u003E\n            \u003C/div\u003E\n            \n            \u003Cdiv id=\u0022visu-line\u0022 class=\u0022hidden\u0022\u003E\n                \u003C!-- Taux de retard --\u003E\n                \u003Cdiv class=\u0022col-md-6 col-xxl-4\u0022\u003E\n                  \u003Cdiv class=\u0022card h-100\u0022\u003E\n                    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n                      \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n                        \u003Ch5 class=\u0022m-0 me-2\u0022\u003ETaux de ponctualité aujoud\u0027hui\u003C/h5\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n                    \u003Cdiv class=\u0022card-body\u0022\u003E\n                      \u003Cdiv id=\u0022delayRateChart\u0022 style=\u0022min-height: 392px;\u0022 class=\u0022\u0022\u003E\n                \n                      \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/div\u003E\n                \u003C/div\u003E\n        \n        \n                    \n                \u003C!-- Taux de retard histogramme--\u003E\n                \u003Cdiv class=\u0022col-md-6 col-xxl-8\u0022\u003E\n                  \u003Cdiv class=\u0022card h-100\u0022\u003E\n                    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n                      \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n                        \u003Ch5 class=\u0022m-0 me-2\u0022\u003ETaux de ponctualité sur 14 jours\u003C/h5\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n        \n                    \u003Cdiv class=\u0022card-body\u0022\u003E\n                         \u003Cdiv id=\u0022punctualityDelayStackChart\u0022 class=\u0022\u0022 style=\u0022min-height: 350px;\u0022\u003E\n                        \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/div\u003E\n                \u003C/div\u003E\n                \n                        \u003C!-- Mixed Chartt--\u003E\n                \u003Cdiv class=\u0022col-md-12 col-xxl-12\u0022\u003E\n                  \u003Cdiv class=\u0022card h-100 mg-t-10\u0022\u003E\n                    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n                      \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n                        \u003Ch5 class=\u0022m-0 me-2\u0022\u003ETaux de ponctualité sur 14 jours\u003C/h5\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n        \n                    \u003Cdiv class=\u0022card-body\u0022\u003E\n                        \u003Cdiv id=\u0022volumeDelayMixedChart\u0022 class=\u0022\u0022 style=\u0022min-height: 350px;\u0022\u003E\n                        \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/div\u003E\n                \u003C/div\u003E\n             \u003C/div\u003E\n    \u003C/div\u003E\n\n\n        \u003C/div\u003E \n      \u003C/div\u003E \n\n    \u003C/div\u003E\n  \u003C/div\u003E\n\n \n \n \n \n \n \n \n \n \n \n \n\n  \u003Cdiv class=\u0022container-xxl flex-grow-1 container-p-y\u0022\u003E\n\n    \u003Cdiv class=\u0022row gy-6\u0022\u003E\n\n      \u003Cdiv class=\u0022col-12 order-5\u0022\u003E\n        \u003Cdiv class=\u0022card\u0022\u003E\n          \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n            \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n              \u003Ch5 class=\u0022m-0 me-2\u0022\u003EComparaison des performances des lignes\u003C/h5\u003E\n              \u003Csmall class=\u0022text-muted\u0022\u003E\u003C/small\u003E\n            \u003C/div\u003E\n          \u003C/div\u003E\n          \n          \u003Cdiv class=\u0022card-header border-bottom\u0022\u003E\n              \u003Ch6 class=\u0022card-title mb-0\u0022\u003E\u003C/h6\u003E\n              \u003Cdiv class=\u0022d-flex justify-content-between align-items-center row pt-4 pb-2 gap-4 gap-md-0 gx-5\u0022\u003E\n                \u003Clabel\u003ELignes\u003C/label\u003E\n                \u003Cdiv id=\u0022lignes_filter_definition\u0022 class=\u0022col-md-12 form-select-div text-capitalize-div\u0022\u003E\n                \u003C/div\u003E\n               \u003C/div\u003E\n            \u003C/div\u003E\n            \n            \n                    \n        \u003Cdiv id=\u0022visu-lines\u0022 class=\u0022card-datatable table-responsive mg-10 hidden\u0022\u003E\n          \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n            \u003Ch5 class=\u0022m-0 me-2\u0022\u003EComparaison des performance aujoud\u0027hui\u003C/h5\u003E\n          \u003C/div\u003E\n            \u003Ctable class=\u0022table table-striped align-middle mb-0\u0022 id=\u0022line-metrics-table\u0022\u003E\n                \u003Cthead class=\u0022table-light\u0022\u003E\n                    \u003Ctr\u003E\n                        \u003Cth\u003ELigne\u003C/th\u003E\n                        \u003Cth\u003ENb trajets\u003C/th\u003E\n                        \u003Cth\u003ENb retards\u003C/th\u003E\n                        \u003Cth\u003ETaux retard (%)\u003C/th\u003E\n                        \u003Cth\u003ENb minutes retard\u003C/th\u003E\n                        \u003Cth\u003ERetard moyen (min)\u003C/th\u003E\n                    \u003C/tr\u003E\n                \u003C/thead\u003E\n                \u003Ctbody\u003E\n                    \n                \u003C/tbody\u003E\n            \u003C/table\u003E\n            \n            \u003Cdiv class=\u0022col-md-12 col-xxl-12\u0022\u003E\n                  \u003Cdiv class=\u0022card h-100 mg-t-10\u0022\u003E\n                    \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n                      \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n                        \u003Ch5 class=\u0022m-0 me-2\u0022\u003EComparaison sur 14 jours\u003C/h5\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n        \n               \u003Cdiv class=\u0022card-body\u0022\u003E\n                    \u003Cdiv id=\u0022groupedLineDelayChart\u0022 class=\u0022\u0022 style=\u0022min-height: 400px;\u0022\u003E\n                    \u003C/div\u003E\n              \u003C/div\u003E\n            \u003C/div\u003E\n\n            \n\n\u003C/div\u003E\n            \n            \n\n        \u003C/div\u003E\n        \n                    \n\n\n        \u003C/div\u003E \n      \u003C/div\u003E \n\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E \n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      },
+      {
+        "id" : "4667ee4f-14d0-207d-9501-f2405939876c",
+        "parent" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnChartsData"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : "content-wrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      }
+    ],
+    "title" : "CDF - Sample structure"
+  }
+}

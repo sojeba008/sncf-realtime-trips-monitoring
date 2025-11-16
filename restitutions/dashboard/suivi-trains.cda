@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CDADescriptor>
+   <DataSources>
+      <Connection id="regionsListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="departementsListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="communesListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="garesListQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+      <Connection id="historiqueDepartsQuery" type="sql.jndi">
+         <Jndi>infocentre</Jndi>
+      </Connection>
+   </DataSources>
+   <DataAccess access="public" connection="regionsListQuery" id="regionsListQuery" type="sql">
+      <Name>regionsListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters/>
+      <Query><![CDATA[(SELECT '-2', 'Toutes les régions')
+UNION ALL
+(SELECT DISTINCT rd.code_region , nom_region 
+FROM ods.ref_departements rd 
+ORDER BY nom_region);]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="departementsListQuery" id="departementsListQuery"
+               type="sql">
+      <Name>departementsListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+      </Parameters>
+      <Query><![CDATA[(SELECT '-2' AS code_departement, 'Tous les départements' AS nom_departement)
+UNION ALL
+(SELECT DISTINCT rd.code_departement  , rd.nom_departement 
+FROM ods.ref_departements rd
+WHERE (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+ORDER BY rd.nom_departement)]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="communesListQuery" id="communesListQuery"
+               type="sql">
+      <Name>communesListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+         <Parameter default="" name="pDepartement" type="String"/>
+      </Parameters>
+      <Query><![CDATA[(SELECT '-2' AS commune_key, 'Toutes les communes' AS commune_val)
+UNION ALL
+(SELECT DISTINCT ds.commune AS commune_key, ds.commune AS commune_val FROM dwh.d_station ds 
+INNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))
+WHERE (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+AND (${pDepartement} = '-2' OR rd.code_departement::TEXT=${pDepartement})
+ORDER BY ds.commune);]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="garesListQuery" id="garesListQuery" type="sql">
+      <Name>garesListQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+         <Parameter default="" name="pDepartement" type="String"/>
+         <Parameter default="" name="pCommune" type="String"/>
+      </Parameters>
+      <Query><![CDATA[(SELECT '-2' AS tk_station, 'Toutes les gares' AS station_name_ref)
+UNION ALL
+(SELECT tk_station, station_name_ref
+FROM dwh.d_station ds 
+INNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))
+WHERE ds.tk_station <> -1
+AND  (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+AND (${pDepartement} = '-2' OR rd.code_departement::TEXT=${pDepartement})
+AND (${pCommune} = '-2' OR unaccent(UPPER(ds.commune))=unaccent(UPPER(${pCommune})))
+ORDER BY station_name_ref)]]></Query>
+   </DataAccess>
+   <DataAccess access="public" connection="historiqueDepartsQuery" id="historiqueDepartsQuery"
+               type="sql">
+      <Name>historiqueDepartsQuery</Name>
+      <Cache duration="3600" enabled="false"/>
+      <Columns/>
+      <Parameters>
+         <Parameter default="" name="pRegion" type="String"/>
+         <Parameter default="" name="pDepartement" type="String"/>
+         <Parameter default="" name="pCommune" type="String"/>
+         <Parameter default="" name="pStation" type="String"/>
+      </Parameters>
+      <Query><![CDATA[WITH current_trips AS (
+    SELECT DISTINCT
+        t.trip_id,
+        t.num_vehicule,
+        t.origin_station_tk,
+        t.destination_station_tk,
+        t.departure_time_journey,
+        t.expected_departure,
+        t.expected_arrival,
+        t.delay_arrival_minutes,
+        t.status_journey,
+        v.categorie_vehicule,
+        v.type_train
+    FROM dwh.f_trips_realtime t
+    JOIN dwh.d_vehicule v ON v.num_vehicule = t.num_vehicule
+    WHERE t.ref_date::date = NOW()::date
+)
+SELECT DISTINCT
+    v.num_vehicule AS train_numero,
+    COALESCE(v.categorie_vehicule, 'Inconnu') AS type_train,
+    CASE 
+        WHEN t.stop_station_tk = v.origin_station_tk THEN s_stop.station_name
+        ELSE s_stop.station_name || ' (De ' || s_origin.station_name || ')'
+    END AS gare_depart,
+    s_dest.station_name AS gare_arrivee,
+    CASE
+        WHEN t.status_journey = 'EN_COURS' THEN
+            CASE 
+                WHEN t.delay_arrival_minutes IS NULL THEN 'En cours'
+                WHEN t.delay_arrival_minutes <= 1 THEN 'À l’heure'
+                ELSE CONCAT('Retard ', t.delay_arrival_minutes, ' min')
+            END
+        WHEN t.status_journey = 'PREVU' THEN 'À venir'
+        WHEN t.status_journey = 'TERMINE' THEN 'Terminé'
+        ELSE 'Indéterminé'
+    END AS statut,
+    TO_CHAR(t.expected_departure, 'HH24:MI') AS heure_depart
+FROM dwh.f_trips_realtime t
+JOIN dwh.d_station s_stop ON s_stop.tk_station = t.stop_station_tk
+JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(s_stop.departement))
+JOIN current_trips v ON v.trip_id = t.trip_id
+LEFT JOIN dwh.d_station s_origin ON s_origin.tk_station = v.origin_station_tk
+LEFT JOIN dwh.d_station s_dest ON s_dest.tk_station = v.destination_station_tk
+WHERE t.expected_departure IS NOT NULL 
+    AND (${pStation}='-2' OR s_stop.tk_station = ${pStation}::INT8)
+  AND (
+        v.status_journey = 'EN_COURS'
+        OR (
+            v.status_journey = 'PREVU'
+            AND t.expected_departure BETWEEN NOW() AND NOW() + INTERVAL '30 minutes'
+        )
+     )
+     AND (${pRegion} = '-2' OR rd.code_region::TEXT=${pRegion})
+AND (${pDepartement} = '-2' OR rd.code_departement::TEXT=${pDepartement})
+AND (${pCommune} = '-2' OR unaccent(UPPER(s_stop.commune))=unaccent(UPPER(${pCommune})))
+ORDER BY TO_CHAR(t.expected_departure, 'HH24:MI') DESC]]></Query>
+   </DataAccess>
+</CDADescriptor>

@@ -1,0 +1,460 @@
+{
+  "components" : {
+    "rows" : [
+      {
+        "id" : "WIDGETS",
+        "name" : "Widgets",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Widgets"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "247f569c-81be-32d0-fd55-9631003bcd56",
+        "meta_wcdf" : "/public/cde/widgets/sncfDashboardMenu.wcdf",
+        "meta_widget" : "true",
+        "parent" : "WIDGETS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menuWidget"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:menu}"
+          }
+        ],
+        "rowName" : "sncfDashboardMenu",
+        "type" : "ComponentswidgetsncfDashboardMenu",
+        "typeDesc" : "sncfDashboardMenu Widget"
+      },
+      {
+        "id" : "PARAMETERS",
+        "name" : "Parameters",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Parameters"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "1362c690-b171-260c-8c29-e44f1feec314",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "page"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "sources"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      }
+    ]
+  },
+  "datasources" : {
+    "rows" : [ ]
+  },
+  "filename" : "/public/dashboard/sources.cdfde",
+  "layout" : {
+    "rows" : [
+      {
+        "id" : "c3c117e0-4e1d-92d4-ea4b-ac76d3c349b3",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "cutomStyles"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/styles.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "f61981aa-8ca1-d002-6469-4856d6e93561",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "customScripts"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/script.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "cf9e1e9c-99c7-9143-c644-23092c87ea4d",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_wrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-wrapper layout-content-navbar"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "parent" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_container"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "046ff158-bd44-6079-1699-4e428abaa6ff",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menu"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "6befa140-dd36-c476-30b7-9f869e6ac63d",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "content"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "container-xxl flex-grow-1 container-p-y layout-container"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "7b5201cf-ac2c-191e-bc57-82d8692e34a7",
+        "parent" : "6befa140-dd36-c476-30b7-9f869e6ac63d",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnIndicateurs"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "455e86cd-c534-16cf-bbc0-d836cdeaf131",
+        "parent" : "7b5201cf-ac2c-191e-bc57-82d8692e34a7",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnIndicateursDefinition"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003Cdiv class=\u0022container my-5\u0022\u003E\n  \u003Ch1 class=\u0022mb-4\u0022\u003ESources de données utilisées\u003C/h1\u003E\n\n  \u003Cdiv class=\u0022mb-5\u0022\u003E\n    \u003Ch2\u003EHoraires théoriques et temps réel de la SNCF\u003C/h2\u003E\n    \u003Cp\u003E\n      Cette source fournit les horaires théoriques et en temps réel des trains SNCF (TER, Intercités, TGV) pour le réseau national.\n      Les données sont disponibles au format GTFS, GTFS-RT, NeTEx et SIRI.\n    \u003C/p\u003E\n    \u003Cul\u003E\n      \u003Cli\u003E\u003Cstrong\u003EGTFS théorique :\u003C/strong\u003E \u003Ca href=\u0022https://eu.ftp.opendatasoft.com/sncf/plandata/Export_OpenData_SNCF_GTFS_NewTripId.zip\u0022 target=\u0022_blank\u0022\u003ETélécharger\u003C/a\u003E\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003ENeTEx :\u003C/strong\u003E \u003Ca href=\u0022https://eu.ftp.opendatasoft.com/sncf/plandata/export-opendata-sncf-netex.zip\u0022 target=\u0022_blank\u0022\u003ETélécharger\u003C/a\u003E\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003EGTFS-RT TU (Trip Updates) :\u003C/strong\u003E \u003Ca href=\u0022https://proxy.transport.data.gouv.fr/resource/sncf-gtfs-rt-trip-updates\u0022 target=\u0022_blank\u0022\u003EEndpoint\u003C/a\u003E\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003EGTFS-RT SA (Service Alerts) :\u003C/strong\u003E \u003Ca href=\u0022https://proxy.transport.data.gouv.fr/resource/sncf-gtfs-rt-service-alerts\u0022 target=\u0022_blank\u0022\u003EEndpoint\u003C/a\u003E\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003ESIRI ET Lite :\u003C/strong\u003E \u003Ca href=\u0022https://proxy.transport.data.gouv.fr/resource/sncf-siri-lite-estimated-timetable\u0022 target=\u0022_blank\u0022\u003EEndpoint\u003C/a\u003E\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003ESIRI SX Lite :\u003C/strong\u003E \u003Ca href=\u0022https://proxy.transport.data.gouv.fr/resource/sncf-siri-lite-situation-exchange\u0022 target=\u0022_blank\u0022\u003EEndpoint\u003C/a\u003E\u003C/li\u003E\n    \u003C/ul\u003E\n    \u003Cp\u003E\n      \u003Cem\u003ERemarques techniques :\u003C/em\u003E Le trip_id peut évoluer en fonction des opérations de maintenance. Les flux temps réel couvrent TGV, IC et TER, et peuvent inclure d’autres circulations pour certaines zones.\n    \u003C/p\u003E\n  \u003C/div\u003E\n\n\n  \u003Cdiv class=\u0022mb-5\u0022\u003E\n    \u003Ch2\u003EListe des gares du Réseau Ferré National\u003C/h2\u003E\n    \u003Cp\u003E\n      Cette source recense toutes les gares du réseau SNCF, en précisant le type (voyageurs ou fret) et les coordonnées géographiques (projection Lambert 93 et WGS84).  \n      Les gares sont projetées sur leurs lignes ferroviaires respectives.\n    \u003C/p\u003E\n    \u003Cp\u003E\u003Cstrong\u003EAccès aux données :\u003C/strong\u003E \u003Ca href=\u0022https://ressources.data.sncf.com/explore/dataset/liste-des-gares/information/\u0022 target=\u0022_blank\u0022\u003EExplorer le dataset\u003C/a\u003E\u003C/p\u003E\n  \u003C/div\u003E\n\n\n  \u003Cdiv class=\u0022mb-5\u0022\u003E\n    \u003Ch2\u003ERégions, départements, villes et villages de France\u003C/h2\u003E\n    \u003Cp\u003E\n      Cette source fournit les codes et noms des régions, départements, villes et villages français, y compris les DROM et COM.  \n      Elle permet d\u0027associer des informations géographiques ou administratives aux gares et lignes de transport.\n    \u003C/p\u003E\n    \u003Cp\u003E\u003Cstrong\u003EOrigine :\u003C/strong\u003E Données INSEE mises à jour et consolidées dans le dépôt French zip-code.\u003C/p\u003E\n    \u003Cul\u003E\n      \u003Cli\u003E\u003Cstrong\u003EFormats disponibles :\u003C/strong\u003E CSV, JSON, SQL\u003C/li\u003E\n      \u003Cli\u003E\u003Cstrong\u003EAccès au projet :\u003C/strong\u003E \u003Ca href=\u0022https://www.data.gouv.fr/datasets/regions-departements-villes-et-villages-de-france-et-doutre-mer/\u0022 target=\u0022_blank\u0022\u003EDataset officiel\u003C/a\u003E\u003C/li\u003E\n    \u003C/ul\u003E\n  \u003C/div\u003E\n\n\n\u003C/div\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      }
+    ],
+    "title" : "CDF - Sample structure"
+  }
+}

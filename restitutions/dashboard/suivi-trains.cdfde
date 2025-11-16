@@ -1,0 +1,1423 @@
+{
+  "components" : {
+    "rows" : [
+      {
+        "id" : "WIDGETS",
+        "name" : "Widgets",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Widgets"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "247f569c-81be-32d0-fd55-9631003bcd56",
+        "meta_wcdf" : "/public/cde/widgets/sncfDashboardMenu.wcdf",
+        "meta_widget" : "true",
+        "parent" : "WIDGETS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menuWidget"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:menu}"
+          }
+        ],
+        "rowName" : "sncfDashboardMenu",
+        "type" : "ComponentswidgetsncfDashboardMenu",
+        "typeDesc" : "sncfDashboardMenu Widget"
+      },
+      {
+        "id" : "PARAMETERS",
+        "name" : "Parameters",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Parameters"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "1362c690-b171-260c-8c29-e44f1feec314",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "page"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "suivi-trains"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "0348dbb4-8060-e1e2-c208-dd8b9efd3cd7",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pDepartement"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "-2"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "b94dbe11-710f-20a7-84a2-a71cda689404",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pStation"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "-2"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "87048333-b59f-58aa-b633-d0b0171c892b",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pCommune"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "-2"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "38998357-99ca-2469-7478-83b8ec1d7b5c",
+        "parent" : "PARAMETERS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "pRegion"
+          },
+          {
+            "name" : "propertyValue",
+            "type" : "String",
+            "value" : "-2"
+          },
+          {
+            "name" : "parameterViewRole",
+            "type" : "parameterViewRoleCustom",
+            "value" : "unused"
+          },
+          {
+            "name" : "bookmarkable",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "public",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "Simple Parameter",
+        "type" : "ComponentsParameter",
+        "typeDesc" : "Simple parameter"
+      },
+      {
+        "id" : "SELECTORS",
+        "name" : "Selects",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Selects"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "7391a254-1baa-cf8a-1dd2-76e01914f9d4",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "region_filter"
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "${p:pRegion}"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "externalPlugin",
+            "type" : "externalPluginCustom",
+            "value" : ""
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "useFirstValue",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "regionsListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : "1"
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:region_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "extraOptions",
+            "type" : "ExtraOptionsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Select Component",
+        "type" : "ComponentsSelect",
+        "typeDesc" : "Select Component"
+      },
+      {
+        "id" : "b9272c1f-4dec-fcb5-49ae-6fbe77900f9b",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "departement_filter"
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "${p:pDepartement}"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pRegion}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pRegion\u0022,\u0022pRegion\u0022]]"
+          },
+          {
+            "name" : "externalPlugin",
+            "type" : "externalPluginCustom",
+            "value" : ""
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "useFirstValue",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "departementsListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : "2"
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:departement_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "extraOptions",
+            "type" : "ExtraOptionsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Select Component",
+        "type" : "ComponentsSelect",
+        "typeDesc" : "Select Component"
+      },
+      {
+        "id" : "dbbc3847-0c4c-7ad7-2b18-1569bed84edd",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "commune_filter"
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "${p:pCommune}"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pDepartement}\u0022,\u0022${p:pRegion}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pRegion\u0022,\u0022pRegion\u0022],[\u0022pDepartement\u0022,\u0022pDepartement\u0022]]"
+          },
+          {
+            "name" : "externalPlugin",
+            "type" : "externalPluginCustom",
+            "value" : ""
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "useFirstValue",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "communesListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : "3"
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:commune_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "extraOptions",
+            "type" : "ExtraOptionsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Select Component",
+        "type" : "ComponentsSelect",
+        "typeDesc" : "Select Component"
+      },
+      {
+        "id" : "a66a911a-b044-21ef-331c-63b2ab0e0475",
+        "parent" : "SELECTORS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "gare_filter"
+          },
+          {
+            "name" : "parameter",
+            "type" : "Parameter",
+            "value" : "${p:pStation}"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pDepartement}\u0022,\u0022${p:pCommune}\u0022,\u0022${p:pRegion}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pRegion\u0022,\u0022pRegion\u0022],[\u0022pDepartement\u0022,\u0022pDepartement\u0022],[\u0022pCommune\u0022,\u0022pCommune\u0022]]"
+          },
+          {
+            "name" : "externalPlugin",
+            "type" : "externalPluginCustom",
+            "value" : ""
+          },
+          {
+            "name" : "valueAsId",
+            "type" : "Boolean",
+            "value" : "false"
+          },
+          {
+            "name" : "useFirstValue",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "garesListQuery"
+          },
+          {
+            "name" : "valuesArray",
+            "type" : "ValuesArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : "4"
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : "${h:gare_filter_definition}"
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "extraOptions",
+            "type" : "ExtraOptionsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Select Component",
+        "type" : "ComponentsSelect",
+        "typeDesc" : "Select Component"
+      },
+      {
+        "id" : "STANDARDCOMPONENTS",
+        "name" : "Standard",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "Standard"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "faa7e0e2-1c4b-39aa-5ab8-734cc765aed7",
+        "parent" : "STANDARDCOMPONENTS",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "histoDeparQueryComponent"
+          },
+          {
+            "name" : "listeners",
+            "type" : "Listeners",
+            "value" : "[\u0022${p:pDepartement}\u0022,\u0022${p:pStation}\u0022,\u0022${p:pCommune}\u0022,\u0022${p:pRegion}\u0022]"
+          },
+          {
+            "name" : "parameters",
+            "type" : "ValuesArray",
+            "value" : "[[\u0022pRegion\u0022,\u0022pRegion\u0022],[\u0022pDepartement\u0022,\u0022pDepartement\u0022],[\u0022pCommune\u0022,\u0022pCommune\u0022],[\u0022pStation\u0022,\u0022pStation\u0022]]"
+          },
+          {
+            "name" : "resultvar",
+            "type" : "Result",
+            "value" : ""
+          },
+          {
+            "name" : "dataSource",
+            "type" : "Datasource",
+            "value" : "historiqueDepartsQuery"
+          },
+          {
+            "name" : "asynchronousMode",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "priority",
+            "type" : "Integer",
+            "value" : 5
+          },
+          {
+            "name" : "refreshPeriod",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "htmlObject",
+            "type" : "HtmlObject",
+            "value" : ""
+          },
+          {
+            "name" : "executeAtStart",
+            "type" : "Boolean",
+            "value" : "true"
+          },
+          {
+            "name" : "preExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postExecution",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postFetch",
+            "type" : "JavaScript",
+            "value" : "function postfetchTrainsDepartByStation(data) {\n    const tableBody = document.querySelector(\u0027#trains-depart-table tbody\u0027);\n    tableBody.innerHTML = \u0027\u0027; // Reset du contenu\n\n    if (!data || !data.resultset || data.resultset.length === 0) {\n        tableBody.innerHTML = `\n            \u003Ctr\u003E\n                \u003Ctd colspan=\u00225\u0022 class=\u0022text-center text-muted\u0022\u003EAucun train à afficher pour cette station\u003C/td\u003E\n            \u003C/tr\u003E\n        `;\n        return;\n    }\n\n    data.resultset.forEach(row =\u003E {\n        const [train, type, gareDepart, gareArrivee, statut, heureDepart] = row;\n\n        const badgeClass = statut.includes(\u0027Retard\u0027) ? \u0027bg-label-warning\u0027\n                        : statut === \u0022À l’heure\u0022 ? \u0027bg-label-success\u0027\n                        : statut === \u0022Terminé\u0022 ? \u0027bg-label-secondary\u0027\n                        : \u0027bg-label-primary\u0027;\n\n        const tr = document.createElement(\u0027tr\u0027);\n        tr.innerHTML = `\n            \u003Ctd\u003E\n                \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                    \u003Cdiv class=\u0022avatar me-3\u0022\u003E\n                        \u003Cspan class=\u0022avatar-initial rounded-circle bg-label-primary\u0022\u003E\n                            \u003Ci class=\u0022ri ri-train-line\u0022\u003E\u003C/i\u003E\n                        \u003C/span\u003E\n                    \u003C/div\u003E\n                    \u003Cdiv\u003E\n                        \u003Ca href=\u0022#\u0022 class=\u0022fw-medium text-heading text-nowrap\u0022\u003E${train}\u003C/a\u003E\u003Cbr\u003E\n                        \u003Csmall class=\u0022text-muted\u0022\u003EType : ${type}\u003C/small\u003E\n                    \u003C/div\u003E\n                \u003C/div\u003E\n            \u003C/td\u003E\n            \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003E${gareDepart}\u003C/span\u003E\u003C/td\u003E\n            \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003E${gareArrivee}\u003C/span\u003E\u003C/td\u003E\n            \u003Ctd\u003E\u003Cspan class=\u0022badge ${badgeClass}\u0022\u003E${statut}\u003C/span\u003E\u003C/td\u003E\n            \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003E${heureDepart}\u003C/span\u003E\u003C/td\u003E\n        `;\n        tableBody.appendChild(tr);\n    });\n}\n "
+          },
+          {
+            "name" : "preChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "postChange",
+            "type" : "JavaScript",
+            "value" : ""
+          },
+          {
+            "name" : "tooltip",
+            "type" : "Html",
+            "value" : ""
+          }
+        ],
+        "rowName" : "Query Component",
+        "type" : "ComponentsQuery",
+        "typeDesc" : "Query Component"
+      }
+    ]
+  },
+  "datasources" : {
+    "rows" : [
+      {
+        "id" : "SQL",
+        "name" : "SQL Queries",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "Group",
+            "type" : "Label",
+            "value" : "SQL Queries"
+          }
+        ],
+        "type" : "Label",
+        "typeDesc" : "\u003Ci\u003EGroup\u003C/i\u003E"
+      },
+      {
+        "id" : "d02b1f66-8e3a-1bb1-3069-0cace1235b83",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "regionsListQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "(SELECT \u0027-2\u0027, \u0027Toutes les régions\u0027)\nUNION ALL\n(SELECT DISTINCT rd.code_region , nom_region \nFROM ods.ref_departements rd \nORDER BY nom_region);"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "1c92fdea-1f85-5e48-bb44-c9ad0b95cbf4",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "departementsListQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "(SELECT \u0027-2\u0027 AS code_departement, \u0027Tous les départements\u0027 AS nom_departement)\nUNION ALL\n(SELECT DISTINCT rd.code_departement  , rd.nom_departement \nFROM ods.ref_departements rd\nWHERE (${pRegion} = \u0027-2\u0027 OR rd.code_region::TEXT=${pRegion})\nORDER BY rd.nom_departement)\n"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pRegion\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "2899ace7-a530-c7c6-6fc5-57b43c17ca33",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "communesListQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "(SELECT \u0027-2\u0027 AS commune_key, \u0027Toutes les communes\u0027 AS commune_val)\nUNION ALL\n(SELECT DISTINCT ds.commune AS commune_key, ds.commune AS commune_val FROM dwh.d_station ds \nINNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))\nWHERE (${pRegion} = \u0027-2\u0027 OR rd.code_region::TEXT=${pRegion})\nAND (${pDepartement} = \u0027-2\u0027 OR rd.code_departement::TEXT=${pDepartement})\nORDER BY ds.commune);"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pRegion\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pDepartement\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "d1afbee2-3318-01a2-ec50-a6e83beee18d",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "garesListQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "(SELECT \u0027-2\u0027 AS tk_station, \u0027Toutes les gares\u0027 AS station_name_ref)\nUNION ALL\n(SELECT tk_station, station_name_ref\nFROM dwh.d_station ds \nINNER JOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(ds.departement))\nWHERE ds.tk_station \u003C\u003E -1\nAND  (${pRegion} = \u0027-2\u0027 OR rd.code_region::TEXT=${pRegion})\nAND (${pDepartement} = \u0027-2\u0027 OR rd.code_departement::TEXT=${pDepartement})\nAND (${pCommune} = \u0027-2\u0027 OR unaccent(UPPER(ds.commune))=unaccent(UPPER(${pCommune})))\nORDER BY station_name_ref)"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pRegion\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pDepartement\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pCommune\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      },
+      {
+        "id" : "17bd8a8a-5579-db1c-21dd-85c65b13afd9",
+        "meta" : "CDA",
+        "meta_conntype" : "sql.jndi",
+        "meta_datype" : "sql",
+        "parent" : "SQL",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "historiqueDepartsQuery"
+          },
+          {
+            "name" : "access",
+            "type" : "Access",
+            "value" : "public"
+          },
+          {
+            "name" : "jndi",
+            "type" : "Jndi",
+            "value" : "infocentre"
+          },
+          {
+            "name" : "query",
+            "type" : "SqlQuery",
+            "value" : "WITH current_trips AS (\n    SELECT DISTINCT\n        t.trip_id,\n        t.num_vehicule,\n        t.origin_station_tk,\n        t.destination_station_tk,\n        t.departure_time_journey,\n        t.expected_departure,\n        t.expected_arrival,\n        t.delay_arrival_minutes,\n        t.status_journey,\n        v.categorie_vehicule,\n        v.type_train\n    FROM dwh.f_trips_realtime t\n    JOIN dwh.d_vehicule v ON v.num_vehicule = t.num_vehicule\n    WHERE t.ref_date::date = NOW()::date\n)\nSELECT DISTINCT\n    v.num_vehicule AS train_numero,\n    COALESCE(v.categorie_vehicule, \u0027Inconnu\u0027) AS type_train,\n    CASE \n        WHEN t.stop_station_tk = v.origin_station_tk THEN s_stop.station_name\n        ELSE s_stop.station_name || \u0027 (De \u0027 || s_origin.station_name || \u0027)\u0027\n    END AS gare_depart,\n    s_dest.station_name AS gare_arrivee,\n    CASE\n        WHEN t.status_journey = \u0027EN_COURS\u0027 THEN\n            CASE \n                WHEN t.delay_arrival_minutes IS NULL THEN \u0027En cours\u0027\n                WHEN t.delay_arrival_minutes \u003C= 1 THEN \u0027À l’heure\u0027\n                ELSE CONCAT(\u0027Retard \u0027, t.delay_arrival_minutes, \u0027 min\u0027)\n            END\n        WHEN t.status_journey = \u0027PREVU\u0027 THEN \u0027À venir\u0027\n        WHEN t.status_journey = \u0027TERMINE\u0027 THEN \u0027Terminé\u0027\n        ELSE \u0027Indéterminé\u0027\n    END AS statut,\n    TO_CHAR(t.expected_departure, \u0027HH24:MI\u0027) AS heure_depart\nFROM dwh.f_trips_realtime t\nJOIN dwh.d_station s_stop ON s_stop.tk_station = t.stop_station_tk\nJOIN ods.ref_departements rd ON unaccent(LOWER(rd.nom_departement)) = unaccent(LOWER(s_stop.departement))\nJOIN current_trips v ON v.trip_id = t.trip_id\nLEFT JOIN dwh.d_station s_origin ON s_origin.tk_station = v.origin_station_tk\nLEFT JOIN dwh.d_station s_dest ON s_dest.tk_station = v.destination_station_tk\nWHERE t.expected_departure IS NOT NULL \n    AND (${pStation}=\u0027-2\u0027 OR s_stop.tk_station = ${pStation}::INT8)\n  AND (\n        v.status_journey = \u0027EN_COURS\u0027\n        OR (\n            v.status_journey = \u0027PREVU\u0027\n            AND t.expected_departure BETWEEN NOW() AND NOW() + INTERVAL \u002730 minutes\u0027\n        )\n     )\n     AND (${pRegion} = \u0027-2\u0027 OR rd.code_region::TEXT=${pRegion})\nAND (${pDepartement} = \u0027-2\u0027 OR rd.code_departement::TEXT=${pDepartement})\nAND (${pCommune} = \u0027-2\u0027 OR unaccent(UPPER(s_stop.commune))=unaccent(UPPER(${pCommune})))\nORDER BY TO_CHAR(t.expected_departure, \u0027HH24:MI\u0027) DESC"
+          },
+          {
+            "name" : "parameters",
+            "type" : "CdaParameters",
+            "value" : "[[\u0022pRegion\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pDepartement\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pCommune\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022],[\u0022pStation\u0022,\u0022\u0022,\u0022String\u0022,\u0022\u0022,\u0022\u0022]]"
+          },
+          {
+            "name" : "cdacalculatedcolumns",
+            "type" : "CdaCalculatedColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "cdacolumns",
+            "type" : "CdaColumnsArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "output",
+            "type" : "IndexArray",
+            "value" : "[]"
+          },
+          {
+            "name" : "outputMode",
+            "type" : "OutputMode",
+            "value" : "include"
+          },
+          {
+            "name" : "cacheKeys",
+            "type" : "CacheKeysValues",
+            "value" : "[]"
+          },
+          {
+            "name" : "cacheDuration",
+            "type" : "Integer",
+            "value" : 3600
+          },
+          {
+            "name" : "cache",
+            "type" : "Boolean",
+            "value" : "false"
+          }
+        ],
+        "rowName" : "sql over sqlJndi",
+        "type" : "Componentssql_sqlJndi",
+        "typeDesc" : "sql over sqlJndi"
+      }
+    ]
+  },
+  "filename" : "/public/dashboard/suivi-trains.cdfde",
+  "layout" : {
+    "rows" : [
+      {
+        "id" : "cde56683-5c6f-05b9-0c7d-55973354695b",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/styles.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "f61981aa-8ca1-d002-6469-4856d6e93561",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:scripts/script.js}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Javascript"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "cf9e1e9c-99c7-9143-c644-23092c87ea4d",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_wrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-wrapper layout-content-navbar"
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "parent" : "1a132df0-aa07-174c-c010-6021fe29011f",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "layout_container"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "046ff158-bd44-6079-1699-4e428abaa6ff",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "menu"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "455e86cd-c534-16cf-bbc0-d836cdeaf131",
+        "parent" : "ad94cf13-7755-dcb7-83b1-cfddce7f21fb",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : ""
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\u003Cdiv class=\u0022content-wrapper\u0022 style=\u0022display: inline;\u0022\u003E\n  \u003Cdiv class=\u0022container-xxl flex-grow-1 container-p-y\u0022\u003E\n\n    \u003Cdiv class=\u0022row gy-6\u0022\u003E\n\n      \u003Cdiv class=\u0022col-12 order-5\u0022\u003E\n        \u003Cdiv class=\u0022card\u0022\u003E\n          \u003Cdiv class=\u0022card-header d-flex align-items-center justify-content-between\u0022\u003E\n            \u003Cdiv class=\u0022card-title mb-0\u0022\u003E\n              \u003Ch5 class=\u0022m-0 me-2\u0022\u003ETrains en circulation\u003C/h5\u003E\n              \u003Csmall class=\u0022text-muted\u0022\u003E\u003C/small\u003E\n            \u003C/div\u003E\n          \u003C/div\u003E\n          \n          \u003Cdiv class=\u0022card-header border-bottom\u0022\u003E\n              \u003Ch6 class=\u0022card-title mb-0\u0022\u003EFiltres\u003C/h6\u003E\n              \u003Cdiv class=\u0022d-flex justify-content-between align-items-center row pt-4 pb-2 gap-4 gap-md-0 gx-5\u0022\u003E\n                \n                \u003Cdiv id=\u0022region_filter_definition\u0022 class=\u0022col-md-3 form-select-div text-capitalize-div\u0022\u003E\n                    \u003Clabel\u003ERégion\u003C/label\u003E\n                \u003C/div\u003E\n                 \n                \u003Cdiv id=\u0022departement_filter_definition\u0022 class=\u0022col-md-3 form-select-div text-capitalize-div\u0022\u003E\n                    \u003Clabel\u003EDépartement\u003C/label\u003E\n                \u003C/div\u003E\n                \n                \u003Cdiv id=\u0022commune_filter_definition\u0022 class=\u0022col-md-3 form-select-div text-capitalize-div\u0022\u003E\n                    \u003Clabel\u003ECommune\u003C/label\u003E    \n                \u003C/div\u003E\n                \n                \u003Cdiv id=\u0022gare_filter_definition\u0022 class=\u0022col-md-3 form-select-div text-capitalize-div\u0022\u003E\n                    \u003Clabel\u003EGare\u003C/label\u003E    \n                \u003C/div\u003E\n            \u003C/div\u003E\n\n            \u003C/div\u003E\n\n          \u003Cdiv class=\u0022col-md-12 col-xxl-12\u0022 style=\u0022padding:0;\u0022\u003E\n            \u003Cdiv class=\u0022card h-100\u0022\u003E\n              \u003Cdiv class=\u0022card-body p-0\u0022\u003E\n                \u003Cdiv class=\u0022nav-align-top\u0022\u003E\n                  \u003Cul class=\u0022nav nav-tabs nav-fill tabs-line border-bottom-0\u0022 role=\u0022tablist\u0022\u003E\n                    \u003Cli class=\u0022nav-item\u0022 role=\u0022presentation\u0022\u003E\n                      \u003Cbutton\n                        type=\u0022button\u0022\n                        class=\u0022nav-link waves-effect active\u0022\n                        role=\u0022tab\u0022\n                        data-bs-toggle=\u0022tab\u0022\n                        data-bs-target=\u0022#navs-justified-link-preparing\u0022\n                        aria-controls=\u0022navs-justified-link-preparing\u0022\n                        aria-selected=\u0022true\u0022\u003E\n                        Départ\n                      \u003C/button\u003E\n                    \u003C/li\u003E\n                    \u003Cli class=\u0022nav-item\u0022 role=\u0022presentation\u0022\u003E\n                      \u003Cbutton\n                        type=\u0022button\u0022\n                        class=\u0022nav-link waves-effect\u0022\n                        role=\u0022tab\u0022\n                        data-bs-toggle=\u0022tab\u0022\n                        data-bs-target=\u0022#navs-justified-link-shipping\u0022\n                        aria-controls=\u0022navs-justified-link-shipping\u0022\n                        aria-selected=\u0022false\u0022\n                        tabindex=\u0022-1\u0022\u003E\n                        Arrivée\n                      \u003C/button\u003E\n                    \u003C/li\u003E\n                  \u003C/ul\u003E\n                \u003C/div\u003E\n              \u003C/div\u003E\n            \u003C/div\u003E\n          \u003C/div\u003E\n\n\n            \u003C!-- backup\n          \u003Cdiv class=\u0022card-datatable table-responsive\u0022\u003E\n            \u003Ctable class=\u0022table table-striped align-middle mb-0\u0022\u003E\n              \u003Cthead class=\u0022table-light\u0022\u003E\n                \u003Ctr\u003E\n                  \u003Cth\u003ETrain\u003C/th\u003E\n                  \u003Cth\u003EDépart\u003C/th\u003E\n                  \u003Cth\u003EArrivée\u003C/th\u003E\n                  \u003Cth\u003EStatut\u003C/th\u003E\n                  \u003Cth\u003EProgression\u003C/th\u003E\n                \u003C/tr\u003E\n              \u003C/thead\u003E\n              \u003Ctbody\u003E\n\n                \u003Ctr\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022avatar me-3\u0022\u003E\n                        \u003Cspan class=\u0022avatar-initial rounded-circle bg-label-primary\u0022\u003E\n                          \u003Ci class=\u0022ri ri-train-line\u0022\u003E\u003C/i\u003E\n                        \u003C/span\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv\u003E\n                        \u003Ca href=\u0022#\u0022 class=\u0022fw-medium text-heading text-nowrap\u0022\u003ETGV 8421\u003C/a\u003E\u003Cbr\u003E\n                        \u003Csmall class=\u0022text-muted\u0022\u003EType : InOui\u003C/small\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003EParis Gare de Lyon\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003ELyon Part-Dieu\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022badge bg-label-success\u0022\u003EÀ l’heure\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022progress bg-label-primary w-100\u0022 style=\u0022height: 8px;\u0022\u003E\n                        \u003Cdiv class=\u0022progress-bar\u0022 role=\u0022progressbar\u0022 style=\u0022width: 65%;\u0022 aria-valuenow=\u002265\u0022 aria-valuemin=\u00220\u0022 aria-valuemax=\u0022100\u0022\u003E\u003C/div\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv class=\u0022ms-3 text-body\u0022\u003E\u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                \u003C/tr\u003E\n\n                \u003Ctr\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022avatar me-3\u0022\u003E\n                        \u003Cspan class=\u0022avatar-initial rounded-circle bg-label-warning\u0022\u003E\n                          \u003Ci class=\u0022ri ri-train-line\u0022\u003E\u003C/i\u003E\n                        \u003C/span\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv\u003E\n                        \u003Ca href=\u0022#\u0022 class=\u0022fw-medium text-heading text-nowrap\u0022\u003ETER 87654\u003C/a\u003E\u003Cbr\u003E\n                        \u003Csmall class=\u0022text-muted\u0022\u003EType : TER\u003C/small\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003EToulouse Matabiau\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003ENarbonne\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022badge bg-label-warning\u0022\u003ERetard 10 min\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022progress bg-label-primary w-100\u0022 style=\u0022height: 8px;\u0022\u003E\n                        \u003Cdiv class=\u0022progress-bar\u0022 role=\u0022progressbar\u0022 style=\u0022width: 40%;\u0022 aria-valuenow=\u002240\u0022 aria-valuemin=\u00220\u0022 aria-valuemax=\u0022100\u0022\u003E\u003C/div\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv class=\u0022ms-3 text-body\u0022\u003E\u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                \u003C/tr\u003E\n\n                \u003Ctr\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022avatar me-3\u0022\u003E\n                        \u003Cspan class=\u0022avatar-initial rounded-circle bg-label-danger\u0022\u003E\n                          \u003Ci class=\u0022ri ri-train-line\u0022\u003E\u003C/i\u003E\n                        \u003C/span\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv\u003E\n                        \u003Ca href=\u0022#\u0022 class=\u0022fw-medium text-heading text-nowrap\u0022\u003EINTERCITÉS 4532\u003C/a\u003E\u003Cbr\u003E\n                        \u003Csmall class=\u0022text-muted\u0022\u003EType : Intercités\u003C/small\u003E\n                      \u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003EBordeaux St-Jean\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022text-body\u0022\u003EMarseille St-Charles\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\u003Cspan class=\u0022badge bg-label-danger\u0022\u003EIncident signalé\u003C/span\u003E\u003C/td\u003E\n                  \u003Ctd\u003E\n                    \u003Cdiv class=\u0022d-flex align-items-center\u0022\u003E\n                      \u003Cdiv class=\u0022progress bg-label-primary w-100\u0022 style=\u0022height: 8px;\u0022\u003E\n                        \u003Cdiv class=\u0022progress-bar\u0022 role=\u0022progressbar\u0022 style=\u0022width: 25%;\u0022 aria-valuenow=\u002225\u0022 aria-valuemin=\u00220\u0022 aria-valuemax=\u0022100\u0022\u003E\u003C/div\u003E\n                      \u003C/div\u003E\n                      \u003Cdiv class=\u0022ms-3 text-body\u0022\u003E\u003C/div\u003E\n                    \u003C/div\u003E\n                  \u003C/td\u003E\n                \u003C/tr\u003E\n\n              \u003C/tbody\u003E\n            \u003C/table\u003E\n          \u003C/div\u003E\n            --\u003E\n            \n            \n            \n         \u003Cdiv id=\u0022depart-content-div\u0022 class=\u0022card-datatable table-responsive\u0022\u003E\n          \u003Ctable class=\u0022table table-striped align-middle mb-0\u0022 id=\u0022trains-depart-table\u0022\u003E\n            \u003Cthead class=\u0022table-light\u0022\u003E\n              \u003Ctr\u003E\n                \u003Cth\u003ETrain\u003C/th\u003E\n                \u003Cth\u003EDépart\u003C/th\u003E\n                \u003Cth\u003EArrivée\u003C/th\u003E\n                \u003Cth\u003EStatut\u003C/th\u003E\n                \u003Cth\u003EHeure départ\u003C/th\u003E\n              \u003C/tr\u003E\n            \u003C/thead\u003E\n            \u003Ctbody\u003E\n\n            \u003C/tbody\u003E\n          \u003C/table\u003E\n        \u003C/div\u003E\n\n        \u003C/div\u003E \n      \u003C/div\u003E \n\n    \u003C/div\u003E\n  \u003C/div\u003E\n\u003C/div\u003E \n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : "layout-container"
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      }
+    ],
+    "title" : "CDF - Sample structure"
+  }
+}

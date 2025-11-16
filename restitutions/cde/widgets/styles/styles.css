@@ -1,0 +1,14 @@
+.container {
+    max-width: 100%;   
+    padding-inline: 0;
+}
+
+a:hover {
+    text-decoration: none ;
+}
+
+.menu-link div {
+  white-space: normal !important;
+  word-wrap: break-word;
+  line-height: 1.2;
+}
