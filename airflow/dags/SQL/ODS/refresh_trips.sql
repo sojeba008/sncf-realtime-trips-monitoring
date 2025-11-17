@@ -20,6 +20,7 @@ SELECT
     production_date,
     departure_time::DATE
 FROM dsa.trips
+WHERE departure_time::DATE>=NOW()::DATE
 ON CONFLICT DO NOTHING;
 
 -- load of ods.vehicules
