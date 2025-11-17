@@ -30,3 +30,6 @@ cp -r ../../restitutions/dashboard tmp/dashboard
 cd tmp
 zip -r cde.zip cde
 zip -r dashboard.zip dashboard
+
+cd ..
+docker-compose build --no-cache pentaho-server

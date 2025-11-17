@@ -262,7 +262,7 @@ SELECT
     ROUND(AVG(t.delay_arrival_minutes) FILTER (WHERE t.delay_arrival_minutes > 0), 2) AS avg_delay_minutes 
 FROM dwh.f_trips t
 INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
-WHERE t.line_tk IS NOT NULL AND dd.date>=NOW()::DATE-2
+WHERE t.line_tk IS NOT NULL AND dd.date>=NOW()::DATE-1
 GROUP BY t.line_tk, t.expected_arrival_date_tk
 ON CONFLICT (line_tk, ref_date_tk) DO UPDATE
 SET 
@@ -283,7 +283,8 @@ INSERT INTO dwh.f_station_platform_usage (
     nb_departures_delayed,
     nb_arrivals_delayed,
     avg_delay_minutes,
-    max_delay_minutes
+    max_delay_minutes,
+    total_delay_minutes
 )
 SELECT
     station_tk,
@@ -300,7 +301,8 @@ SELECT
           AND delay_minutes > 0
     ) AS nb_departures_delayed,
     AVG(NULLIF(delay_minutes, 0))                       AS avg_delay_minutes,
-    MAX(delay_minutes)                                  AS max_delay_minutes
+    MAX(delay_minutes)                                  AS max_delay_minutes,
+    SUM(delay_minutes)									AS total_delay_minutes
 FROM (
     SELECT
         stop_station_tk AS station_tk,
@@ -310,7 +312,7 @@ FROM (
         GREATEST(COALESCE(delay_arrival_minutes, 0), 0) AS delay_minutes
     FROM dwh.f_trips t
     INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
-    WHERE arrival_platform_name IS NOT NULL AND arrival_platform_name<> '' AND dd.date>=NOW()::DATE-2
+    WHERE arrival_platform_name IS NOT NULL AND arrival_platform_name<> '' AND dd.date>=NOW()::DATE-1
     UNION ALL
     SELECT
         stop_station_tk AS station_tk,
@@ -320,7 +322,7 @@ FROM (
         GREATEST(COALESCE(delay_departure_minutes, 0), 0) AS delay_minutes
     FROM dwh.f_trips t
     INNER JOIN dwh.d_date dd ON dd.tk_date = t.expected_arrival_date_tk 
-    WHERE departure_platform_name IS NOT NULL AND departure_platform_name<> '' AND dd.date>=NOW()::DATE-2
+    WHERE departure_platform_name IS NOT NULL AND departure_platform_name<> '' AND dd.date>=NOW()::DATE-1
 ) t
 GROUP BY station_tk, platform_name, ref_date_tk
 ON CONFLICT (station_tk, platform_name, ref_date_tk) DO UPDATE
@@ -331,6 +333,7 @@ SET
     nb_departures_delayed = EXCLUDED.nb_departures_delayed,
     avg_delay_minutes     = EXCLUDED.avg_delay_minutes,
     max_delay_minutes     = EXCLUDED.max_delay_minutes,
+    total_delay_minutes    = EXCLUDED.total_delay_minutes,
     insert_date           = clock_timestamp();
 
 
@@ -358,7 +361,7 @@ SELECT
     SUM(nb_arrivals_delayed)       AS nb_arrivals_delayed,
     100*(SUM(nb_departures_delayed) + SUM(nb_arrivals_delayed))::float
         / NULLIF(SUM(nb_arrivals) + SUM(nb_departures), 0) AS delay_rate,
-    SUM(total_delay_minutes)       AS total_delay_minutes,
+    SUM(pu.total_delay_minutes)       AS total_delay_minutes,
     AVG(pu.avg_delay_minutes)         AS avg_delay_minutes,
     MAX(pu.max_delay_minutes)         AS max_delay_minutes,
     COUNT(*)                       AS nb_platforms_used,
@@ -375,11 +378,9 @@ INNER JOIN dwh.d_date dd ON dd.tk_date = pu.ref_date_tk
 LEFT JOIN LATERAL (
     SELECT
         GREATEST(pu.max_delay_minutes, 0) AS max_delay_minutes,
-        GREATEST(pu.avg_delay_minutes, 0) AS avg_delay_minutes,
-        COALESCE(pu.avg_delay_minutes * (pu.nb_arrivals + pu.nb_departures), 0) 
-            AS total_delay_minutes
+        GREATEST(pu.avg_delay_minutes, 0) AS avg_delay_minutes
 ) d ON TRUE
-WHERE dd.date::DATE>=NOW()::DATE-2
+WHERE dd.date::DATE>=NOW()::DATE-1
 GROUP BY station_tk, ref_date_tk
 ON CONFLICT (station_tk, ref_date_tk) DO UPDATE
 SET

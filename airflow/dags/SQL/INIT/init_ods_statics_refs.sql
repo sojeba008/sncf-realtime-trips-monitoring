@@ -1,4 +1,4 @@
-﻿DROP TABLE IF EXISTS ods.station_name_corr;
+DROP TABLE IF EXISTS ods.station_name_corr;
 
 CREATE TABLE ods.station_name_corr (
 	station_name TEXT NULL,
