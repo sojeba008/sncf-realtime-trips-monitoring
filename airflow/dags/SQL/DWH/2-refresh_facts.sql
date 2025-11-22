@@ -1,5 +1,6 @@
 INSERT INTO dwh.f_trips (
       trip_id,
+      vehicule_tk,
       num_vehicule,
       ref_date_tk,
       stop_station_tk,
@@ -45,6 +46,7 @@ WITH src AS (
 )
 SELECT
     s.trip_id,
+    dv.tk_vehicule,
     s.num_vehicule,
     d_ref.tk_date,
     COALESCE(st_stop.tk_station, -1),
@@ -66,6 +68,7 @@ SELECT
     s.is_starting_point,
     s.is_terminus
 FROM src s
+INNER JOIN dwh.d_vehicule dv ON dv.num_vehicule = s.num_vehicule
 -- === Main Dates ===
 JOIN dwh.d_date d_ref       ON d_ref.date = s.departure_ref_date::DATE
 -- ==== Stations Dim ===
@@ -88,6 +91,7 @@ ON CONFLICT (trip_id, stop_station_tk, ref_date_tk) DO NOTHING;
 
 INSERT INTO dwh.f_journey (
     trip_id,
+    vehicule_tk,
     num_vehicule,
     ref_date_tk,
     origin_station_tk,
@@ -114,6 +118,7 @@ WITH src AS (
 )
 SELECT
     s.trip_id,
+    dv.tk_vehicule,
     s.num_vehicule,
     d_ref.tk_date AS ref_date_tk,
     COALESCE(st_origin.tk_station, -1)       AS origin_station_tk,
@@ -126,6 +131,7 @@ SELECT
     clock_timestamp()
 FROM src s
 JOIN dwh.d_date d_ref ON d_ref.date = s.ref_date::date
+INNER JOIN dwh.d_vehicule dv ON dv.num_vehicule = s.num_vehicule
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
 LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
 LEFT JOIN dwh.d_line dl ON dl.line_name=s.published_line_name
@@ -142,6 +148,7 @@ ON CONFLICT (trip_id, ref_date_tk) DO NOTHING;
 TRUNCATE TABLE dwh.f_trips_realtime RESTART IDENTITY;
 INSERT INTO dwh.f_trips_realtime (
     trip_id,
+    vehicule_tk,
     num_vehicule,
     ref_date,
     stop_station_tk,
@@ -162,7 +169,6 @@ INSERT INTO dwh.f_trips_realtime (
     expected_arrival,
     delay_arrival_minutes,
     delay_departure_minutes,
-        
     departure_time_journey,
     arrival_time_journey,
     departure_platform_name,
@@ -195,6 +201,7 @@ WITH src AS (
 )
 SELECT
     s.trip_id,
+    dv.tk_vehicule,
     s.num_vehicule,
     NOW()::TIMESTAMP AS tk_date,
     COALESCE(st_stop.tk_station, -1),
@@ -215,7 +222,6 @@ SELECT
     s.expected_arrival,
     COALESCE(EXTRACT(EPOCH FROM (s.expected_arrival  - s.aimed_arrival ))/60::int, 0),
     COALESCE(EXTRACT(EPOCH FROM (s.expected_departure - s.aimed_departure))/60::int, 0),
-    
     departure_time_journey,
     arrival_time_journey,
     s.departure_platform_name,
@@ -224,6 +230,7 @@ SELECT
     s.is_terminus
 FROM src s
 JOIN dwh.d_date d_ref ON d_ref.date = s.ref_date
+INNER JOIN dwh.d_vehicule dv ON dv.num_vehicule = s.num_vehicule
 LEFT JOIN dwh.d_station st_stop   ON st_stop.station_name  = s.stop_name
 LEFT JOIN dwh.d_station st_origin ON st_origin.station_name = s.origin_name
 LEFT JOIN dwh.d_station st_dest   ON st_dest.station_name   = s.dest_name
