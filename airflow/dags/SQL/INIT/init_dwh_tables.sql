@@ -77,8 +77,8 @@ CREATE TABLE  IF NOT EXISTS dwh.d_station (
   CONSTRAINT d_station_un UNIQUE (station_name, commune, departement)
 );
 INSERT INTO dwh.d_station (tk_station, station_name) VALUES(-1, 'Gare/Station inconnue');
-CREATE INDEX IF NOT EXISTS dwh_stations_geom_gix ON ods.stations USING gist (geom);
-CREATE INDEX IF NOT EXISTS dwh_stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
+-- CREATE INDEX IF NOT EXISTS dwh_stations_geom_gix ON ods.stations USING gist (geom);
+-- CREATE INDEX IF NOT EXISTS dwh_stations_geom_l93_gix ON ods.stations USING gist (geom_l93);
 
 INSERT INTO 
   dwh.d_date
@@ -354,23 +354,21 @@ CREATE TABLE IF NOT EXISTS  dwh.f_journey (
     CONSTRAINT fk_arrival_journey_time      FOREIGN KEY (arrival_journey_time_tk) REFERENCES dwh.d_time(tk_time),
     
     CONSTRAINT fk_origin_station    FOREIGN KEY (origin_station_tk)     REFERENCES dwh.d_station(tk_station),
+    CONSTRAINT f_journey_line FOREIGN KEY (line_tk) REFERENCES dwh.d_line(tk_line),
     CONSTRAINT fk_destination_station FOREIGN KEY (destination_station_tk) REFERENCES dwh.d_station(tk_station),
     CONSTRAINT f_journey_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
 ) PARTITION BY RANGE (ref_date_tk);
 
 CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     tk_trip_rt INT8 GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    
     trip_id text NOT NULL,
     vehicule_tk              int4,
     num_vehicule text NOT NULL,
-
     ref_date  timestamp NULL,
     stop_station_tk int4 NOT NULL,
     origin_station_tk int4 NULL,
     destination_station_tk int4 NULL,
     line_tk                  int4,
-
     aimed_arrival_date_tk int4 NULL,
     aimed_arrival_time_tk int4 NULL,
     expected_arrival_date_tk int4 NULL,
@@ -379,24 +377,18 @@ CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
     aimed_departure_time_tk int4 NULL,
     expected_departure_date_tk int4 NULL,
     expected_departure_time_tk int4 NULL,
-
     aimed_departure timestamp,
     aimed_arrival timestamp,
     expected_departure timestamp,
     expected_arrival timestamp,
-    
     delay_arrival_minutes int4 NULL,
     delay_departure_minutes int4 NULL,
-    
     departure_time_journey timestamp,
     arrival_time_journey timestamp,
-    
     departure_platform_name TEXT,
     arrival_platform_name TEXT,
-
     is_starting_point bool NULL,
     is_terminus bool NULL,
-
     status_stop text GENERATED ALWAYS AS (
         CASE 
 	        WHEN expected_departure IS NULL AND is_terminus THEN 'TERMINE'
@@ -415,13 +407,14 @@ CREATE TABLE IF NOT EXISTS dwh.f_trips_realtime (
         END
     ) STORED,
     last_update timestamp DEFAULT now(),
+    CONSTRAINT f_trips_realtime_line FOREIGN KEY (line_tk) REFERENCES dwh.d_line(tk_line),
     CONSTRAINT f_trips_realtime_d_vehicule_fk FOREIGN KEY (vehicule_tk) REFERENCES dwh.d_vehicule(tk_vehicule)
 );
 
 CREATE TABLE IF NOT EXISTS dwh.f_line_metrics (
     tk_line_metrics INT8 GENERATED ALWAYS AS IDENTITY,
-    line_tk INT8 NOT NULL REFERENCES dwh.d_line(tk_line),
-    ref_date_tk INT8 NOT NULL REFERENCES dwh.d_date(tk_date),
+    line_tk INT8 NOT NULL,
+    ref_date_tk INT8 NOT NULL,
     nb_journey INT8,        
     nb_delay INT8,           
     delay_rate FLOAT8,

@@ -1,5 +1,5 @@
 INSERT INTO dwh.d_line (line_name)
-SELECT DISTINCT t.published_line_name 
+SELECT DISTINCT ON(UPPER(REPLACE(t.published_line_name, ' ', ''))) published_line_name
 FROM ods.trips t 
 WHERE t.published_line_name IS NOT NULL 
 AND t.published_line_name <> 'N/A'
