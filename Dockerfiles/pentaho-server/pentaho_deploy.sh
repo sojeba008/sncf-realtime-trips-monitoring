@@ -11,10 +11,6 @@ DWH_HOST="${DWH_HOST:-localhost}"
 DWH_USERNAME="${DWH_USERNAME:-postgres}"
 DWH_PASSWORD="${DWH_PASSWORD:-postgres}"
 
-cd /opt/schemaspy
-java -jar schemaspy-6.2.4.jar -t pgsql   -dp postgresql-42.2.23.jar -s dwh -db $DWH_DATABASE   -host $DWH_HOST   -port $DWH_PORT   -u $DWH_USERNAME   -p $DWH_PASSWORD  -o ./data_schema
-cp -r data_schema /opt/pentaho-server/tomcat/webapps/
-
 /opt/pentaho-server/start-pentaho.sh &
 sleep 5
 
@@ -121,5 +117,9 @@ password_response=$(curl --retry 1 -s -o /dev/null -w "%{http_code}" --basic -u 
   -d "{ \"userName\" : \"$AUTH_USER\", \"$AUTH_PASSWORD\" : \"$NEW_AUTH_PASSWORD\", \"administratorPassword\" : \"$AUTH_PASSWORD\"}")
 
 echo "Code retour mise à jour mot de passe : $password_response"
+
+cd /opt/schemaspy
+java -jar schemaspy-6.2.4.jar -t pgsql   -dp postgresql-42.2.23.jar -s dwh -db $DWH_DATABASE   -host $DWH_HOST   -port $DWH_PORT   -u $DWH_USERNAME   -p $DWH_PASSWORD  -o ./data_schema  -x ".*_[0-9]{8}$"
+cp -r data_schema /opt/pentaho-server/tomcat/webapps/
 
 tail -f /opt/pentaho-server/tomcat/logs/catalina.out

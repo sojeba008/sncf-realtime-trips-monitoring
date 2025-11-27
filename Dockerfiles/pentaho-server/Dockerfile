@@ -13,7 +13,8 @@ COPY tmp/dashboard.zip /opt/
 COPY pentaho_deploy.sh /opt/
 COPY schemaspy-6.2.4.jar /opt/schemaspy/
 COPY postgresql-42.2.23.jar /opt/schemaspy/
-
+COPY PUCLogin.jsp /opt/pentaho-server/tomcat/webapps/pentaho/jsp/
+COPY index.jsp /opt/pentaho-server/tomcat/webapps/pentaho/
 
 RUN sed -i 's|<login-show-users-list>true</login-show-users-list>|<login-show-users-list>false</login-show-users-list>|' \
 /opt/pentaho-server/pentaho-solutions/system/pentaho.xml && \

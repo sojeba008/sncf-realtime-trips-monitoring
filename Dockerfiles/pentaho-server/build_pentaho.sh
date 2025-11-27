@@ -24,7 +24,7 @@ else
     echo "L'archive Pentaho est dejà présente."
 fi
 
-mkdir tmp/
+mkdir -p tmp/
 cp -r ../../restitutions/cde tmp/cde
 cp -r ../../restitutions/dashboard tmp/dashboard
 cd tmp
