@@ -12,7 +12,7 @@ DWH_USERNAME="${DWH_USERNAME:-postgres}"
 DWH_PASSWORD="${DWH_PASSWORD:-postgres}"
 
 /opt/pentaho-server/start-pentaho.sh &
-sleep 5
+sleep 3
 
 
 
@@ -43,7 +43,7 @@ curl -s -o /dev/null -w "%{http_code}\n" --basic -u "$AUTH_USER:$AUTH_PASSWORD" 
     ]
   }
 }"
-
+sleep 5
 
 
 DASHBOARDS_FILEPATH="/opt/dashboard.zip"
@@ -61,7 +61,7 @@ dashboard_response=$(curl -s -o /dev/null -w "%{http_code}" --basic -u "$AUTH_US
   -F "fileUpload=@${DASHBOARDS_FILEPATH}")
 
 echo "Code retour dashboard : $dashboard_response"
-
+sleep 2
 # Upload du CDE
 echo "Upload du CDE..."
 cde_response=$(curl -s -o /dev/null -w "%{http_code}" --basic -u "$AUTH_USER:$AUTH_PASSWORD" \
@@ -74,7 +74,7 @@ cde_response=$(curl -s -o /dev/null -w "%{http_code}" --basic -u "$AUTH_USER:$AU
   -F "fileUpload=@${CDE_FILEPATH}")
 
 echo "Code retour CDE : $cde_response"
-
+sleep 1
 
 # --- Assignation des rôles ---
 echo "Assignation des rôles pour l'utilisateur $AUTH_USER..."

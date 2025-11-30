@@ -1,0 +1,240 @@
+{
+  "components" : {
+    "rows" : [ ]
+  },
+  "datasources" : {
+    "rows" : [ ]
+  },
+  "filename" : "/public/cde/widgets/sncfDashboardMenu.cdfde",
+  "layout" : {
+    "rows" : [
+      {
+        "id" : "fc180e06-cfbb-189a-6eff-7a1bcbb2ef64",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "iconify_icons"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/iconify-icons.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "2443782c-02c9-8f1b-5aea-8e3f9edfcacf",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "core_css"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/core.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "e9cb99a1-697b-31c5-adce-f868d655a601",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "demo_css"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/demo.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "fa8e62f6-b2d6-f2c4-4131-4a32c19cd9c1",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "styles_css"
+          },
+          {
+            "name" : "resourceFile",
+            "type" : "ResourceFile",
+            "value" : "${solution:styles/styles.css}"
+          },
+          {
+            "name" : "resourceType",
+            "type" : "Label",
+            "value" : "Css"
+          }
+        ],
+        "type" : "LayoutResourceFile",
+        "typeDesc" : "Resource"
+      },
+      {
+        "id" : "a33cbf75-6ff0-09c8-65d0-6a7ff85c7195",
+        "parent" : "UnIqEiD",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "rowWrapper"
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutRow",
+        "typeDesc" : "Row"
+      },
+      {
+        "id" : "c9903082-2bd2-4980-1308-b2ae54823044",
+        "parent" : "a33cbf75-6ff0-09c8-65d0-6a7ff85c7195",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "columnWrapper"
+          },
+          {
+            "name" : "bootstrapExtraSmall",
+            "type" : "String",
+            "value" : "12"
+          },
+          {
+            "name" : "bootstrapSmall",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapMedium",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapLarge",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "bootstrapCssClass",
+            "type" : "String",
+            "value" : ""
+          },
+          {
+            "name" : "height",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "backgroundColor",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "roundCorners",
+            "type" : "RoundCorners",
+            "value" : ""
+          },
+          {
+            "name" : "textAlign",
+            "type" : "TextAlign",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutBootstrapColumn",
+        "typeDesc" : "Column"
+      },
+      {
+        "id" : "0429b7d6-d632-c4f0-dce4-2abf7e3e2cb5",
+        "parent" : "c9903082-2bd2-4980-1308-b2ae54823044",
+        "properties" : [
+          {
+            "name" : "name",
+            "type" : "Id",
+            "value" : "wrapperDefinition"
+          },
+          {
+            "name" : "html",
+            "type" : "Html",
+            "value" : "\n      \u003Caside id=\u0022layout-menu\u0022 class=\u0022layout-menu menu-vertical menu bg-menu-theme\u0022\u003E\n        \u003Cdiv class=\u0022app-brand demo\u0022\u003E\n          \u003Ca href=\u0022index.html\u0022 class=\u0022app-brand-link\u0022\u003E\n            \u003Cspan class=\u0022app-brand-logo demo me-1\u0022\u003E\n              \u003Cspan class=\u0022text-primary\u0022\u003E\n\n              \u003C/span\u003E\n            \u003C/span\u003E\n           \u003C!-- \u003Cspan class=\u0022app-brand-text demo menu-text fw-semibold ms-2\u0022\u003E\u003C/span\u003E --\u003E\n          \u003C/a\u003E\n\n          \u003Ca href=\u0022javascript:void(0);\u0022 class=\u0022layout-menu-toggle menu-link text-large ms-auto\u0022\u003E\n          \u003C/a\u003E\n        \u003C/div\u003E\n\n        \u003Cdiv class=\u0022menu-inner-shadow\u0022\u003E\u003C/div\u003E\n\n        \u003Cul class=\u0022menu-inner py-1\u0022\u003E\n          \u003Cli class=\u0022menu-header mt-7\u0022\u003E\n            \u003Cspan class=\u0022menu-header-text\u0022\u003EVue d\u0027ensemble\u003C/span\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-item\u0022 page=\u0022vue-globale-trafic\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri  ri-dashboard-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Vue globale\u0022\u003EVue globale du trafic\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n\n          \u003Cli class=\u0022menu-item\u0022 page=\u0022suivi-trains\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-map-2-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Analyse régionale\u0022\u003ESuivi opérationnel des trains\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n          \n\u003C!--          \n        \u003Cli class=\u0022menu-item\u0022 page=\u0022geoloacate-trains\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link disabled-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-map-pin-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Analyse régionale\u0022\u003ESuivi cartographique des trains\u003C/div\u003E \n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n--\u003E\n          \u003Cli class=\u0022menu-header mt-7\u0022\u003E\n            \u003Cspan class=\u0022menu-header-text\u0022\u003EAnalyses opérationnelles\u003C/span\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-item\u0022 page=\u0022analyse-par-ligne\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-train-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Ligne\u0022\u003EAnalyse par ligne\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n          \n\n          \u003Cli class=\u0022menu-item\u0022 page=\u0022analyse-par-station\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-community-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Station\u0022\u003EAnalyse par station/Gare\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n \u003C!--         \n          \u003Cli class=\u0022menu-item\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link disabled-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri ri-subway-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Ligne\u0022\u003EAnalyse par type de train\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n          \n          \u003Cli class=\u0022menu-item\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-close-circle-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Annulations\u0022\u003ESuivi des annulations\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n--\u003E\n          \u003Cli class=\u0022menu-header mt-7\u0022\u003E\n            \u003Cspan class=\u0022menu-header-text\u0022\u003EAnalyse prédictive\u003C/span\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-item\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link disabled-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-bar-chart-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Prédictions\u0022\u003EPrédictions \u0026 simulations\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-header mt-7\u0022\u003E\n            \u003Cspan class=\u0022menu-header-text\u0022\u003EDonnées\u003C/span\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-item\u0022 external_link=\u0022true\u0022\u003E\n            \u003Ca href=\u0022/data_schema\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-database-2-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Données\u0022\u003ESchémas de données\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n          \n        \u003Cli class=\u0022menu-item\u0022 page=\u0022sources\u0022\u003E\n            \u003Ca href=\u0022\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-database-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Données\u0022\u003ESources de données\u003C/div\u003E\n              \u003Cdiv class=\u0022badge rounded-pill bg-label-primary fs-tiny ms-auto\u0022\u003E\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-header mt-7\u0022\u003E\n            \u003Cspan class=\u0022menu-header-text\u0022\u003ESupport\u003C/span\u003E\n          \u003C/li\u003E\n\n          \u003Cli class=\u0022menu-item\u0022\u003E\n            \u003Ca href=\u0022https://github.com/sojeba008/sncf-realtime-trips-monitoring\u0022 target=\u0022_blank\u0022 class=\u0022menu-link\u0022\u003E\n              \u003Ci class=\u0022menu-icon icon-base ri ri-github-line\u0022\u003E\u003C/i\u003E\n              \u003Cdiv data-i18n=\u0022Code source\u0022\u003ECode source\u003C/div\u003E\n            \u003C/a\u003E\n          \u003C/li\u003E\n        \u003C/ul\u003E\n      \u003C/aside\u003E\n "
+          },
+          {
+            "name" : "fontSize",
+            "type" : "Integer",
+            "value" : ""
+          },
+          {
+            "name" : "color",
+            "type" : "Color",
+            "value" : ""
+          },
+          {
+            "name" : "cssClass",
+            "type" : "String",
+            "value" : ""
+          }
+        ],
+        "type" : "LayoutHtml",
+        "typeDesc" : "Html"
+      }
+    ],
+    "title" : "CDF - Sample structure"
+  }
+}
