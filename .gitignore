@@ -1,3 +1,4 @@
+.env
 airflow/logs/*
 local-delta/*
 *.pyc
