@@ -7,8 +7,8 @@ x-airflow-common:
   environment:
     &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: CeleryExecutor
-    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}
-    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}/${POSTGRES_DB}
+    AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://${AIRFLOW_USER}:${AIRFLOW_PASSWORD}@${AIRFLOW_HOST}/${AIRFLOW_DB}
+    AIRFLOW__CELERY__RESULT_BACKEND: db+postgresql://${AIRFLOW_USER}:${AIRFLOW_PASSWORD}@${AIRFLOW_HOST}/${AIRFLOW_DB}
     AIRFLOW__CELERY__BROKER_URL: redis://:@redis:6379/0
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'false'
@@ -33,15 +33,24 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      AIRFLOW_DB: ${AIRFLOW_DB}
+      AIRFLOW_USER: ${AIRFLOW_USER}
+      AIRFLOW_PASSWORD: ${AIRFLOW_PASSWORD}
+      DWH_DB: ${DWH_DB}
+      DWH_USER: ${DWH_USER}
+      DWH_PASSWORD: ${DWH_PASSWORD}
+    container_name: postgresql
     ports:
       - "8082:5432"
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
+      - ./init:/docker-entrypoint-initdb.d
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}"]
       interval: 5s
       retries: 5
     restart: always
+
 
   redis:
     image: redis:latest
@@ -91,8 +100,7 @@ services:
   airflow-init:
     <<: *airflow-common
     command: >
-      bash -c "airflow connections add postgres_default \
-        --conn-uri postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+      bash -c "airflow connections add postgres_default --conn-uri postgres://${DWH_USER}:${DWH_PASSWORD}@${DWH_HOST}:${DWH_PORT}/${DWH_DB}"
     environment:
       <<: *airflow-common-env
       _AIRFLOW_DB_UPGRADE: 'true'
@@ -116,11 +124,11 @@ services:
       build:
         context: ./Dockerfiles/pentaho-server
       environment:
-        DWH_DATABASE: ${DB_NAME}
-        DWH_HOST: ${DB_HOST}
-        DWH_PORT: ${DB_PORT}
-        DWH_USERNAME: ${DB_USER}
-        DWH_PASSWORD: ${DB_PASSWORD}
+        DWH_DATABASE: ${DWH_DB}
+        DWH_HOST: ${DWH_HOST}
+        DWH_PORT: ${DWH_PORT}
+        DWH_USERNAME: ${DWH_USER}
+        DWH_PASSWORD: ${DWH_PASSWORD}
       ports:
         - "8086:8080"
       depends_on:

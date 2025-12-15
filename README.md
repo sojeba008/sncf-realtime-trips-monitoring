@@ -33,7 +33,7 @@ Le projet repose sur la pile technologique suivante, entièrement conteneurisée
 | Couche | Outil | Rôle |
 | :--- | :--- | :--- |
 | **Orchestration** | **Apache Airflow** | Planification et exécution des workflows de collecte et de transformation (**DAGs**) des données temps réel et des référentiels. |
-| **Stockage** | **PostgreSQL** | Base de données relationnelle servant de **Data Warehouse**. Stocke les faits temps réel et les tables de dimensions (Gares, Trajets, Géographie). |
+| **Stockage** | **PostgreSQL (PostGIS)** | Base de données relationnelle servant de **Data Warehouse** (`sncf_trips`) et de base de métadonnées pour Airflow (`airflow`). Stocke les faits temps réel et les tables de dimensions (Gares, Trajets, Géographie). |
 | **Visualisation (Actuel)** | **Pentaho Server** | Plateforme de Business Intelligence utilisée pour générer des rapports et des tableaux de bord. |
 | **Visualisation (Cible)** | **Apache Superset** | Nouvelle plateforme de BI pour des tableaux de bord modernes et interactifs. |
 | **Conteneurisation** | **Docker / Docker Compose** | Configuration et déploiement de l'environnement de développement et de production. |
@@ -78,23 +78,32 @@ Ce projet utilise Docker Compose pour orchestrer l'ensemble des services (Airflo
     ```
 2. Configuration de l'environnement
 
-Créez un fichier `.env` (à partir du fichier template) à la racine du projet pour définir les variables d'environnement nécessaires au fonctionnement des services (PostgreSQL et Airflow).
+Créez un fichier `.env` (à partir du fichier template) à la racine du projet pour définir les variables d'environnement nécessaires au fonctionnement des services.
 
-Exemple de variables à adapter :
+**Exemple des variables d'environnement critiques (fichier `.env`) :**
 
 ```env
-# Configuration PostgreSQL (Data Warehouse)
-POSTGRES_USER=airflow
-POSTGRES_PASSWORD=airflow
-POSTGRES_DB=airflow
-POSTGRES_HOST=postgres
+# Configuration Airflow (Métadonnées)
+AIRFLOW_USER=airflow
+AIRFLOW_PASSWORD=airflow
+AIRFLOW_DB=airflow
+AIRFLOW_HOST=postgres
 
-# Variables pour la connexion Airflow et Pentaho (pointent vers le service postgres)
-DB_USER=airflow
-DB_PASSWORD=airflow
-DB_NAME=airflow
-DB_HOST=postgres
-DB_PORT=5432
+# Configuration PostgreSQL (Utilisateur/Base par défaut pour l'initialisation)
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+POSTGRES_DB=postgres
+
+# Configuration Data Warehouse (DWH - Base de données des données SNCF)
+DWH_HOST=postgres
+DWH_USER=etl_user
+DWH_PASSWORD=etl_password
+DWH_DB=sncf_trips
+DWH_PORT=5432
+
+# Utilisateur Admin Airflow
+AIRFLOW_ADMIN_USERNAME=airflow
+AIRFLOW_ADMIN_PASSWORD=airflow
 ```
 
 2.  Lancer la commande de votre script `run.sh` pour l'initialisation et le démarrage :

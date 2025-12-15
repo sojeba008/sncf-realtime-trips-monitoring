@@ -15,11 +15,11 @@ from psycopg2.extras import execute_values
 
 load_dotenv()
 DB_PARAMS = {
-    'host': os.getenv('DB_HOST'),
-    'dbname': os.getenv('DB_NAME'),
-    'user': os.getenv('DB_USER'),
-    'password': os.getenv('DB_PASSWORD'),
-    'port': (os.getenv('DB_PORT'))
+    'host': os.getenv('DWH_HOST'),
+    'dbname': os.getenv('DWH_DB'),
+    'user': os.getenv('DWH_USER'),
+    'password': os.getenv('DWH_PASSWORD'),
+    'port': (os.getenv('DWH_PORT'))
 }
 
 
