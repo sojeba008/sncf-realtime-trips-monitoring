@@ -2,3 +2,4 @@
 airflow/logs/*
 local-delta/*
 *.pyc
+airflow/dags/DATASETS/NB_TRAINS
