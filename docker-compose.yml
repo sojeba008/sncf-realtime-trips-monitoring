@@ -120,6 +120,32 @@ services:
       retries: 5
     restart: always
 
+
+  minio:
+    image: minio/minio
+    entrypoint: /bin/sh
+    command: >
+      -c "minio server /data --console-address ':9001' & 
+          AVERAGE_SLEEP=5; sleep $$AVERAGE_SLEEP;
+          mc alias set myminio http://localhost:9000 $${MINIO_ROOT_USER} $${MINIO_ROOT_PASSWORD};
+          mc mb --ignore-existing --with-lock myminio/$${MINIO_BUCKET_NAME};
+          wait"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+      MINIO_BUCKET_NAME: ${MINIO_BUCKET_NAME}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    volumes:
+      - ./minio-data:/data
+
+
   pentaho-server:
       build:
         context: ./Dockerfiles/pentaho-server

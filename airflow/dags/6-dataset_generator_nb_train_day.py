@@ -6,6 +6,8 @@ import os
 from datetime import datetime, timedelta, date
 import pandas as pd
 from pathlib import Path
+from minio import Minio
+import io
 
 load_dotenv()
 DB_PARAMS = {
@@ -18,46 +20,50 @@ DB_PARAMS = {
 
 def generate_trains_number_dataset():
     yesterday = date.today() - timedelta(days=1)
-    
     suffix_yesterday = yesterday.strftime("%Y%m%d") 
-    
     date_for_sql = yesterday.strftime("%Y-%m-%d") 
     
+    MINIO_CLIENT = Minio(
+        os.getenv("MINIO_HOST"),
+        access_key=os.getenv("MINIO_ROOT_USER"),
+        secret_key=os.getenv("MINIO_ROOT_PASSWORD"),
+        secure=False
+    )
+    BUCKET_NAME = os.getenv("MINIO_BUCKET_NAME")
+
     dag_folder = os.path.dirname(__file__)
     SQL_FILE_PATH = os.path.join(dag_folder, 'SQL', 'TASKS', 'create_yesterday_trains_number_dataset.sql')
     
-    try:
-        with open(SQL_FILE_PATH, 'r', encoding='utf-8') as file:
-            sql_template = file.read()
-    except FileNotFoundError:
-        print(f"Erreur de lecture de {SQL_FILE_PATH}")
-        raise
+    with open(SQL_FILE_PATH, 'r', encoding='utf-8') as file:
+        sql_template = file.read()
 
     sql_query = sql_template.format(yesterday=date_for_sql)
-    print("Requête SQL exécutée :")
-    #print(sql_query)
 
     conn = None
     try:
         conn = psycopg2.connect(**DB_PARAMS)
-
         df = pd.read_sql(sql_query, conn)
 
-        OUTPUT_DIR = Path(dag_folder) / "DATASETS/NB_TRAINS"
-        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        parquet_buffer = io.BytesIO()
+        df.to_parquet(parquet_buffer, index=False)
+        parquet_size = parquet_buffer.tell()
+        parquet_buffer.seek(0)
+        object_name = f"NB_TRAINS/nb_trains_day_{suffix_yesterday}.parquet"
+        print("nom bucket "+str(BUCKET_NAME))
+        MINIO_CLIENT.put_object(
+            BUCKET_NAME,
+            object_name,
+            data=parquet_buffer,
+            length=parquet_size,
+            content_type='application/octet-stream'
+        )
         
-        parquet_filename = f"nb_trains_day_{suffix_yesterday}.parquet"
-        OUTPUT_FILE_PATH = OUTPUT_DIR / parquet_filename
-        
-        df.to_parquet(OUTPUT_FILE_PATH, index=False)
-        
-        print(f"Creation fichier ok : {OUTPUT_FILE_PATH}")
+        print(f"Upload réussi : {BUCKET_NAME}/{object_name}")
         print(f"Nombre d enregistrements : {len(df)}")
         
     except Exception as e:
-        print("Erreur lors de la génération du dataset PostgreSQL/Parquet :", e)
-        if conn:
-            conn.rollback()
+        print("Erreur :", e)
+        if conn: conn.rollback()
         raise
     finally:
         if conn:
