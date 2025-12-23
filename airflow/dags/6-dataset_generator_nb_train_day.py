@@ -6,8 +6,7 @@ import os
 from datetime import datetime, timedelta, date
 import pandas as pd
 from pathlib import Path
-from minio import Minio
-import io
+from utils.minio_ops import upload_parquet_to_minio
 
 load_dotenv()
 DB_PARAMS = {
@@ -23,12 +22,11 @@ def generate_trains_number_dataset():
     suffix_yesterday = yesterday.strftime("%Y%m%d") 
     date_for_sql = yesterday.strftime("%Y-%m-%d") 
     
-    MINIO_CLIENT = Minio(
-        os.getenv("MINIO_HOST"),
-        access_key=os.getenv("MINIO_ROOT_USER"),
-        secret_key=os.getenv("MINIO_ROOT_PASSWORD"),
-        secure=False
-    )
+    MINIO_PARAMS = {
+        'host': os.getenv("MINIO_HOST"),
+        'user': os.getenv("MINIO_ROOT_USER"),
+        'password': os.getenv("MINIO_ROOT_PASSWORD")
+    }
     BUCKET_NAME = os.getenv("MINIO_BUCKET_NAME")
 
     dag_folder = os.path.dirname(__file__)
@@ -43,19 +41,14 @@ def generate_trains_number_dataset():
     try:
         conn = psycopg2.connect(**DB_PARAMS)
         df = pd.read_sql(sql_query, conn)
-
-        parquet_buffer = io.BytesIO()
-        df.to_parquet(parquet_buffer, index=False)
-        parquet_size = parquet_buffer.tell()
-        parquet_buffer.seek(0)
-        object_name = f"NB_TRAINS/nb_trains_day_{suffix_yesterday}.parquet"
-        print("nom bucket "+str(BUCKET_NAME))
-        MINIO_CLIENT.put_object(
-            BUCKET_NAME,
-            object_name,
-            data=parquet_buffer,
-            length=parquet_size,
-            content_type='application/octet-stream'
+        print(df.head(5))
+        suffix = (date.today() - timedelta(days=1)).strftime("%Y%m%d")
+        object_name = f"NB_TRAINS/nb_trains_day_{suffix}.parquet"
+        upload_parquet_to_minio(
+            df=df, 
+            object_name=object_name, 
+            minio_config=MINIO_PARAMS, 
+            bucket_name=BUCKET_NAME
         )
         
         print(f"Upload réussi : {BUCKET_NAME}/{object_name}")
