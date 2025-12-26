@@ -4,3 +4,4 @@ DateTime
 pyarrow
 jours-feries-france
 minio
+s3fs
