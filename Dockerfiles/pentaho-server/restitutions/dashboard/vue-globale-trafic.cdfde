@@ -145,7 +145,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -234,7 +234,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -323,7 +323,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -412,7 +412,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -501,7 +501,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -590,7 +590,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -679,7 +679,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -768,7 +768,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -857,7 +857,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -946,7 +946,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
@@ -1035,7 +1035,7 @@
           {
             "name" : "refreshPeriod",
             "type" : "Integer",
-            "value" : ""
+            "value" : "130"
           },
           {
             "name" : "htmlObject",
