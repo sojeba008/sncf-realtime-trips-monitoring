@@ -22,6 +22,41 @@ document.addEventListener("DOMContentLoaded", function(e){
         }
       }
     }));
+    
+    
+    const mobileLinks = document.querySelectorAll('#mobile-menu-panel a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', event => {
+          event.preventDefault();
+        
+          const page = link.getAttribute('data-page');
+          const href = link.getAttribute('href');
+        
+          // Lien interne (dashboard)
+          if (page) {
+            window.top.location =
+              `${getDashboardUrl()}${encodeURIComponent(":public:dashboard:")}${page}.wcdf/generatedContent`;
+          }
+          // Lien externe
+          else if (href && href !== '') {
+            window.top.location = href;
+          }
+        
+          // Ferme le menu mobile après clic (optionnel mais recommandé)
+          const panel = document.getElementById('mobile-menu-panel');
+          if (panel) {
+            panel.style.display = 'none';
+          }
+        });
+    });
+    document.querySelectorAll('.menu-link, #mobile-menu-panel a').forEach(link => {
+        link.addEventListener('click', event => {
+        const page = link.getAttribute('page') || link.getAttribute('data-page');
+        if (page) {
+            event.preventDefault();
+        }
+        });
+    });
 
     document.querySelectorAll('.menu-link').forEach(link => {
       link.addEventListener('click', event => {
@@ -36,4 +71,13 @@ document.addEventListener("DOMContentLoaded", function(e){
           nav.classList.add("active");
       }
     });
+    
+
+  const toggleBtn = document.getElementById('mobile-menu-toggle');
+  const panel = document.getElementById('mobile-menu-panel');
+
+  toggleBtn.addEventListener('click', () => {
+    panel.style.display = panel.style.display === 'flex' ? 'none' : 'flex';
+  });
+
 });
