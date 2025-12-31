@@ -86,7 +86,12 @@ FROM dwh.v_taux_retard WHERE jour=NOW()::DATE;]]></Query>
       <Cache duration="3600" enabled="false"/>
       <Columns/>
       <Parameters/>
-      <Query><![CDATA[SELECT to_char(hour_start , 'HH24:mi') AS heure, nb_trains_actifs , nb_trains_actifs_j_1 FROM dwh.v_trains_actifs_par_heure]]></Query>
+      <Query><![CDATA[SELECT to_char(hour_start , 'HH24:mi') AS heure, 
+    	nb_trains_actifs , 
+		nb_trains_actifs_j_1,
+		predicted_nb_train
+FROM dwh.v_trains_actifs_par_heure
+LEFT JOIN forecast.fact_train_volume_forecast dtvf ON hour_start=dtvf.date;]]></Query>
    </DataAccess>
    <DataAccess access="public" connection="nbMinutesRetardQuery" id="nbMinutesRetardQuery"
                type="sql">
