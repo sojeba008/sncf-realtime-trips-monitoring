@@ -53,9 +53,13 @@ def update_nb_trains_forecats():
     sql = """
         WITH times_list AS (
             SELECT
-                %s::TIMESTAMP + (hour_delta || ' hour')::INTERVAL AS hour_start,
-                hour_delta
-            FROM generate_series(1, 23) AS gs(hour_delta)
+                hour_delta AS hour_start,
+                TO_CHAR(hour_delta, 'HH24')::INT4 AS hour_delta
+            FROM generate_series(
+                    %s::timestamp+INTERVAL '1 hour',
+                    now()::timestamp,
+                    INTERVAL '1 hour'
+                ) AS gs(hour_delta)
         )
         SELECT
             tl.hour_start,
@@ -88,7 +92,7 @@ def update_nb_trains_forecats():
     future_df["predicted_nb_trains_actifs"] = model.predict(X_future)
     print(future_df.head())
     print(future_df["predicted_nb_trains_actifs"])
-    cur.execute("TRUNCATE TABLE forecast.fact_train_volume_forecast;")
+    cur.execute("TRUNCATE TABLE forecast.fact_train_volume_forecast RESTART IDENTITY;")
 
     records_to_insert = [
         (row["hour_start"], int(row["predicted_nb_trains_actifs"]), metadata["model_name"])

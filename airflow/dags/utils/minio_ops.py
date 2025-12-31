@@ -97,12 +97,15 @@ def nb_trains_model_from_s3(MINIO_PARAMS, BUCKET_NAME :str):
         "is_public_holiday"
     ]
 
-    X = df[feature_cols]
+    #X = df[feature_cols]
     y = df["nb_trains_actifs"]
 
     split_idx = int(len(df) * 0.8)
-    X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]
+    X_train, X_test = df.iloc[:split_idx], df.iloc[split_idx:]
     y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]
+    last_date_x_train = X_train["hour_start"].max()
+    X_train = X_train[feature_cols]
+    X_test = X_test[feature_cols]
 
     model = RandomForestRegressor(
         n_estimators=200,
@@ -147,7 +150,7 @@ def nb_trains_model_from_s3(MINIO_PARAMS, BUCKET_NAME :str):
 ### 
     metadata = {
         "model_name": f"nb_trains_model_{model_date}",
-        "trained_until": str(last_date),
+        "trained_until": str(last_date_x_train),
         "mse": mse,
         "rmse": rmse,
         "mae": mae,
