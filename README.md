@@ -24,6 +24,8 @@ Les **analyses station** permettent de suivre :
 
 Toutes ces mesures sont accessibles via des vues et *materialized views* PostgreSQL, ce qui permet une **consultation rapide et dynamique** des indicateurs pour le reporting ou la visualisation en BI.
 
+Au-delà du simple monitoring, l'infrastructure intègre une brique de **Machine Learning** pour prédire le volume de trains en circulation.
+
 ---
 
 ## 🚀 Architecture Technique
@@ -33,13 +35,22 @@ Le projet repose sur la pile technologique suivante, entièrement conteneurisée
 | Couche | Outil | Rôle |
 | :--- | :--- | :--- |
 | **Orchestration** | **Apache Airflow** | Planification et exécution des workflows de collecte et de transformation (**DAGs**) des données temps réel et des référentiels. |
-| **Stockage** | **PostgreSQL (PostGIS)** | Base de données relationnelle servant de **Data Warehouse** (`sncf_trips`) et de base de métadonnées pour Airflow (`airflow`). Stocke les faits temps réel et les tables de dimensions (Gares, Trajets, Géographie). |
+| **Stockage SQL** | **PostgreSQL (PostGIS)** | Base de données relationnelle servant de **Data Warehouse** (`sncf_trips`) et de base de métadonnées pour Airflow (`airflow`). Stocke les faits temps réel et les tables de dimensions (Gares, Trajets, Géographie). |
+| **Stockage Objet** | **MinIO (S3)** | Stockage des datasets d'entraînement et des modèles sérialisés. |
+| **Machine Learning** | Scikit-learn | Régression Random Forest pour la prédiction de volume de trains. |
 | **Visualisation (Actuel)** | **Pentaho Server** | Plateforme de Business Intelligence utilisée pour générer des rapports et des tableaux de bord. |
 | **Visualisation (Cible)** | **Apache Superset** | Nouvelle plateforme de BI pour des tableaux de bord modernes et interactifs. |
 | **Conteneurisation** | **Docker / Docker Compose** | Configuration et déploiement de l'environnement de développement et de production. |
 
 
 ---
+
+## 🧠 Pipeline Machine Learning (MLOps)
+
+L'originalité du projet réside dans son pipeline d'apprentissage automatisé :
+1.  **Génération de Dataset :** Un DAG Airflow extrait les données agrégées de PostgreSQL et les stocke au format `.parquet` sur **MinIO**.
+2.  **Entraînement :** Le modèle **Random Forest** est entraîné/affiné chaque jour avec les nouvelles données.
+3.  **Inférence :** Prédiction en temps réel du volume de trains en France.
 
 ## 🔗 Sources de Données
 
@@ -104,6 +115,11 @@ DWH_PORT=5432
 # Utilisateur Admin Airflow
 AIRFLOW_ADMIN_USERNAME=airflow
 AIRFLOW_ADMIN_PASSWORD=airflow
+
+# --- MinIO (S3 Storage) ---
+MINIO_ROOT_USER=minioadmin
+MINIO_ROOT_PASSWORD=minioadmin
+MINIO_BUCKET_NAME=sncf-trips-datasets
 ```
 
 2.  Lancer la commande de votre script `run.sh` pour l'initialisation et le démarrage :
@@ -119,6 +135,7 @@ AIRFLOW_ADMIN_PASSWORD=airflow
 | Service | URL | Identifiants par Défaut | Remarques |
 | :--- | :--- | :--- | :--- |
 | **Airflow UI** | `http://localhost:[8084 - Port Airflow UI]` | **User :** `[airflow_user]` / **Pass :** `[airflow_pass]` | Interface web pour gérer et monitorer les pipelines ETL et les tâches en temps réel. |
+| **MinIO Console** | `http://localhost:9001 - Port MinIO]` | **User :** `[MINIO_ROOT_USER]` / **Pass :** `[MINIO_ROOT_PASSWORD]` | Exploration des datasets & modèles (S3). |
 | **PostgreSQL** | `[http://localhost:[8082 - Port Postgresql]/database]` | **User :** `[postgres_user]` / **Pass :** `[postgres_pass]` | Base de données relationnelle et spatiale (PostGIS) pour stocker les données du Data Warehouse. |
 | **Pentaho Server (Actuel)** | `http://localhost:[8086 - Port Pentaho]` | Aucun identifiant de connexion n'est necessaire. | Serveur BI pour création et publication de rapports et tableaux de bord. |
 | **Superset (Futur)** |  | **User :** `[superset_user]` / **Pass :** `[superset_pass]` | Remplacera Pentaho pour la visualisation interactive et l’exploration des données. |

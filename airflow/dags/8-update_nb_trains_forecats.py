@@ -57,7 +57,7 @@ def update_nb_trains_forecats():
                 TO_CHAR(hour_delta, 'HH24')::INT4 AS hour_delta
             FROM generate_series(
                     %s::timestamp+INTERVAL '1 hour',
-                    now()::timestamp,
+                    (now()::DATE+1 ||' 23:00:00')::timestamp,
                     INTERVAL '1 hour'
                 ) AS gs(hour_delta)
         )
